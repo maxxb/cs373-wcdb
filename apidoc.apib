@@ -1,0 +1,211 @@
+HOST: http://www.google.com/
+
+--- WCDB API v0.0.1 ---
+---
+- 200 `OK` - the request was successful (some API calls may return 201 instead).
+- 201 `Created` - the request was successful and a resource was created.
+- 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
+- 400 `Bad Request` - the request could not be understood or was missing required parameters.
+- 401 `Unauthorized` - authentication failed or user doesn't have permissions for requested operation.
+- 403 `Forbidden` - access denied.
+- 404 `Not Found` - resource was not found
+- 405 `Method Not Allowed` - requested method is not supported for resource.
+---
+
+--
+Crisis
+
+A crisis has some number of organizations and some number of people associated with it, as well as some other properties.
+
+--
+Get a particular crisis
+GET /crises/{crisis-id}
+< 200
+< Content-Type: application/json
+{ "crisis-id": CRISIS_ID, 
+  "name": "crisis_name", 
+  "date": "YYYY-MM-DD", 
+  "org-ids": ["org1"], 
+  "person-ids": ["person1"]
+}
+
+Get all crises
+GET /crises
+< 200
+< Content-Type: application/json
+{ "crises": [{ "crisis-id": CRISIS_ID, 
+               "name": "crisis_name", 
+               "date": "YYYY-MM-DD", 
+               "organization_ids": ["org1"], 
+               "people_ids": ["person1"]
+            }]
+}
+
+Create a new crisis
+POST /crises
+> Content-Type: application/json
+> Accept: application/json
+{ "name": "crisis_name", 
+  "date": "YYYY-MM-DD"
+}
+< 201
+< Content-Type: application/json
+{
+    "url": "/crises/CRISIS_ID"
+}
+
+Associate a crisis with an organization
+
+The assocation goes both ways. Both the crisis and the organization are updated
+POST /crises/{crisis-id}/orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+{ "crisis-id": CRISIS_ID,
+  "org-id": ORG_ID
+}
+< 201
+< Content-Type: application/json
+{ 
+    "crisis-url": "/crises/CRISIS_ID",
+    "org-url": "/orgs/ORD_ID"
+}
+
+Associate a crisis with a person
+
+The assocation goes both ways. Both the crisis and the person are updated
+POST /crises/{crisis-id}/person/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
+{
+    "person-url": "/people/PERSON_ID",
+    "crisis-url": "/crises/CRISIS_ID"
+}
+
+--
+Organization
+
+An organization has some number of crises and some number of people associated with it, as well as some other attributes.
+--
+
+Get a particular organization
+GET /orgs/{org-id}
+< 200
+< Content-Type: application/json
+{ "org-id": ORG_ID,
+  "name": "org_name",
+  "date_founded": "YYYY-MM-DD",
+  "crisis-ids": ["crisis1"],
+  "person-ids": ["person1"]
+}
+
+Get all organizations
+GET /orgs/{org-id}
+< 200 
+< Content-Type: application/json
+{ "orgs": [{ "org-id": ORG_ID,
+              "name": "org_name",
+              "date_founded": "YYYY-MM-DD",
+              "crisis-ids": ["crisis1"],
+              "person-ids": ["person1"]
+}]}
+
+Associate an organization with a crisis
+
+The assocation goes both ways. Both the crisis and the organization are updated
+POST /orgs/{org-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+{ "crisis-id": CRISIS_ID,
+  "org-id": ORG_ID
+}
+< 201
+< Content-Type: application/json
+{ 
+    "crisis-url": "/crises/CRISIS_ID",
+    "org-url": "/orgs/ORG_ID"
+}
+
+Associate an organization with a person
+
+The assocation goes both ways. Both the organization and the person are updated
+POST /orgs/{org-id}/person/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
+{
+    "person-url": "/people/PERSON_ID",
+    "org-url": "/orgs/ORG_ID"
+}
+
+--
+Person
+
+A person has some number of crises and some number of organizations associated with it, as well as some other attributes.
+--
+
+Get a particular person
+GET /people/{person-id}
+< 200
+< Content-Type: application/json
+{ "person-id": PERSON_ID,
+  "name": "person_name",
+  "birthday": "YYYY-MM-DD",
+  "crisis-ids": ["crisis1"],
+  "org-ids": ["org1"]
+}
+
+Get all people
+GET /people
+< 200
+< Content-Type: application/json
+{ "people" : [{ "person-id": PERSON_ID,
+                "name": "person_name",
+                "birthday": "YYYY-MM-DD",
+                "crisis-ids": ["crisis1"],
+                "org-ids": ["org1"]
+            }]                  
+}
+
+Create a new person
+POST /people
+> Content-Type: application/json
+> Accept: application/json
+{ "name": "person_name",
+  "birthday": "YYYY-MM-DD",
+}
+< 201
+< Content-Type: application/json
+{
+    "url": "/people/PERSON_ID"
+}
+
+Associate a person with an organization
+
+The assocation goes both ways. Both the person and the organization are updated
+POST /people/{person-id}/orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
+{
+    "person-url": "/people/PERSON_ID",
+    "org-url": "/orgs/ORG_ID"
+}
+
+Associate a person with a crisis
+
+The assocation goes both ways. Both the person and the crisis are updated
+POST /people/{person-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
+{
+    "person-url": "/people/PERSON_ID",
+    "crisis-url": "/crises/CRISIS_ID"
+}
+
+
