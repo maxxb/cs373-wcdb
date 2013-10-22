@@ -1,6 +1,7 @@
 HOST: http://www.google.com/
 
---- WCDB API v0.0.1 ---
+--- WCDB API v0.0.2 ---
+Docs: http://docs.pglass.apiary.io/
 ---
 - 200 `OK` - the request was successful (some API calls may return 201 instead).
 - 201 `Created` - the request was successful and a resource was created.
@@ -73,7 +74,7 @@ POST /crises/{crisis-id}/orgs/{org-id}
 Associate a crisis with a person
 
 The assocation goes both ways. Both the crisis and the person are updated
-POST /crises/{crisis-id}/person/{person-id}
+POST /crises/{crisis-id}/people/{person-id}
 > Content-Type: application/json
 > Accept: application/json
 < 201
@@ -82,6 +83,30 @@ POST /crises/{crisis-id}/person/{person-id}
     "person-url": "/people/PERSON_ID",
     "crisis-url": "/crises/CRISIS_ID"
 }
+
+Delete a crisis
+DELETE /crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated person from a crisis and vice versa. This does not delete the person.
+DELETE /crises/{crisis-id}/people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated organization from a crisis and vice versa. This does not delete the organization.
+DELETE /crises/{crisis-id}/orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
 
 --
 Organization
@@ -101,7 +126,7 @@ GET /orgs/{org-id}
 }
 
 Get all organizations
-GET /orgs/{org-id}
+GET /orgs
 < 200 
 < Content-Type: application/json
 { "orgs": [{ "org-id": ORG_ID,
@@ -113,7 +138,7 @@ GET /orgs/{org-id}
 
 Associate an organization with a crisis
 
-The assocation goes both ways. Both the crisis and the organization are updated
+The assocation goes both ways. Both the organization and the crisis are updated
 POST /orgs/{org-id}/crises/{crisis-id}
 > Content-Type: application/json
 > Accept: application/json
@@ -130,7 +155,7 @@ POST /orgs/{org-id}/crises/{crisis-id}
 Associate an organization with a person
 
 The assocation goes both ways. Both the organization and the person are updated
-POST /orgs/{org-id}/person/{person-id}
+POST /orgs/{org-id}/people/{person-id}
 > Content-Type: application/json
 > Accept: application/json
 < 201
@@ -139,6 +164,30 @@ POST /orgs/{org-id}/person/{person-id}
     "person-url": "/people/PERSON_ID",
     "org-url": "/orgs/ORG_ID"
 }
+
+Delete an organization
+DELETE /orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated crisis from an organization and vice versa. This does not delete the crisis.
+DELETE /orgs/{org-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated person from an organization and vice versa. This does not delete the person.
+DELETE /orgs/{org-id}/people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
 
 --
 Person
@@ -208,4 +257,25 @@ POST /people/{person-id}/crises/{crisis-id}
     "crisis-url": "/crises/CRISIS_ID"
 }
 
+Delete a person
+DELETE /people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+Remove an associated organization from a person and vice versa. This does not delete the organization.
+DELETE /people/{person-id}/orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated crisis from a person and vice versa. This does not delete the crisis.
+DELETE /people/{person-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
 
