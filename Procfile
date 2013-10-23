@@ -1,1 +1,1 @@
-web: gunicorn wcdb.wsgi
+web: cd wcdb && gunicorn wcdb.wsgi

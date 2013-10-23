@@ -67,7 +67,7 @@
         </div>  
         
 
-        <div class="col-md-6">
+        <div class="col-md-6" >
           {% block data %}
 
           {% endblock %}
@@ -76,27 +76,39 @@
 
 
       <div class="row">
+
         <div class="col-md-4">
-          <div class="media">
+          <div class="media" style="width:500px;height:400px">
+          <center>  
           {% block video %} 
 
           {% endblock %}
+          </center>
           </div>
         </div>  
         
 
         <div class="col-md-4">
+          <div class="media" style="width:400px;height:400px">
+          <center>  
           {% block maps %}
 
           {% endblock %}
+          </center>
+          </div>
         </div>
 
         <div class="col-md-4">
-          {% block twitter %}
+          <div class="media" style="width:400px;height:400px">  
+            <center>  
+            {% block twitter %}
 
-          {% endblock %}
-        </div>          
-      </div>   
+            {% endblock %}
+            </center> 
+          </div>  
+        </div>   
+
+      </div><!--/.row -->   
 
     </div><!-- /.container -->
 
@@ -110,6 +122,7 @@
   <style>
   body {background: red;}
   .container {background: white;}
+  .media {padding: 20px 20px;}
 
   </style>
 </html>
