@@ -9,7 +9,9 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$',  'views.home', name='home'),
     url(r'^', include('wcdb.crises.urls')),
-    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),   
+
+    #Heroku setting to serve static files
+    #url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),   
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
