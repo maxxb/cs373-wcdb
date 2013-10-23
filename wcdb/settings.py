@@ -21,11 +21,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-<<<<<<< HEAD
         'NAME':     os.path.join(BASE_DIR,'mydb.db'),                      # Or path to database file if using sqlite3.
-=======
-        'NAME': '/u/alek313/cs373/cs373-wcdb/mysqldb.db',                      # Or path to database file if using sqlite3.
->>>>>>> a416dc7ae58657e6c7573750d5bb083f14562929
+
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -73,7 +70,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-#STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
