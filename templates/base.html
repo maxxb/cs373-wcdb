@@ -6,11 +6,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>WCDB</title>
+    <title>{% block title %}WCDB{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-
+    <link rel = "stylesheet" type = "text/css" href = "static/style.css">
     <!-- Add custom CSS here -->
     <style>
      body {margin-top: 60px;}
@@ -29,41 +29,76 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="home.html">WCDB</a>
+          <a class="navbar-brand" href="/">WCDB</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="crises">Crises</a></li>
-            <li><a href="organizations">Organizations</a></li>
-            <li><a href="people">People</a></li>
+            <li><a href="#crises">Crises</a></li>
+            <li><a href="#org">Organizations</a></li>
+            <li><a href="#people">People</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container -->
     </nav>
 
-    <div class="container">
-      <center>
-      <div class="row">
+    <div id="item-row" class="container">
+
+        <div class = "row">
         <center>
-        <div class="col-lg-6">
-          <h1>Group name goes here</h1>
-          <p>Maxx Boehme</p>
-          <p>Alek Anwar Merani</p>
-          <p>Scott Enriquez</p>
-          <p>Paul Glass</p>
-          <p>Charles Tang</p>
+          <div class="col-md-12">
+          <center>  
+          {% block about %}  {% endblock about %}
+          </center>
+          </div>  
+        </center>
+      </div>
+
+      {% block group %} {% endblock group %}  
+
+      {% block links %} {% endblock links %}    
+
+      <div class="row">
+        <div class="col-md-6">
+          {% block image %} 
+
+          {% endblock %}
+        </div>  
+        
+
+        <div class="col-md-6">
+          {% block data %}
+
+          {% endblock %}
+        </div>  
+      </div>      
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="media">
+          {% block video %} 
+
+          {% endblock %}
+          </div>
+        </div>  
+        
+
+        <div class="col-md-4">
+          {% block maps %}
+
+          {% endblock %}
         </div>
 
-        <div class="col-lg-6">
-        <center>
-          <a href="/crises/1">Crises #1<a>
-        </center>
-        </div>  
-      </center>
-      </div>
-    </center>
+        <div class="col-md-4">
+          {% block twitter %}
+
+          {% endblock %}
+        </div>          
+      </div>   
+
+
     </div><!-- /.container -->
 
     <!-- Bootstrap core JavaScript -->
@@ -75,7 +110,6 @@
 
   <style>
   body {background: red;}
-  .container {background: white;
-              text-align: center;}
+  .container {background: white;}
   </style>
 </html>

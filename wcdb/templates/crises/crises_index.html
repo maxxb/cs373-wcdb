@@ -1,6 +1,3 @@
-<!DOCTYPE HTML>
-<html>
-<body>
-	<p>This is my <b>CRISES</b> number {{ crisis_id }} page</p>
-</body>
-</html>
+{% with "crises/crisis"|add:crisis_id|add:".html" as crisis %}
+{% include crisis %}
+{% endwith %}
