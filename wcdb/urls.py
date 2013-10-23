@@ -6,7 +6,7 @@ from django.conf.urls.defaults import patterns, include, url
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$',  'wcdb.views.home'),
+    url(r'^$',  'views.home', name='home'),
     url(r'^', include('wcdb.crises.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
