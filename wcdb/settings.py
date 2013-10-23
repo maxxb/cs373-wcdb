@@ -1,6 +1,7 @@
 # Django settings for wcdb project.
 import sys, os
 import dj_database_url #comment out if not using heroku
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -20,7 +21,11 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+<<<<<<< HEAD
         'NAME':     os.path.join(BASE_DIR,'mydb.db'),                      # Or path to database file if using sqlite3.
+=======
+        'NAME': '/u/alek313/cs373/cs373-wcdb/mysqldb.db',                      # Or path to database file if using sqlite3.
+>>>>>>> a416dc7ae58657e6c7573750d5bb083f14562929
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -120,6 +125,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'templates'),
+#    os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
 )
 
 INSTALLED_APPS = (

@@ -1,3 +1,4 @@
+'''
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wcdb.settings")
 
@@ -5,3 +6,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wcdb.settings")
 # as well as any WSGI server configured to use this file.
 import django.core.handlers.wsgi
 application = django.core.handlers.wsgi.WSGIHandler()
+'''
+
+from django.core.wsgi import get_wsgi_application
+from dj_static import Cling
+
+application = Cling(get_wsgi_application())

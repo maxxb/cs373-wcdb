@@ -1,7 +1,11 @@
 HOST: http://www.google.com/
 
---- WCDB API v0.0.1 ---
+--- WCDB API v0.0.2 ---
 ---
+Docs: http://docs.pglass.apiary.io/
+
+HTTP status codes:
+
 - 200 `OK` - the request was successful (some API calls may return 201 instead).
 - 201 `Created` - the request was successful and a resource was created.
 - 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
@@ -51,37 +55,58 @@ POST /crises
 < 201
 < Content-Type: application/json
 {
-    "url": "/crises/CRISIS_ID"
+    "url": "/crises/{crisis-id}"
 }
 
 Associate a crisis with an organization
 
 The assocation goes both ways. Both the crisis and the organization are updated
-POST /crises/{crisis-id}/orgs/{org-id}
+PUT /crises/{crisis-id}/orgs/{org-id}
 > Content-Type: application/json
 > Accept: application/json
-{ "crisis-id": CRISIS_ID,
-  "org-id": ORG_ID
-}
 < 201
 < Content-Type: application/json
 { 
-    "crisis-url": "/crises/CRISIS_ID",
-    "org-url": "/orgs/ORD_ID"
+    "crisis-url": "/crises/{crisis-id}",
+    "org-url": "/orgs/{org-id}"
 }
 
 Associate a crisis with a person
 
 The assocation goes both ways. Both the crisis and the person are updated
-POST /crises/{crisis-id}/person/{person-id}
+PUT /crises/{crisis-id}/people/{person-id}
 > Content-Type: application/json
 > Accept: application/json
 < 201
 < Content-Type: application/json
 {
-    "person-url": "/people/PERSON_ID",
-    "crisis-url": "/crises/CRISIS_ID"
+    "person-url": "/people/{person-id}",
+    "crisis-url": "/crises/{crisis-id}"
 }
+
+Delete a crisis
+DELETE /crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated person from a crisis and vice versa. This does not delete the person.
+DELETE /crises/{crisis-id}/people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated organization from a crisis and vice versa. This does not delete the organization.
+DELETE /crises/{crisis-id}/orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
 
 --
 Organization
@@ -101,7 +126,7 @@ GET /orgs/{org-id}
 }
 
 Get all organizations
-GET /orgs/{org-id}
+GET /orgs
 < 200 
 < Content-Type: application/json
 { "orgs": [{ "org-id": ORG_ID,
@@ -111,34 +136,68 @@ GET /orgs/{org-id}
               "person-ids": ["person1"]
 }]}
 
-Associate an organization with a crisis
-
-The assocation goes both ways. Both the crisis and the organization are updated
-POST /orgs/{org-id}/crises/{crisis-id}
+Create a new organization
+POST /orgs
 > Content-Type: application/json
 > Accept: application/json
-{ "crisis-id": CRISIS_ID,
-  "org-id": ORG_ID
+{ "name": "org_name",
+  "date_founded": "YYYY-MM-DD"
 }
 < 201
 < Content-Type: application/json
+{
+    "url": "/orgs/{org-id}"
+}
+
+Associate an organization with a crisis
+
+The assocation goes both ways. Both the organization and the crisis are updated
+PUT /orgs/{org-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
 { 
-    "crisis-url": "/crises/CRISIS_ID",
-    "org-url": "/orgs/ORG_ID"
+    "crisis-url": "/crises/{crisis-id}",
+    "org-url": "/orgs/{org-id}"
 }
 
 Associate an organization with a person
 
 The assocation goes both ways. Both the organization and the person are updated
-POST /orgs/{org-id}/person/{person-id}
+PUT /orgs/{org-id}/people/{person-id}
 > Content-Type: application/json
 > Accept: application/json
 < 201
 < Content-Type: application/json
 {
-    "person-url": "/people/PERSON_ID",
-    "org-url": "/orgs/ORG_ID"
+    "person-url": "/people/{person-id}",
+    "org-url": "/orgs/{org-id}"
 }
+
+Delete an organization
+DELETE /orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated crisis from an organization and vice versa. This does not delete the crisis.
+DELETE /orgs/{org-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated person from an organization and vice versa. This does not delete the person.
+DELETE /orgs/{org-id}/people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
 
 --
 Person
@@ -179,33 +238,55 @@ POST /people
 < 201
 < Content-Type: application/json
 {
-    "url": "/people/PERSON_ID"
+    "url": "/people/{person-id}"
 }
 
 Associate a person with an organization
 
 The assocation goes both ways. Both the person and the organization are updated
-POST /people/{person-id}/orgs/{org-id}
+PUT /people/{person-id}/orgs/{org-id}
 > Content-Type: application/json
 > Accept: application/json
 < 201
 < Content-Type: application/json
 {
-    "person-url": "/people/PERSON_ID",
-    "org-url": "/orgs/ORG_ID"
+    "person-url": "/people/{person-id}",
+    "org-url": "/orgs/{org-id}"
 }
 
 Associate a person with a crisis
 
 The assocation goes both ways. Both the person and the crisis are updated
-POST /people/{person-id}/crises/{crisis-id}
+PUT /people/{person-id}/crises/{crisis-id}
 > Content-Type: application/json
 > Accept: application/json
 < 201
 < Content-Type: application/json
 {
-    "person-url": "/people/PERSON_ID",
-    "crisis-url": "/crises/CRISIS_ID"
+    "person-url": "/people/{person-id}",
+    "crisis-url": "/crises/{crisis-id}"
 }
 
+Delete a person
+DELETE /people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated organization from a person and vice versa. This does not delete the organization.
+DELETE /people/{person-id}/orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated crisis from a person and vice versa. This does not delete the crisis.
+DELETE /people/{person-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
 
