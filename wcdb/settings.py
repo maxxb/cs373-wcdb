@@ -10,7 +10,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.getcwd()
 
 DATABASES = {}
 DATABASES['default'] = dj_database_url.config()
