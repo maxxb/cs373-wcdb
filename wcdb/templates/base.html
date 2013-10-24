@@ -10,7 +10,7 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-    <link rel = "stylesheet" type = "text/css" href = "static/style.css">
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/wcdb-style.css">
     <!-- Add custom CSS here -->
     <style>
 	   body {margin-top: 60px;}
@@ -71,46 +71,52 @@
           {% block data %}
 
           {% endblock %}
-        </div>  
-      </div>      
-
-
-      <div class="row">
-
-        <div class="col-md-4">
-          <div class="media" style="width:500px;height:400px">
-          <center>  
-          {% block video %} 
-
-          {% endblock %}
-          </center>
-          </div>
-        </div>  
+        </div> 
         
-
-        <div class="col-md-4">
-          <div class="media" style="width:400px;height:400px">
-          <center>  
-          {% block maps %}
-
-          {% endblock %}
-          </center>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="media" style="width:400px;height:400px">  
-            <center>  
-            {% block twitter %}
-
-            {% endblock %}
-            </center> 
-          </div>  
-        </div>   
-
-      </div><!--/.row -->   
-
-    </div><!-- /.container -->
+		<div class="row">
+		<center>  
+		<div class="col-md-12">
+		  <div class="media" style="width:500px;height:400px">
+		  
+		  {% block video %} 
+	
+		  {% endblock %}
+		  
+		  </div>
+		</div>  
+		</center>
+		</div><!--/.row -->
+		
+		<div class="col-md-12">
+		<br>
+		<br>
+		<br>
+		</div>
+		
+		<div class="row" id="twitter-map-row">
+		<div class="col-md-6">
+		  <div class="media" style="width:500px;height:400px">
+		  <center>  
+		  {% block maps %}
+	
+		  {% endblock %}
+		  </center>
+		  </div>
+		</div>
+	
+		
+		<div class="col-md-6">
+		  <div class="media" style="width:500px;height:400px">  
+		    <center>  
+		    {% block twitter %}
+	
+		    {% endblock %}
+		    </center> 
+		  </div>  
+		</div>   
+	
+	      </div><!--/.row -->
+      </div>      
 
     <!-- Bootstrap core JavaScript -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -120,9 +126,7 @@
   </body>
 
   <style>
-  body {background: red;}
-  .container {background: white;}
-  .media {padding: 20px 20px;}
+
 
   </style>
 </html>
