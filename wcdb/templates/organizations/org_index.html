@@ -1,6 +1,3 @@
-<!DOCTYPE HTML>
-<html>
-<body>
-	<p>This is my <b>ORGANIZATIONS</b> number {{ org_id }} page</p>
-</body>
-</html>
+{% with "organizations/organization"|add:org_id|add:".html" as organization %}
+{% include organization %}
+{% endwith %}
