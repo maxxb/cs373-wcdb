@@ -4,6 +4,7 @@ all:
 clean:
 	rm -f WCDB1.log
 	rm -f WCDB1.zip
+	rm -f Models.py
 
 turnin-list:
 	turnin --list acoomans cs373pj3
@@ -13,6 +14,9 @@ turnin-submit: WCDB1.zip
 
 turnin-verify:
 	turnin --verify acoomans cs373pj3
+
+Models.py:
+	cp wcdb/crises/models.py Models.py
 
 WCDB1.log:
 	git log > WCDB1.log
