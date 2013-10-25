@@ -1,6 +1,6 @@
 HOST: http://tcp-connections.herokuapp.com/api/
 
---- WCDB API v0.0.4 ---
+--- WCDB API v0.0.5 ---
 ---
 
 HTTP status codes:
@@ -81,6 +81,23 @@ POST /crises
 {
     "url": "/crises/{crisis-id}"
 }
+
+Update a crisis. You cannot update associations with this.
+PUT /crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+{   "name": "Chernobyl disaster",
+    "type": "Nuclear power plant incident"
+    "timeframe": "April 26, 1986",
+    "location": "The Chernobyl Power Complex, lying about 130 km north of Kiev, Ukraine",
+    "links": ["http://en.wikipedia.org/wiki/Chernobyl_disaster"],
+    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
+    "videos": ["http://www.youtube.com/watch?v=abcde12345"],
+    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=chernobyl&ie=UTF8&z=12&t=m&iwloc=near"],
+    "social-impact": "The Chernobyl accident's severe radiation effects killed 28 of the site’s 600 workers...",
+    "economic-impact": "Estimated cost of 18 billion rubles (5.6 US Dollars) for containment."
+}
+< 204
 
 Associate a crisis with an organization
 
@@ -191,6 +208,21 @@ POST /orgs
     "url": "/orgs/{org-id}"
 }
 
+Update an organization. You cannot update associations with this.
+PUT /orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+{ 
+    "name": "UNSCEAR",
+    "date-founded": "1995",
+    "type": "Committee", 
+    "links": ["http://www.unscear.org/"],
+    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
+    "videos": ["http://www.youtube.com/watch?v=gyLDNq3VBMU"],
+    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank,%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near"]
+}
+< 204
+
 Associate an organization with a crisis
 
 The assocation goes both ways. Both the organization and the crisis are updated
@@ -296,6 +328,21 @@ POST /people
     "url": "/people/{person-id}"
 }
 
+Update a person. You cannot update associations with this.
+PUT /people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+{ 
+    "name": "Mikhail Gorbachev",
+    "birthday": "March 2, 1931",
+    "location": "Deceased November 11, 2004, Clamart, France",
+    "links": ["http://news.bbc.co.uk/2/hi/europe/4918940.stm"],
+    "videos": ["http://www.youtube.com/watch?v=GLujNV-9cf0"],
+    "maps": ["https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=moscow"]
+}
+< 204
+
+
 Associate a person with an organization
 
 The assocation goes both ways. Both the person and the organization are updated
@@ -344,3 +391,5 @@ DELETE /people/{person-id}/crises/{crisis-id}
 > Accept: application/json
 < 200
 < Content-Type: application/json
+
+
