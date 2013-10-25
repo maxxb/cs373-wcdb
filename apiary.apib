@@ -1,0 +1,346 @@
+HOST: http://tcp-connections.herokuapp.com/api/
+
+--- WCDB API v0.0.4 ---
+---
+
+HTTP status codes:
+
+- 200 `OK` - the request was successful (some API calls may return 201 instead).
+- 201 `Created` - the request was successful and a resource was created.
+- 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
+- 400 `Bad Request` - the request could not be understood or was missing required parameters.
+- 401 `Unauthorized` - authentication failed or user doesn't have permissions for requested operation.
+- 403 `Forbidden` - access denied.
+- 404 `Not Found` - resource was not found
+- 405 `Method Not Allowed` - requested method is not supported for resource.
+---
+
+--
+Crisis
+
+A crisis has some number of organizations and some number of people associated with it, as well as some other properties.
+
+--
+Get a particular crisis
+GET /crises/{crisis-id}
+< 200
+< Content-Type: application/json
+{ 
+    "crisis-id": CRISIS_ID, 
+    "name": "Chernobyl disaster",
+    "type": "Nuclear power plant incident"
+    "timeframe": "April 26, 1986",
+    "location": "The Chernobyl Power Complex, lying about 130 km north of Kiev, Ukraine",
+    "links": ["http://en.wikipedia.org/wiki/Chernobyl_disaster"],
+    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
+    "videos": ["http://www.youtube.com/watch?v=abcde12345"],
+    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=chernobyl&ie=UTF8&z=12&t=m&iwloc=near"],
+    "social-impact": "The Chernobyl accident's severe radiation effects killed 28 of the site’s 600 workers...",
+    "economic-impact": "Estimated cost of 18 billion rubles (5.6 US Dollars) for containment.",
+    "org-ids": ["org1"], 
+    "person-ids": ["person1"]
+}
+
+Get all crises
+GET /crises
+< 200
+< Content-Type: application/json
+{ "crises": [{ "crisis-id": CRISIS_ID, 
+               "name": "Chernobyl disaster",
+               "type": "Nuclear power plant incident"
+               "timeframe": "April 26, 1986",
+               "location": "The Chernobyl Power Complex, lying about 130 km north of Kiev, Ukraine",
+               "links": ["http://en.wikipedia.org/wiki/Chernobyl_disaster"],
+               "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
+               "videos": ["http://www.youtube.com/watch?v=abcde12345"],
+               "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=chernobyl&ie=UTF8&z=12&t=m&iwloc=near"],
+               "social-impact": "The Chernobyl accident's severe radiation effects killed 28 of the site’s 600 workers...",
+               "economic-impact": "Estimated cost of 18 billion rubles (5.6 US Dollars) for containment.",
+               "org-ids": ["org1"], 
+               "person-ids": ["person1"]
+            }]
+}
+
+Create a new crisis
+POST /crises
+> Content-Type: application/json
+> Accept: application/json
+{   "name": "Chernobyl disaster",
+    "type": "Nuclear power plant incident"
+    "timeframe": "April 26, 1986",
+    "location": "The Chernobyl Power Complex, lying about 130 km north of Kiev, Ukraine",
+    "links": ["http://en.wikipedia.org/wiki/Chernobyl_disaster"],
+    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
+    "videos": ["http://www.youtube.com/watch?v=abcde12345"],
+    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=chernobyl&ie=UTF8&z=12&t=m&iwloc=near"],
+    "social-impact": "The Chernobyl accident's severe radiation effects killed 28 of the site’s 600 workers...",
+    "economic-impact": "Estimated cost of 18 billion rubles (5.6 US Dollars) for containment."
+}
+< 201
+< Content-Type: application/json
+{
+    "url": "/crises/{crisis-id}"
+}
+
+Associate a crisis with an organization
+
+The assocation goes both ways. Both the crisis and the organization are updated
+PUT /crises/{crisis-id}/orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
+{ 
+    "crisis-url": "/crises/{crisis-id}",
+    "org-url": "/orgs/{org-id}"
+}
+
+Associate a crisis with a person
+
+The assocation goes both ways. Both the crisis and the person are updated
+PUT /crises/{crisis-id}/people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
+{
+    "person-url": "/people/{person-id}",
+    "crisis-url": "/crises/{crisis-id}"
+}
+
+Delete a crisis
+DELETE /crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated person from a crisis and vice versa. This does not delete the person.
+DELETE /crises/{crisis-id}/people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated organization from a crisis and vice versa. This does not delete the organization.
+DELETE /crises/{crisis-id}/orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+--
+Organization
+
+An organization has some number of crises and some number of people associated with it, as well as some other attributes.
+--
+
+Get a particular organization
+GET /orgs/{org-id}
+< 200
+< Content-Type: application/json
+{ 
+    "org-id": ORG_ID,
+    "name": "UNSCEAR",
+    "date-founded": "1995",
+    "type": "Committee", 
+    "links": ["http://www.unscear.org/"],
+    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
+    "videos": ["http://www.youtube.com/watch?v=gyLDNq3VBMU"],
+    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank,%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near"],
+    "crisis-ids": ["crisis1"],
+    "person-ids": ["person1"]
+}
+
+Get all organizations
+GET /orgs
+< 200 
+< Content-Type: application/json
+{ "orgs": [{ "org-id": ORG_ID,
+             "name": "UNSCEAR",
+             "date-founded": "1995",
+             "type": "Committee", 
+             "links": ["http://www.unscear.org/"],
+             "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
+             "videos": ["http://www.youtube.com/watch?v=gyLDNq3VBMU"],
+             "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank,%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near"],
+             "crisis-ids": ["crisis1"],
+             "person-ids": ["person1"]
+}]}
+
+
+Create a new organization
+POST /orgs
+> Content-Type: application/json
+> Accept: application/json
+{ 
+    "name": "UNSCEAR",
+    "date-founded": "1995",
+    "type": "Committee", 
+    "links": ["http://www.unscear.org/"],
+    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
+    "videos": ["http://www.youtube.com/watch?v=gyLDNq3VBMU"],
+    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank,%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near"]
+}
+< 201
+< Content-Type: application/json
+{ 
+    "url": "/orgs/{org-id}"
+}
+
+Associate an organization with a crisis
+
+The assocation goes both ways. Both the organization and the crisis are updated
+PUT /orgs/{org-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
+{ 
+    "crisis-url": "/crises/{crisis-id}",
+    "org-url": "/orgs/{org-id}"
+}
+
+Associate an organization with a person
+
+The assocation goes both ways. Both the organization and the person are updated
+PUT /orgs/{org-id}/people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
+{
+    "person-url": "/people/{person-id}",
+    "org-url": "/orgs/{org-id}"
+}
+
+Delete an organization
+DELETE /orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated crisis from an organization and vice versa. This does not delete the crisis.
+DELETE /orgs/{org-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated person from an organization and vice versa. This does not delete the person.
+DELETE /orgs/{org-id}/people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+--
+Person
+
+A person has some number of crises and some number of organizations associated with it, as well as some other attributes.
+--
+
+Get a particular person
+GET /people/{person-id}
+< 200
+< Content-Type: application/json
+{ "person-id": PERSON_ID,
+  "name": "Mikhail Gorbachev",
+  "birthday": "March 2, 1931",
+  "location": "Deceased November 11, 2004, Clamart, France",
+  "links": ["http://news.bbc.co.uk/2/hi/europe/4918940.stm"],
+  "videos": ["http://www.youtube.com/watch?v=GLujNV-9cf0"],
+  "maps": ["https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=moscow"],
+  "crisis-ids": ["crisis1"],
+  "org-ids": ["org1"]
+}
+
+Get all people
+GET /people
+< 200
+< Content-Type: application/json
+{ "people" : [{ "person-id": PERSON_ID,
+                "name": "Mikhail Gorbachev",
+                "birthday": "March 2, 1931",
+                "location": "Deceased November 11, 2004, Clamart, France",
+                "links": ["http://news.bbc.co.uk/2/hi/europe/4918940.stm"],
+                "videos": ["http://www.youtube.com/watch?v=GLujNV-9cf0"],
+                "maps": ["https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=moscow"],
+                "crisis-ids": ["crisis1"],
+                "org-ids": ["org1"]
+            }]                  
+}
+
+Create a new person
+POST /people
+> Content-Type: application/json
+> Accept: application/json
+{ 
+    "name": "Mikhail Gorbachev",
+    "birthday": "March 2, 1931",
+    "location": "Deceased November 11, 2004, Clamart, France",
+    "links": ["http://news.bbc.co.uk/2/hi/europe/4918940.stm"],
+    "videos": ["http://www.youtube.com/watch?v=GLujNV-9cf0"],
+    "maps": ["https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=moscow"]
+}
+< 201
+< Content-Type: application/json
+{
+    "url": "/people/{person-id}"
+}
+
+Associate a person with an organization
+
+The assocation goes both ways. Both the person and the organization are updated
+PUT /people/{person-id}/orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
+{
+    "person-url": "/people/{person-id}",
+    "org-url": "/orgs/{org-id}"
+}
+
+Associate a person with a crisis
+
+The assocation goes both ways. Both the person and the crisis are updated
+PUT /people/{person-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 201
+< Content-Type: application/json
+{
+    "person-url": "/people/{person-id}",
+    "crisis-url": "/crises/{crisis-id}"
+}
+
+Delete a person
+DELETE /people/{person-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated organization from a person and vice versa. This does not delete the organization.
+DELETE /people/{person-id}/orgs/{org-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
+
+
+Remove an associated crisis from a person and vice versa. This does not delete the crisis.
+DELETE /people/{person-id}/crises/{crisis-id}
+> Content-Type: application/json
+> Accept: application/json
+< 200
+< Content-Type: application/json
