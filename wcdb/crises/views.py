@@ -1,4 +1,10 @@
 from django.shortcuts import render
+from crises.models import *
+from django.template import *
+
+def crises_list(request):
+	crises_list = Crises.objects.all()
+	return render(request,'crises/crises_list.html', {'crises_list':crises_list})
 
 def crisis_index(request, cid):
 	return render(request, 'crises/crises_index.html', {'crisis_id':cid})

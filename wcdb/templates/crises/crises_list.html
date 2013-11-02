@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block links %} 
+<div class="col-md-12">
+  <center>
+  <h3>Crises</h3>
+  <ul>
+  	{% for c in crises_list %}
+  		<li>{{c.id}} -- {{c.name}} -- {{c.kind}}</li>
+  	{% endfor %}
+  </ul>
+  </center>
+</div>  
+
+{% endblock links %}   
