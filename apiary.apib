@@ -1,9 +1,10 @@
-HOST: http://tcp-connections.herokuapp.com/api/
-
---- WCDB API v0.0.5 ---
+--- cs373-wcdb-api ---
 ---
+This documents our RESTful API for our World Crisis Database.  We separated our HTML returns and our JSON returns by prepending /api, similar
+to Facebook's graph API. Example: API endpoint for '/people' would be '/api/people'.
+POST requests are used to create, while PUT requests are used to update endpoints.
 
-HTTP status codes:
+HTTP status codes as stated below are expected to be followed:
 
 - 200 `OK` - the request was successful (some API calls may return 201 instead).
 - 201 `Created` - the request was successful and a resource was created.
@@ -16,380 +17,417 @@ HTTP status codes:
 ---
 
 --
-Crisis
-
-A crisis has some number of organizations and some number of people associated with it, as well as some other properties.
-
+Crisis Data
 --
-Get a particular crisis
-GET /crises/{crisis-id}
+Lists the crises in the database
+GET /api/crises
 < 200
 < Content-Type: application/json
-{ 
-    "crisis-id": CRISIS_ID, 
-    "name": "Chernobyl disaster",
-    "type": "Nuclear power plant incident"
-    "timeframe": "April 26, 1986",
-    "location": "The Chernobyl Power Complex, lying about 130 km north of Kiev, Ukraine",
-    "links": ["http://en.wikipedia.org/wiki/Chernobyl_disaster"],
-    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
-    "videos": ["http://www.youtube.com/watch?v=abcde12345"],
-    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=chernobyl&ie=UTF8&z=12&t=m&iwloc=near"],
-    "social-impact": "The Chernobyl accident's severe radiation effects killed 28 of the site’s 600 workers...",
-    "economic-impact": "Estimated cost of 18 billion rubles (5.6 US Dollars) for containment.",
-    "org-ids": ["org1"], 
-    "person-ids": ["person1"]
-}
+[
+    {
+        "name": "Cambodian Genocide",
+        "id": 1,
+        "kind": "Attack"
+    }
+]
 
-Get all crises
-GET /crises
+Displays the information for a specific crisis,
+id is the database primary key
+GET /api/crises/{id}
 < 200
 < Content-Type: application/json
-{ "crises": [{ "crisis-id": CRISIS_ID, 
-               "name": "Chernobyl disaster",
-               "type": "Nuclear power plant incident"
-               "timeframe": "April 26, 1986",
-               "location": "The Chernobyl Power Complex, lying about 130 km north of Kiev, Ukraine",
-               "links": ["http://en.wikipedia.org/wiki/Chernobyl_disaster"],
-               "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
-               "videos": ["http://www.youtube.com/watch?v=abcde12345"],
-               "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=chernobyl&ie=UTF8&z=12&t=m&iwloc=near"],
-               "social-impact": "The Chernobyl accident's severe radiation effects killed 28 of the site’s 600 workers...",
-               "economic-impact": "Estimated cost of 18 billion rubles (5.6 US Dollars) for containment.",
-               "org-ids": ["org1"], 
-               "person-ids": ["person1"]
-            }]
+{
+    "name": "Cambodian Genocide",
+    "id": 1,
+    "start_date": "1975-MM-DD",
+    "end_date": "1978-MM-DD",
+    "location": "Cambodia",
+    "kind": "Genocide",
+    "description": "Long text description of the Cambodian Genocide",
+    "human_impact": "Lost 25% of population over three years",
+    "economic_impact": "Peasant farming society centralized",
+    "maps": ["http://goo.gl/maps/PKI5L"],
+    "images": ["http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
+    "videos": ["http://www.youtube.com/watch?v=1-SI8RF6wDE"],
+    "social_media": ["https://twitter.com/UN"],
+    "ways_to_help": ["Donation"],
+    "resources_needed": ["Monetary donation"],
+    "people": [1],
+    "organizations": [1],
+    "external_links": ["unfoundation.org"],
+    "citations": ["http://worldwithoutgenocide.org/genocides-and-conflicts/cambodian-genocide"],
 }
 
-Create a new crisis
-POST /crises
+Create a new entry for a crisis.
+POST /api/crises
 > Content-Type: application/json
-> Accept: application/json
-{   "name": "Chernobyl disaster",
-    "type": "Nuclear power plant incident"
-    "timeframe": "April 26, 1986",
-    "location": "The Chernobyl Power Complex, lying about 130 km north of Kiev, Ukraine",
-    "links": ["http://en.wikipedia.org/wiki/Chernobyl_disaster"],
-    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
-    "videos": ["http://www.youtube.com/watch?v=abcde12345"],
-    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=chernobyl&ie=UTF8&z=12&t=m&iwloc=near"],
-    "social-impact": "The Chernobyl accident's severe radiation effects killed 28 of the site’s 600 workers...",
-    "economic-impact": "Estimated cost of 18 billion rubles (5.6 US Dollars) for containment."
+{
+    "name": "Cambodian Genocide",
+    "start_date": "1975-MM-DD",
+    "end_date": "1978-MM-DD",
+    "location": "Cambodia",
+    "kind": "Attack",
+    "description": "Long text description of the Cambodian Genocide",
+    "human_impact": "Lost 25% of population over three years",
+    "economic_impact": "Peasant farming society centralized",
+    "maps": ["http://goo.gl/maps/PKI5L"],
+    "images": ["http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
+    "videos": ["http://www.youtube.com/watch?v=1-SI8RF6wDE"],
+    "social_media": ["https://twitter.com/UN"],
+    "ways_to_help": ["Donation"],
+    "resources_needed": ["Monetary donation"],
+    "people": [1],
+    "organizations": [1],
+    "external_links": ["unfoundation.org"],
+    "citations": ["http://worldwithoutgenocide.org/genocides-and-conflicts/cambodian-genocide"],
 }
 < 201
 < Content-Type: application/json
-{
-    "url": "/crises/{crisis-id}"
-}
+{ id: 1 }
 
-Update a crisis. You cannot update associations with this.
-PUT /crises/{crisis-id}
+Update an existing crisis.
+PUT /api/crises/{id}
 > Content-Type: application/json
-> Accept: application/json
-{   "name": "Chernobyl disaster",
-    "type": "Nuclear power plant incident"
-    "timeframe": "April 26, 1986",
-    "location": "The Chernobyl Power Complex, lying about 130 km north of Kiev, Ukraine",
-    "links": ["http://en.wikipedia.org/wiki/Chernobyl_disaster"],
-    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
-    "videos": ["http://www.youtube.com/watch?v=abcde12345"],
-    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=chernobyl&ie=UTF8&z=12&t=m&iwloc=near"],
-    "social-impact": "The Chernobyl accident's severe radiation effects killed 28 of the site’s 600 workers...",
-    "economic-impact": "Estimated cost of 18 billion rubles (5.6 US Dollars) for containment."
+{
+    "name": "Cambodian Genocide",
+    "start_date": "1975-MM-DD",
+    "end_date": "1978-MM-DD",
+    "location": "Cambodia",
+    "kind": "Attack",
+    "description": "Long text description of the Cambodian Genocide",
+    "human_impact": "Lost 25% of population over three years",
+    "economic_impact": "Peasant farming society centralized",
+    "maps": ["http://goo.gl/maps/PKI5L"],
+    "images": ["http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
+    "videos": ["http://www.youtube.com/watch?v=1-SI8RF6wDE"],
+    "social_media": ["https://twitter.com/UN"],
+    "ways_to_help": ["Donation"],
+    "resources_needed": ["Monetary donation"],
+    "people": [1],
+    "organizations": [1],
+    "external_links": ["unfoundation.org"],
+    "citations": ["http://worldwithoutgenocide.org/genocides-and-conflicts/cambodian-genocide"],
 }
 < 204
 
-Associate a crisis with an organization
+Delete an existing crisis
+DELETE /api/crises/{id}
+< 204
 
-The assocation goes both ways. Both the crisis and the organization are updated
-PUT /crises/{crisis-id}/orgs/{org-id}
-> Content-Type: application/json
-> Accept: application/json
-< 201
+List all related organizations
+GET /api/crises/{id}/organizations
+< 200
 < Content-Type: application/json
-{ 
-    "crisis-url": "/crises/{crisis-id}",
-    "org-url": "/orgs/{org-id}"
-}
+[
+    {
+        "id": 1,
+        "name": "FEMA",
+        "established": "1987-06-19",
+        "location": "United States of America",
+        "kind": "Disaster Relief",
+        "description": "Long text description for FEMA",
+        "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3a/US-FEMA-Pre2003Seal.svg"],
+        "video": ["http://www.youtube.com/watch?v=UXLXjys9EgM"],
+        "maps": ["http://goo.gl/maps/9dLXB"],
+        "social_media": ["https://twitter.com/fema"],
+        "external_links": ["http://www.fema.gov/"],
+        "citations": ["http://en.wikipedia.org/wiki/Federal_Emergency_Management_Agency"],
+        "contact_info": {"name": "FEMA",
+                         "address": "P.O. Box 10055 Hyattsville, MD 20782-8055"
+                         "email": "None",
+                         "phone": "800-621-3362"}
+    }
+]
 
-Associate a crisis with a person
+List all related people
+GET /api/crises/{id}/people
+< 200
+< Content-Type: application/json
+[
+    {
+        "name": "Al Gore",
+        "id": 1,
+        "DOB": "1948-03-31",
+        "location": "United States of America",
+        "kind": "Vice President",
+        "description": "Long text description for Al Gore",
+        "images": ["http://en.wikipedia.org/wiki/File:Al_Gore_at_SapphireNow_2010_cropped.jpg"],
+        "video": ["http://www.youtube.com/watch?v=-T-yqlH67_4"],
+        "maps": ["http://goo.gl/maps/yzrDw"],
+        "social_media": ["https://twitter.com/algore"],
+        "external_links": ["http://www.algore.com/"],
+        "citations": ["http://en.wikipedia.org/wiki/Al_Gore"],
+    }
+]
 
-The assocation goes both ways. Both the crisis and the person are updated
-PUT /crises/{crisis-id}/people/{person-id}
-> Content-Type: application/json
-> Accept: application/json
-< 201
+--
+People Data
+--
+Lists the people in the database
+GET /api/people
+< 200
+< Content-Type: application/json
+[
+    {
+        "name": "Al Gore",
+        "id": 1,
+        "kind": "Vice President"
+    }
+]
+
+Displays the information for a specific crisis,
+id is the database primary key
+GET /api/people/{id}
+< 200
 < Content-Type: application/json
 {
-    "person-url": "/people/{person-id}",
-    "crisis-url": "/crises/{crisis-id}"
+    "name": "Al Gore",
+    "id": 1,
+    "DOB": "1948-03-31",
+    "location": "United States of America",
+    "kind": "Vice President",
+    "description": "Long text description for Al Gore",
+    "images": ["http://en.wikipedia.org/wiki/File:Al_Gore_at_SapphireNow_2010_cropped.jpg"],
+    "video": ["http://www.youtube.com/watch?v=-T-yqlH67_4"],
+    "maps": ["http://goo.gl/maps/yzrDw"],
+    "social_media": ["https://twitter.com/algore"],
+    "crises": [1],
+    "organizations": [1],
+    "external_links": ["http://www.algore.com/"],
+    "citations": ["http://en.wikipedia.org/wiki/Al_Gore"],
 }
 
-Delete a crisis
-DELETE /crises/{crisis-id}
+Create a new entry for a person
+POST /api/people
 > Content-Type: application/json
-> Accept: application/json
-< 200
-< Content-Type: application/json
-
-
-Remove an associated person from a crisis and vice versa. This does not delete the person.
-DELETE /crises/{crisis-id}/people/{person-id}
-> Content-Type: application/json
-> Accept: application/json
-< 200
-< Content-Type: application/json
-
-
-Remove an associated organization from a crisis and vice versa. This does not delete the organization.
-DELETE /crises/{crisis-id}/orgs/{org-id}
-> Content-Type: application/json
-> Accept: application/json
-< 200
-< Content-Type: application/json
-
-
---
-Organization
-
-An organization has some number of crises and some number of people associated with it, as well as some other attributes.
---
-
-Get a particular organization
-GET /orgs/{org-id}
-< 200
-< Content-Type: application/json
-{ 
-    "org-id": ORG_ID,
-    "name": "UNSCEAR",
-    "date-founded": "1995",
-    "type": "Committee", 
-    "links": ["http://www.unscear.org/"],
-    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
-    "videos": ["http://www.youtube.com/watch?v=gyLDNq3VBMU"],
-    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank,%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near"],
-    "crisis-ids": ["crisis1"],
-    "person-ids": ["person1"]
-}
-
-Get all organizations
-GET /orgs
-< 200 
-< Content-Type: application/json
-{ "orgs": [{ "org-id": ORG_ID,
-             "name": "UNSCEAR",
-             "date-founded": "1995",
-             "type": "Committee", 
-             "links": ["http://www.unscear.org/"],
-             "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
-             "videos": ["http://www.youtube.com/watch?v=gyLDNq3VBMU"],
-             "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank,%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near"],
-             "crisis-ids": ["crisis1"],
-             "person-ids": ["person1"]
-}]}
-
-
-Create a new organization
-POST /orgs
-> Content-Type: application/json
-> Accept: application/json
-{ 
-    "name": "UNSCEAR",
-    "date-founded": "1995",
-    "type": "Committee", 
-    "links": ["http://www.unscear.org/"],
-    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
-    "videos": ["http://www.youtube.com/watch?v=gyLDNq3VBMU"],
-    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank,%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near"]
+{
+    "name": "Al Gore",
+    "DOB": "1948-03-31",
+    "location": "United States of America",
+    "kind": "Vice President",
+    "description": "Long text description for Al Gore",
+    "images": ["http://en.wikipedia.org/wiki/File:Al_Gore_at_SapphireNow_2010_cropped.jpg"],
+    "video": ["http://www.youtube.com/watch?v=-T-yqlH67_4"],
+    "social_media": ["https://twitter.com/algore"],
+    "crises": [1],
+    "organizations": [1],
+    "external_links": ["http://www.algore.com/"],
+    "citations": ["http://en.wikipedia.org/wiki/Al_Gore"],
 }
 < 201
 < Content-Type: application/json
-{ 
-    "url": "/orgs/{org-id}"
-}
+{ id: 1 }
 
-Update an organization. You cannot update associations with this.
-PUT /orgs/{org-id}
+Update an existing person
+PUT /api/people/{id}
 > Content-Type: application/json
-> Accept: application/json
-{ 
-    "name": "UNSCEAR",
-    "date-founded": "1995",
-    "type": "Committee", 
-    "links": ["http://www.unscear.org/"],
-    "images": ["http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg"],
-    "videos": ["http://www.youtube.com/watch?v=gyLDNq3VBMU"],
-    "maps": ["https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank,%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near"]
+{
+    "name": "Al Gore",
+    "DOB": "1948-03-31",
+    "location": "United States of America",
+    "kind": "Vice President",
+    "description": "Long text description for Al Gore",
+    "images": ["http://en.wikipedia.org/wiki/File:Al_Gore_at_SapphireNow_2010_cropped.jpg"],
+    "video": ["http://www.youtube.com/watch?v=-T-yqlH67_4"],
+    "social_media": ["https://twitter.com/algore"],
+    "crises": [1],
+    "organizations": [1],
+    "external_links": ["http://www.algore.com/"],
+    "citations": ["http://en.wikipedia.org/wiki/Al_Gore"],
 }
 < 204
 
-Associate an organization with a crisis
+Delete an existing person
+DELETE /api/people/{id}
+< 204
 
-The assocation goes both ways. Both the organization and the crisis are updated
-PUT /orgs/{org-id}/crises/{crisis-id}
-> Content-Type: application/json
-> Accept: application/json
-< 201
-< Content-Type: application/json
-{ 
-    "crisis-url": "/crises/{crisis-id}",
-    "org-url": "/orgs/{org-id}"
-}
-
-Associate an organization with a person
-
-The assocation goes both ways. Both the organization and the person are updated
-PUT /orgs/{org-id}/people/{person-id}
-> Content-Type: application/json
-> Accept: application/json
-< 201
-< Content-Type: application/json
-{
-    "person-url": "/people/{person-id}",
-    "org-url": "/orgs/{org-id}"
-}
-
-Delete an organization
-DELETE /orgs/{org-id}
-> Content-Type: application/json
-> Accept: application/json
+List all related organizations
+GET /api/people/{id}/organizations
 < 200
 < Content-Type: application/json
+[
+    {
+        "id": 1,
+        "name": "FEMA",
+        "established": "1987-06-19",
+        "location": "United States of America",
+        "kind": "Disaster Relief",
+        "description": "Long text description for FEMA",
+        "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3a/US-FEMA-Pre2003Seal.svg"],
+        "video": ["http://www.youtube.com/watch?v=UXLXjys9EgM"],
+        "maps": ["http://goo.gl/maps/9dLXB"],
+        "social_media": ["https://twitter.com/fema"],
+        "external_links": ["http://www.fema.gov/"],
+        "citations": ["http://en.wikipedia.org/wiki/Federal_Emergency_Management_Agency"],
+        "contact_info": {"name": "FEMA",
+                         "address": "P.O. Box 10055 Hyattsville, MD 20782-8055"
+                         "email": "None",
+                         "phone": "800-621-3362"}
+    }
+]
 
-
-Remove an associated crisis from an organization and vice versa. This does not delete the crisis.
-DELETE /orgs/{org-id}/crises/{crisis-id}
-> Content-Type: application/json
-> Accept: application/json
+List all related crises
+GET /api/people/{id}/crises
 < 200
 < Content-Type: application/json
-
-
-Remove an associated person from an organization and vice versa. This does not delete the person.
-DELETE /orgs/{org-id}/people/{person-id}
-> Content-Type: application/json
-> Accept: application/json
-< 200
-< Content-Type: application/json
-
+[
+    {
+        "name": "Cambodian Genocide",
+        "id": 1,
+        "start_date": "1975-MM-DD",
+        "end_date": "1978-MM-DD",
+        "location": "Cambodia",
+        "kind": "Genocide",
+        "description": "Long text description of the Cambodian Genocide",
+        "human_impact": "Lost 25% of population over three years",
+        "economic_impact": "Peasant farming society centralized",
+        "maps": ["http://goo.gl/maps/PKI5L"],
+        "images": ["http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
+        "videos": ["http://www.youtube.com/watch?v=1-SI8RF6wDE"],
+        "social_media": ["https://twitter.com/UN"],
+        "ways_to_help": ["Donation"],
+        "resources_needed": ["Monetary donation"],
+        "external_links": ["unfoundation.org"],
+        "citations": ["http://worldwithoutgenocide.org/genocides-and-conflicts/cambodian-genocide"],
+    }
+]
 
 --
-Person
-
-A person has some number of crises and some number of organizations associated with it, as well as some other attributes.
+Organization Data
 --
-
-Get a particular person
-GET /people/{person-id}
+Lists the people in the database
+GET /api/organizations
 < 200
 < Content-Type: application/json
-{ "person-id": PERSON_ID,
-  "name": "Mikhail Gorbachev",
-  "birthday": "March 2, 1931",
-  "location": "Deceased November 11, 2004, Clamart, France",
-  "links": ["http://news.bbc.co.uk/2/hi/europe/4918940.stm"],
-  "videos": ["http://www.youtube.com/watch?v=GLujNV-9cf0"],
-  "maps": ["https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=moscow"],
-  "crisis-ids": ["crisis1"],
-  "org-ids": ["org1"]
-}
+[
+    {
+        "name": "Federal Emergency Management Agency",
+        "id": 1,
+        "kind": "Disaster Relief"
+    }
+]
 
-Get all people
-GET /people
+Displays the information for a specific organization,
+id is the database primary key
+GET /api/organizations/{id}
 < 200
 < Content-Type: application/json
-{ "people" : [{ "person-id": PERSON_ID,
-                "name": "Mikhail Gorbachev",
-                "birthday": "March 2, 1931",
-                "location": "Deceased November 11, 2004, Clamart, France",
-                "links": ["http://news.bbc.co.uk/2/hi/europe/4918940.stm"],
-                "videos": ["http://www.youtube.com/watch?v=GLujNV-9cf0"],
-                "maps": ["https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=moscow"],
-                "crisis-ids": ["crisis1"],
-                "org-ids": ["org1"]
-            }]                  
+{
+    "name": "FEMA",
+    "id": 1,
+    "established": "1987-06-19",
+    "location": "United States of America",
+    "kind": "Disaster Relief",
+    "description": "Long text description for FEMA",
+    "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3a/US-FEMA-Pre2003Seal.svg"],
+    "video": ["http://www.youtube.com/watch?v=UXLXjys9EgM"],
+    "maps": ["http://goo.gl/maps/9dLXB"],
+    "social_media": ["https://twitter.com/fema"],
+    "crises": [1],
+    "people": [1],
+    "external_links": ["http://www.fema.gov/"],
+    "citations": ["http://en.wikipedia.org/wiki/Federal_Emergency_Management_Agency"],
+    "contact_info": {"name": "FEMA",
+                     "address": "P.O. Box 10055 Hyattsville, MD 20782-8055"
+                     "email": "None",
+                     "phone": "800-621-3362"}
 }
 
-Create a new person
-POST /people
+Create a new entry for an organization
+POST /api/organizations
 > Content-Type: application/json
-> Accept: application/json
-{ 
-    "name": "Mikhail Gorbachev",
-    "birthday": "March 2, 1931",
-    "location": "Deceased November 11, 2004, Clamart, France",
-    "links": ["http://news.bbc.co.uk/2/hi/europe/4918940.stm"],
-    "videos": ["http://www.youtube.com/watch?v=GLujNV-9cf0"],
-    "maps": ["https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=moscow"]
+{
+    "name": "FEMA",
+    "established": "1987-06-19",
+    "location": "United States of America",
+    "kind": "Disaster Relief",
+    "description": "Long text description for FEMA",
+    "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3a/US-FEMA-Pre2003Seal.svg"],
+    "video": ["http://www.youtube.com/watch?v=UXLXjys9EgM"],
+    "social_media": ["https://twitter.com/fema"],
+    "crises": [1],
+    "people": [1],
+    "external_links": ["http://www.fema.gov/"],
+    "citations": ["http://en.wikipedia.org/wiki/Federal_Emergency_Management_Agency"],
+    "contact_info": {"name": "FEMA",
+                     "address": "P.O. Box 10055 Hyattsville, MD 20782-8055"
+                     "email": "None",
+                     "phone": "800-621-3362"}
 }
 < 201
 < Content-Type: application/json
-{
-    "url": "/people/{person-id}"
-}
+{ id: 1 }
 
-Update a person. You cannot update associations with this.
-PUT /people/{person-id}
+Update an existing organization
+PUT /api/organizations/{id}
 > Content-Type: application/json
-> Accept: application/json
-{ 
-    "name": "Mikhail Gorbachev",
-    "birthday": "March 2, 1931",
-    "location": "Deceased November 11, 2004, Clamart, France",
-    "links": ["http://news.bbc.co.uk/2/hi/europe/4918940.stm"],
-    "videos": ["http://www.youtube.com/watch?v=GLujNV-9cf0"],
-    "maps": ["https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=moscow"]
+{
+    "name": "FEMA",
+    "established": "1987-06-19",
+    "location": "United States of America",
+    "kind": "Disaster Relief",
+    "description": "Long text description for FEMA",
+    "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3a/US-FEMA-Pre2003Seal.svg"],
+    "video": ["http://www.youtube.com/watch?v=UXLXjys9EgM"],
+    "social_media": ["https://twitter.com/fema"],
+    "crises": [1],
+    "people": [1],
+    "external_links": ["http://www.fema.gov/"],
+    "citations": ["http://en.wikipedia.org/wiki/Federal_Emergency_Management_Agency"],
+    "contact_info": {"name": "FEMA",
+                     "address": "P.O. Box 10055 Hyattsville, MD 20782-8055"
+                     "email": "None",
+                     "phone": "800-621-3362"}
 }
 < 204
 
+Delete an existing organization
+DELETE /api/organizations/{id}
+< 204
 
-Associate a person with an organization
-
-The assocation goes both ways. Both the person and the organization are updated
-PUT /people/{person-id}/orgs/{org-id}
-> Content-Type: application/json
-> Accept: application/json
-< 201
-< Content-Type: application/json
-{
-    "person-url": "/people/{person-id}",
-    "org-url": "/orgs/{org-id}"
-}
-
-Associate a person with a crisis
-
-The assocation goes both ways. Both the person and the crisis are updated
-PUT /people/{person-id}/crises/{crisis-id}
-> Content-Type: application/json
-> Accept: application/json
-< 201
-< Content-Type: application/json
-{
-    "person-url": "/people/{person-id}",
-    "crisis-url": "/crises/{crisis-id}"
-}
-
-Delete a person
-DELETE /people/{person-id}
-> Content-Type: application/json
-> Accept: application/json
+List all related crises
+GET /api/organizations/{id}/crises
 < 200
 < Content-Type: application/json
+[
+    {
+        "name": "Cambodian Genocide",
+        "id": 1,
+        "start_date": "1975-MM-DD",
+        "end_date": "1978-MM-DD",
+        "location": "Cambodia",
+        "kind": "Genocide",
+        "description": "Long text description of the Cambodian Genocide",
+        "human_impact": "Lost 25% of population over three years",
+        "economic_impact": "Peasant farming society centralized",
+        "maps": ["http://goo.gl/maps/PKI5L"],
+        "images": ["http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
+        "videos": ["http://www.youtube.com/watch?v=1-SI8RF6wDE"],
+        "social_media": ["https://twitter.com/UN"],
+        "ways_to_help": ["Donation"],
+        "resources_needed": ["Monetary donation"],
+        "external_links": ["unfoundation.org"],
+        "citations": ["http://worldwithoutgenocide.org/genocides-and-conflicts/cambodian-genocide"],
+    }
+]
 
-
-Remove an associated organization from a person and vice versa. This does not delete the organization.
-DELETE /people/{person-id}/orgs/{org-id}
-> Content-Type: application/json
-> Accept: application/json
+List all related people
+GET /api/organizations/{id}/people
 < 200
 < Content-Type: application/json
-
-
-Remove an associated crisis from a person and vice versa. This does not delete the crisis.
-DELETE /people/{person-id}/crises/{crisis-id}
-> Content-Type: application/json
-> Accept: application/json
-< 200
-< Content-Type: application/json
-
-
+[
+    {
+        "name": "Al Gore",
+        "id": 1,
+        "DOB": "1948-03-31",
+        "location": "United States of America",
+        "kind": "Vice President",
+        "description": "Long text description for Al Gore",
+        "images": ["http://en.wikipedia.org/wiki/File:Al_Gore_at_SapphireNow_2010_cropped.jpg"],
+        "video": ["http://www.youtube.com/watch?v=-T-yqlH67_4"],
+        "maps": ["http://goo.gl/maps/yzrDw"],
+        "social_media": ["https://twitter.com/algore"],
+        "external_links": ["http://www.algore.com/"],
+        "citations": ["http://en.wikipedia.org/wiki/Al_Gore"],
+    }
+]
