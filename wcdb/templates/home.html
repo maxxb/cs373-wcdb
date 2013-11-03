@@ -1,47 +1,77 @@
-{% extends "base.html" %}
-
-{% block about %}  
-
-<h1>About WCDB</h1>
-<p><br>With the explosion of advanced mobile technologies and social media, news and global awareness are now more prolific than ever before. In the digital age, people want news as quickly as it takes to load a page. The World Crisis Database was created with this notion in mind. Powered by the newest tools and frameworks, TCP Connections strives to bring awareness about crises and issues worldwide in a clean, organized, and readable format.</p>
-
-{% endblock about %}
-
-{% block group %}
-<div class = "row">
-<div class="col-md-12">
-  <center>
-  <h2>TCP Connections</h2>
-  <p>Maxx Boehme</p>
-  <p>Alek Anwar Merani</p>
-  <p>Scott Enriquez</p>
-  <p>Paul Glass</p>
-  <p>Charles Tang</p>
-  </center>
-</div>
-</div>  
-{% endblock group %}  
-
-{% block links %}
-<div class = "row">
-
-<div class="col-md-4">
-  <center>
-  <a href="/crises/"><h3>Crises</h3></a><br>
-  </center>
-</div>  
-    
-<div class="col-md-4">
-  <center>
-  <a href="/organizations/"><h3>Organizations</h3></a><br>
-  </center>
-</div>  
-
-<div class="col-md-4">
-  <center>
-  <a href="/people/"><h3>People</h3></a><br>
-  </center>
-</div>
-
-</div>  
-{% endblock links %}  
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>World Crisies Database | Home</title>
+    <link rel = "stylesheet" type = "text/css" href = "http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic">
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/bootstrap.css">
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/wcdb-style.css">
+  </head>
+  <body>
+    <!-- Body container -->
+    <div class = "container">
+      <!-- Top-level menu -->
+      <div class = "navbar navbar-inverse navbar-fixed-top">
+            <div class = "container">
+              <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="http://tcp-connections.herokuapp.com/">WCDB Home</a></li>
+                    <li><a href = "http://tcp-connections.herokuapp.com/crises/">Crises</a></li>
+                    <li><a href = "http://tcp-connections.herokuapp.com/organizations/">Organizations</a></li>
+                    <li><a href = "http://tcp-connections.herokuapp.com/people/">People</a></li>
+                    <li><a href = "http://tcp-connections.herokuapp.com/about">Designed and implemented by TCP Connections</a></li>
+                  </ul>
+              </div>
+            </div>
+        </div>
+        <center><h1>The World Crises Database</h1></center>
+        <br>
+        <p1>With the explosion of advanced mobile technologies and social media, news and global awareness are now more prolific than ever before. In the digital age, people want news as quickly as it takes to load a page. The World Crisis Database was created with this notion in mind. Powered by the latest tools and frameworks, TCP Connections strives to bring awareness about crises and issues worldwide in a clean, organized, and readable format.</p1>
+        <br><br><br>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="item active">
+              <img src="http://www.solstation.com/stars/earth2.jpg">
+              <div class="container">
+                <div class="carousel-caption">
+                  <h1>Crises</h1>
+                  <p>At any given time there are thousands of crises occuring throughout the world.</p>
+                  <p><a class="btn btn-lg btn-primary" href="http://tcp-connections.herokuapp.com/crises/" role="button">Stay informed</a></p>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <img src="http://www.fpsoftlab.com/images/screenshots/earth-640x480-3.jpg">
+              <div class="container">
+                <div class="carousel-caption">
+                  <h1>Organizations</h1>
+                  <p>Groups both combat and cause the crises of the world.</p>
+                  <p><a class="btn btn-lg btn-primary" href="http://tcp-connections.herokuapp.com/organizations/" role="button">Stay informed</a></p>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <img src="http://files.doobybrain.com/wp-content/uploads/2009/07/black-and-white-earth.jpg">
+              <div class="container">
+                <div class="carousel-caption">
+                  <h1>People</h1>
+                  <p>These are the public figures directly involved with world crises.</p>
+                  <p><a class="btn btn-lg btn-primary" href="http://tcp-connections.herokuapp.com/people/" role="button">Stay informed</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+          <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div><!-- /.carousel -->
+    </div>
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <script src="/static/js/bootstrap.js"></script>
+  </body>
+</html>
