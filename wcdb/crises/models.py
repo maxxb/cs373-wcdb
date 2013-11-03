@@ -23,13 +23,13 @@ class Organizations(models.Model):
 
 class CommonData(models.Model):
 	description = models.CharField(max_length=1000)
-	location = models.CharField(max_length=50)	
-	image = models.URLField(max_length=100)
-	video = models.URLField(max_length=100)
-	maps = models.URLField(max_length=100)
-	twitter = models.URLField(max_length=100)
-	external_links = models.URLField(max_length=100)
-	citations = models.URLField(max_length=100) 	
+	location = models.CharField(max_length=100)	
+	image = models.URLField(max_length=500)
+	video = models.URLField(max_length=500)
+	maps = models.URLField(max_length=500)
+	twitter = models.URLField(max_length=500)
+	external_links = models.URLField(max_length=500)
+	citations = models.URLField(max_length=500) 	
 
 class ContactInfo(models.Model):
 	name = models.CharField(max_length=100)
@@ -37,7 +37,7 @@ class ContactInfo(models.Model):
 	email = models.EmailField(max_length=50)
 	phone = models.DecimalField(max_digits=10, decimal_places=2)	
 
-class CrisesData(models.Model):
+class CrisesData(CommonData):
 	crisis = models.OneToOneField(Crises, primary_key=True)
 	start_date = models.DateField()
 	end_date = models.DateField()
@@ -45,7 +45,7 @@ class CrisesData(models.Model):
 	economic_impact = models.CharField(max_length=500)
 	ways_to_help = models.CharField(max_length=100)
 	resourses_needed = models.CharField(max_length=100)
-	common = models.ManyToManyField(CommonData)
+	common = models.OneToOneField(CommonData)
 	people = models.ManyToManyField(People)
 	orgs = models.ManyToManyField(Organizations)
 

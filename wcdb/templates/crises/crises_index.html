@@ -1,4 +1,60 @@
-{% with "crises/crisis"|add:crisis_id|add:".html" as crisis %}
-{% include crisis %}
-{% endwith %}
+{% extends "base.html" %}
 
+{% block title %}{{crisis_data.crisis.name}}{% endblock %}
+
+{% block about %}  
+<h1>{{crisis_data.crisis.name}}</h1>
+<p><br>{{crisis_data.common.description}}</p><br>
+{% endblock about %}
+
+{% block image %}  
+<a><img src = "{{crisis_data.common.image}}" width="450" height="300"></a>
+{% endblock %}
+	
+
+{% block data %}
+<center><h3>Article Data</h3></center>
+<br>
+<ul>
+	<li><b>Type</b>: {{crisis_data.crisis.kind}}</li>
+	<li><b>Time frame</b>: {{crisis_data.start_date}} to {{crisis_data.end_date}}</li>
+	<li><b>Location</b>:{{crisis_data.common.location}}</li>
+	<li><b>Human Impact</b>: 
+		<p>{{crisis_data.human_impact}}
+		</p>
+
+	</li>
+	<li><b>Economic impact</b>:
+		<p>{{crisis_data.economic_impact}}
+		</p>
+	</li>
+	<li><b>Ways to help</b>: {{crisis_data.ways_to_help}}</li>
+	<li><b>Resourses Needed</b>: {{crisis_data.resourses_needed}}</li>
+	<li><b>External Links</b>: <a href="{{crisis_data.common.external_links}}">{{crisis_data.common.external_links}}</a></li>
+	<li><b>Citations</b>: <a href="{{crisis_data.common.citations}}">{{crisis_data.common.external_links}}</a></li>
+	<li><b>Related people</b>:
+		{% for p in crisis_data.people.all %}
+			<p>{{p.name}}</p>
+		{% endfor %}	
+	</li>
+	<li><b>Related organizations</b>:
+		{% for o in crisis_data.orgs.all %}
+			<p>{{o.name}}</p>
+		{% endfor %}	
+	</li>
+</ul>
+</div>	
+{% endblock %}
+
+{% block video %} 
+<iframe width="500" height="350" src="{{crisis_data.common.video}}" frameborder="0" allowfullscreen></iframe>
+{% endblock %}
+
+{% block maps %} 
+<div style="width:400px;height:400px"><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{crisis_data.common.maps}}"></iframe><br><table width="425" cellpadding="0" cellspacing="0" border="0"><tr><td align="left"><small><a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near">View Larger Map</a></small></td><td align="right"><small><a href="http://www.embedgooglemap.com">embed google map</a></small></td></tr></table></div>
+{% endblock %}
+
+{% block twitter %} 
+<a class="twitter-timeline" href="{{crisis_data.common.twitter}}" data-widget-id="393146817866518528">Tweets about "isreal palestine"</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endblock %}

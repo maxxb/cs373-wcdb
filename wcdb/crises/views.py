@@ -2,12 +2,20 @@ from django.shortcuts import render
 from crises.models import *
 from django.template import *
 
-def crises_list(request):
-	crises_list = Crises.objects.all()
-	return render(request,'crises/crises_list.html', {'crises_list':crises_list})
+def links(request,entity):
+	if entity == 'crises':
+		crises_list = Crises.objects.all()
+		return render(request,'links_page.html', {'links':crises_list})
+	elif entity == 'organizations':
+		org_list = Organizations.objects.all()
+		return render(request,'links_page.html', {'links':org_list})
+	elif entity == 'people':
+		people_list = People.objects.all()
+		return render(request,'links_page.html', {'links':people_list})
 
 def crisis_index(request, cid):
-	return render(request, 'crises/crises_index.html', {'crisis_id':cid})
+	crisis_data = CrisesData.objects.get(pk=cid)
+	return render(request, 'crises/crises_index.html', {'crisis_data':crisis_data})
 
 def org_index(request, oid):
 	return render(request, 'organizations/org_index.html', {'org_id':oid})

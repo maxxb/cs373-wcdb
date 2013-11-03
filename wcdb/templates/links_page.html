@@ -1,14 +1,13 @@
 {% extends "base.html" %}
+{% load model_extras %}
 
 {% block links %} 
 <div class="col-md-12">
   <center>
-  <h3>Crises</h3>
-  <ul>
-  	{% for c in crises_list %}
-  		<li>{{c.id}} -- {{c.name}} -- {{c.kind}}</li>
+  <h3>{{ links|get_model_name }}</h3>
+  	{% for l in links %}
+  		<a href="{{l.id}}">{{l.name}}</a><br>
   	{% endfor %}
-  </ul>
   </center>
 </div>  
 

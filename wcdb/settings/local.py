@@ -18,7 +18,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME':     os.path.join(BASE_DIR,'mydb.db'),                      # Or path to database file if using sqlite3.
-
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -118,6 +117,10 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'templates'),
 #    os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
+)
+
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, 'fixtures'),
 )
 
 INSTALLED_APPS = (
