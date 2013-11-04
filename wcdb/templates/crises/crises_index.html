@@ -4,11 +4,13 @@
 
 {% block about %}  
 <h1>{{crisis_data.crisis.name}}</h1>
-<p><br>{{crisis_data.common.description}}</p><br>
+<p><br>{{crisis_data.description}}</p><br>
 {% endblock about %}
 
 {% block image %}  
-<a><img src = "{{crisis_data.common.image}}" width="450" height="300"></a>
+{% for x in crisis_data.crisis.crisesimages_set.all %}
+<a><img src = "{{x.image}}" width="450" height="300"></a>
+{% endfor %}
 {% endblock %}
 	
 
@@ -18,7 +20,7 @@
 <ul>
 	<li><b>Type</b>: {{crisis_data.crisis.kind}}</li>
 	<li><b>Time frame</b>: {{crisis_data.start_date}} to {{crisis_data.end_date}}</li>
-	<li><b>Location</b>:{{crisis_data.common.location}}</li>
+	<li><b>Location</b>:{{crisis_data.location}}</li>
 	<li><b>Human Impact</b>: 
 		<p>{{crisis_data.human_impact}}
 		</p>
@@ -28,10 +30,26 @@
 		<p>{{crisis_data.economic_impact}}
 		</p>
 	</li>
-	<li><b>Ways to help</b>: {{crisis_data.ways_to_help}}</li>
-	<li><b>Resourses Needed</b>: {{crisis_data.resourses_needed}}</li>
-	<li><b>External Links</b>: <a href="{{crisis_data.common.external_links}}">{{crisis_data.common.external_links}}</a></li>
-	<li><b>Citations</b>: <a href="{{crisis_data.common.citations}}">{{crisis_data.common.external_links}}</a></li>
+	<li><b>Ways to help</b>: 
+		{% for x in crisis_data.crisis.criseshelp_set.all %}
+			<p>{{x.help}}</p>
+		{% endfor %}
+	</li>
+	<li><b>Resourses Needed</b>: 
+		{% for x in crisis_data.crisis.crisesresourses_set.all %}
+			<p>{{x.resourses}}</p>
+		{% endfor %}
+	</li>		
+	<li><b>External Links</b>: 
+		{% for x in crisis_data.crisis.criseslinks_set.all %}
+			<a href="{{x.external_links}}">{{x.external_links}}</a><br>
+		{% endfor %}
+	</li>
+	<li><b>Citations</b>: 
+		{% for x in crisis_data.crisis.crisescitations_set.all %}
+			<a href="{{x.citations}}">{{x.citations}}</a><br>
+		{% endfor %}
+	</li>
 	<li><b>Related people</b>:
 		{% for p in crisis_data.people.all %}
 			<p>{{p.name}}</p>
@@ -47,14 +65,14 @@
 {% endblock %}
 
 {% block video %} 
-<iframe width="500" height="350" src="{{crisis_data.common.video}}" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="350" src="" frameborder="0" allowfullscreen></iframe>
 {% endblock %}
 
 {% block maps %} 
-<div style="width:400px;height:400px"><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{crisis_data.common.maps}}"></iframe><br><table width="425" cellpadding="0" cellspacing="0" border="0"><tr><td align="left"><small><a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near">View Larger Map</a></small></td><td align="right"><small><a href="http://www.embedgooglemap.com">embed google map</a></small></td></tr></table></div>
+<div style="width:400px;height:400px"><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=""></iframe><br><table width="425" cellpadding="0" cellspacing="0" border="0"><tr><td align="left"><small><a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near">View Larger Map</a></small></td><td align="right"><small><a href="http://www.embedgooglemap.com">embed google map</a></small></td></tr></table></div>
 {% endblock %}
 
 {% block twitter %} 
-<a class="twitter-timeline" href="{{crisis_data.common.twitter}}" data-widget-id="393146817866518528">Tweets about "isreal palestine"</a>
+<a class="twitter-timeline" href="" data-widget-id="393146817866518528">Tweets about "isreal palestine"</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 {% endblock %}

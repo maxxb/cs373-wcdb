@@ -3,7 +3,7 @@
 		"model":"crises.Crises",
 		"pk":1,
 		"fields":{
-			"name":"Isreali-Palestinian conflict",
+			"name":"Israeli-Palestinian conflict",
 			"kind":"political"
 		}
 	},
@@ -27,7 +27,7 @@
 		"model":"crises.People",
 		"pk":2,
 		"fields":{
-			"name":"Barak Obama",
+			"name":"Barack Obama",
 			"kind":"POTUS"
 		}
 	},	
