@@ -2,19 +2,15 @@
 
 {% block title %}{{crisis_data.crisis.name}}{% endblock %}
 
-{% block about %}  
+{% block crisis %}  
 <h1>{{crisis_data.crisis.name}}</h1>
 <p><br>{{crisis_data.description}}</p><br>
-{% endblock about %}
 
-{% block image %}  
 {% for x in crisis_data.crisis.crisesimages_set.all %}
 <a><img src = "{{x.image}}" width="450" height="300"></a>
 {% endfor %}
-{% endblock %}
 	
 
-{% block data %}
 <center><h3>Article Data</h3></center>
 <br>
 <ul>
@@ -62,17 +58,13 @@
 	</li>
 </ul>
 </div>	
-{% endblock %}
 
-{% block video %} 
 <iframe width="500" height="350" src="" frameborder="0" allowfullscreen></iframe>
-{% endblock %}
 
-{% block maps %} 
 <div style="width:400px;height:400px"><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=""></iframe><br><table width="425" cellpadding="0" cellspacing="0" border="0"><tr><td align="left"><small><a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near">View Larger Map</a></small></td><td align="right"><small><a href="http://www.embedgooglemap.com">embed google map</a></small></td></tr></table></div>
-{% endblock %}
 
-{% block twitter %} 
 <a class="twitter-timeline" href="" data-widget-id="393146817866518528">Tweets about "isreal palestine"</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
 {% endblock %}
