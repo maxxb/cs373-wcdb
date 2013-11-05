@@ -7,7 +7,6 @@
 			"people":1
 		}
 	},
-	,
 	{
 		"model":"crises.PeopleCitations",
 		"pk":2,
@@ -28,15 +27,39 @@
 		"model":"crises.PeopleCitations",
 		"pk":4,
 		"fields":{
-			"citations":"http://en.wikipedia.org/wiki/Bill_Gates",
-			"people":4
+			"citations":"http://www.time.com/time/time100/leaders/profile/gorbachev.html",
+			"people":3
 		}
 	},
 	{
 		"model":"crises.PeopleCitations",
 		"pk":5,
 		"fields":{
+			"citations":"http://en.wikipedia.org/wiki/Bill_Gates",
+			"people":4
+		}
+	},
+	{
+		"model":"crises.PeopleCitations",
+		"pk":6,
+		"fields":{
+			"citations":"http://www.gatesfoundation.org/",
+			"people":4
+		}
+	},
+	{
+		"model":"crises.PeopleCitations",
+		"pk":7,
+		"fields":{
 			"citations":"http://en.wikipedia.org/wiki/Benjamin_Netanyahu",
+			"people":5
+		}
+	},
+	{
+		"model":"crises.PeopleCitations",
+		"pk":8,
+		"fields":{
+			"citations":"http://www.pmo.gov.il/ENGLISH/PRIMEMINISTER/Pages/PrimeMinister-CurriculumVitae.aspx",
 			"people":5
 		}
 	}
