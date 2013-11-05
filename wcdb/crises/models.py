@@ -75,13 +75,14 @@ class PeopleMaps(models.Model):
 class PeopleImages(models.Model):
 	image = models.URLField(max_length=500)
 	people = models.ForeignKey(People)
-
+	
 class PeopleVideos(models.Model):
 	video = models.URLField(max_length=500)
 	people = models.ForeignKey(People)
 
 class PeopleTwitter(models.Model):
-	maps = models.URLField(max_length=500)
+	twitter = models.URLField(max_length=500)
+	widget_id = models.CharField(max_length=20)
 	people = models.ForeignKey(People)
 
 class PeopleLinks(models.Model):
@@ -107,7 +108,7 @@ class ContactInfo(models.Model):
 	name = models.CharField(max_length=100)
 	address = models.CharField(max_length=200)
 	email = models.EmailField(max_length=50)
-	phone = models.DecimalField(max_digits=10, decimal_places=2)
+	phone = models.CharField(max_length=50)
 
 class OrgMaps(models.Model):
 	maps = models.URLField(max_length=500)
@@ -122,7 +123,7 @@ class OrgVideos(models.Model):
 	org = models.ForeignKey(Organizations)
 
 class OrgTwitter(models.Model):
-	maps = models.URLField(max_length=500)
+	twitter = models.URLField(max_length=500)
 	org = models.ForeignKey(Organizations)
 
 class OrgLinks(models.Model):
@@ -144,6 +145,4 @@ class OrganizationsData(models.Model):
 	people = models.ManyToManyField(People)
 
 	def __unicode__(self):
-		return self.org.name	
-
-			
+		return self.org.name
