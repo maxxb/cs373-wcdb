@@ -1,0 +1,26 @@
+[
+	{
+		"model":"crises.OrgLinks",
+		"pk":1,
+		"fields":{
+			"external_links":"http://www.bmeia.gv.at/en/austrian-mission/austrian-mission-vienna/organizations-in-vienna/with-offices-at-the-vic/unscear.html",
+			"org":1
+		}
+	},
+	{
+		"model":"crises.OrgLinks",
+		"pk":2,
+		"fields":{
+			"external_links":"http://www.infoplease.com/encyclopedia/history/palestine-liberation-organization.html",
+			"org":2
+		}
+	},
+	{
+		"model":"crises.OrgLinks",
+		"pk":3,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/Union_Carbide",
+			"org":3
+		}
+	}
+]

@@ -1,0 +1,26 @@
+[
+	{
+		"model":"crises.OrgCitations",
+		"pk":1,
+		"fields":{
+			"citations":"http://www.unscear.org/",
+			"org":1
+		}
+	},
+	{
+		"model":"crises.OrgCitations",
+		"pk":2,
+		"fields":{
+			"citations":"http://www.unioncarbide.com/",
+			"org":2
+		}
+	},
+	{
+		"model":"crises.OrgCitations",
+		"pk":3,
+		"fields":{
+			"citations":"http://www.britannica.com/EBchecked/topic/439725/Palestine-Liberation-Organization-PLO",
+			"org":3
+		}
+	}
+]

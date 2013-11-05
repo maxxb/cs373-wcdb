@@ -1,0 +1,88 @@
+[
+	{
+		"model":"crises.CrisesCitations",
+		"pk":1,
+		"fields":{
+			"citations":"http://www.trust.org/spotlight/Israeli-Palestinian-conflict",
+			"crisis":1
+		}
+	},
+	{
+		"model":"crises.CrisesCitations",
+		"pk":2,
+		"fields":{
+			"citations":"http://en.wikipedia.org/wiki/Israeli%E2%80%93Palestinian_conflict",
+			"crisis":1
+		}
+	},
+
+
+	{
+		"model":"crises.CrisesCitations",
+		"pk":3,
+		"fields":{
+			"citations":"http://www.nrc.gov/reading-rm/doc-collections/fact-sheets/chernobyl-bg.html",
+			"crisis":2
+		}
+	},
+	{
+		"model":"crises.CrisesCitations",
+		"pk":4,
+		"fields":{
+			"citations":"http://www.world-nuclear.org/info/Safety-and-Security/Safety-of-Plants/Chernobyl-Accident/#.UmREgN9acz0",
+			"crisis":2
+		}
+	},
+	{
+		"model":"crises.CrisesCitations",
+		"pk":5,
+		"fields":{
+			"citations":"http://en.wikipedia.org/wiki/Chernobyl_disaster",
+			"crisis":2
+		}
+	},
+
+	{
+		"model":"crises.CrisesCitations",
+		"pk":6,
+		"fields":{
+			"citations":"http://news.nationalgeographic.com/news/2004/12/1227_041226_tsunami.html",
+			"crisis":3
+		}
+	},
+	{
+		"model":"crises.CrisesCitations",
+		"pk":7,
+		"fields":{
+			"citations":"http://en.wikipedia.org/wiki/2004_Indian_Ocean_earthquake_and_tsunami",
+			"crisis":3
+		}
+	},	
+
+
+	{
+		"model":"crises.CrisesCitations",
+		"pk":8,
+		"fields":{
+			"citations":"http://www.greenpeace.org/usa/en/campaigns/toxics/justice-for-bhopal/",
+			"crisis":4
+		}
+	},
+	{
+		"model":"crises.CrisesCitations",
+		"pk":9,
+		"fields":{
+			"citations":"http://en.wikipedia.org/wiki/Bhopal_disaster",
+			"crisis":4
+		}
+	},	
+
+	{
+		"model":"crises.CrisesCitations",
+		"pk":10,
+		"fields":{
+			"citations":"http://en.wikipedia.org/wiki/1989_Loma_Prieta_earthquake",
+			"crisis":5
+		}
+	}
+]

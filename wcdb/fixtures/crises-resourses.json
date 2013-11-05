@@ -1,0 +1,42 @@
+[
+	{
+		"model":"crises.CrisesResourses",
+		"pk":1,
+		"fields":{
+			"resourses":"none",
+			"crisis":1
+		}
+	},
+	{
+		"model":"crises.CrisesResourses",
+		"pk":2,
+		"fields":{
+			"resourses":"Radiation Treatments",
+			"crisis":2
+		}
+	},
+	{
+		"model":"crises.CrisesResourses",
+		"pk":3,
+		"fields":{
+			"resourses":"Building Materials",
+			"crisis":3
+		}
+	},
+	{
+		"model":"crises.CrisesResourses",
+		"pk":4,
+		"fields":{
+			"resourses":"none",
+			"crisis":4
+		}
+	},
+	{
+		"model":"crises.CrisesResourses",
+		"pk":5,
+		"fields":{
+			"resourses":"none",
+			"crisis":5
+		}
+	}
+]	

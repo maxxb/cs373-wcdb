@@ -1,0 +1,42 @@
+[
+	{
+		"model":"crises.Crises",
+		"pk":1,
+		"fields":{
+			"name":"Israeli-Palestinian conflict",
+			"kind":"Political"
+		}
+	},
+	{
+		"model":"crises.Crises",
+		"pk":2,
+		"fields":{
+			"name":"Chernobyl Disaster",
+			"kind":"Nuclear Accident"
+		}
+	},
+	{
+		"model":"crises.Crises",
+		"pk":3,
+		"fields":{
+			"name":"2004 Indian Ocean Earthquake and Tsunami",
+			"kind":"Natural Disaster"
+		}
+	},
+	{
+		"model":"crises.Crises",
+		"pk":4,
+		"fields":{
+			"name":"Bhopal Gas Tragedy",
+			"kind":"Industrial Accident"
+		}
+	},	
+	{
+		"model":"crises.Crises",
+		"pk":5,
+		"fields":{
+			"name":"1989 Loma Prieta Earthquake",
+			"kind":"Natural Disaster"
+		}
+	}
+]
