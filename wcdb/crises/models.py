@@ -75,13 +75,14 @@ class PeopleMaps(models.Model):
 class PeopleImages(models.Model):
 	image = models.URLField(max_length=500)
 	people = models.ForeignKey(People)
-
+	
 class PeopleVideos(models.Model):
 	video = models.URLField(max_length=500)
 	people = models.ForeignKey(People)
 
 class PeopleTwitter(models.Model):
-	maps = models.URLField(max_length=500)
+	twitter = models.URLField(max_length=500)
+	widget_id = models.CharField(max_length=20)
 	people = models.ForeignKey(People)
 
 class PeopleLinks(models.Model):
@@ -122,7 +123,7 @@ class OrgVideos(models.Model):
 	org = models.ForeignKey(Organizations)
 
 class OrgTwitter(models.Model):
-	maps = models.URLField(max_length=500)
+	twitter = models.URLField(max_length=500)
 	org = models.ForeignKey(Organizations)
 
 class OrgLinks(models.Model):

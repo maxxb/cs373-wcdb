@@ -3,7 +3,7 @@
 		"model":"crises.OrgTwitter",
 		"pk":1,
 		"fields":{
-			"maps":"https://twitter.com/search?q=UNSCEAR",
+			"twitter":"https://twitter.com/search?q=UNSCEAR",
 			"org":1
 		}
 	},
@@ -11,7 +11,7 @@
 		"model":"crises.OrgTwitter",
 		"pk":2,
 		"fields":{
-			"maps":"https://twitter.com/search?q=Palestine+Liberation+Organization",
+			"twitter":"https://twitter.com/search?q=Palestine+Liberation+Organization",
 			"org":2
 		}
 	},
@@ -19,7 +19,7 @@
 		"model":"crises.OrgTwitter",
 		"pk":3,
 		"fields":{
-			"maps":"https://twitter.com/search?q=Union+Carbide",
+			"twitter":"https://twitter.com/search?q=Union+Carbide",
 			"org":3
 		}
 	}

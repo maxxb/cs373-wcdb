@@ -32,10 +32,6 @@ Additional Information
 <div class="panel-body">
 <ul>
 <li><b>Type</b>: {{people_data.people.kind}}</li>
-<li><b>Time Frame</b>: {{people_data.start_date}} to {{people_data.end_date}}</li>
-<li><b>Location</b>: {{people_data.location}}</li>
-<li><b>Human Impact</b>: {{people_data.human_impact}}</li>
-<li><b>Economic Impact</b>: {{people_data.economic_impact}}</li>
 <li><b>External Links</b>:
 {% for x in people_data.people.peoplelinks_set.all %}
 <a href="{{x.external_links}}">{{x.external_links}}</a><br>

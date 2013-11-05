@@ -7,7 +7,6 @@
 			"people":1
 		}
 	},
-	,
 	{
 		"model":"crises.PeopleCitations",
 		"pk":2,
