@@ -38,45 +38,5 @@
 			"maps":"http://goo.gl/maps/4pJPk",
 			"people":5
 		}
-	},
-	{
-		"model":"crises.PeopleMaps",
-		"pk":6,
-		"fields":{
-			"maps":"http://goo.gl/maps/voSnY",
-			"people":6
-		}
-	},
-	{
-		"model":"crises.PeopleMaps",
-		"pk":7,
-		"fields":{
-			"maps":"",
-			"people":7
-		}
-	},
-		{
-		"model":"crises.PeopleMaps",
-		"pk":8,
-		"fields":{
-			"maps":"",
-			"people":8
-		}
-	},
-		{
-		"model":"crises.PeopleMaps",
-		"pk":9,
-		"fields":{
-			"maps":"",
-			"people":9
-		}
-	},
-		{
-		"model":"crises.PeopleMaps",
-		"pk":10,
-		"fields":{
-			"maps":"",
-			"people":10
-		}
 	}
 ]

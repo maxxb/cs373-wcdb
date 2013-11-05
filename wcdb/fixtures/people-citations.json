@@ -39,46 +39,5 @@
 			"citations":"http://en.wikipedia.org/wiki/Benjamin_Netanyahu",
 			"people":5
 		}
-	},
-	{
-		"model":"crises.PeopleCitations",
-		"pk":6,
-		"fields":{
-			"citations":"http://en.wikipedia.org/wiki/Barack_Obama",
-			"people":6
-		}
-	},
-	{
-		"model":"crises.PeopleCitations",
-		"pk":7,
-		"fields":{
-			"citations":"",
-			"people":7
-		}
-	},
-		{
-		"model":"crises.PeopleCitations",
-		"pk":8,
-		"fields":{
-			"citations":"",
-			"people":8
-		}
-	},
-		{
-		"model":"crises.PeopleCitations",
-		"pk":9,
-		"fields":{
-			"citations":"",
-			"people":9
-		}
-	},
-		{
-		"model":"crises.PeopleCitations",
-		"pk":10,
-		"fields":{
-			"citations":"",
-			"people":10
-		}
-	}	
-	
+	}
 ]

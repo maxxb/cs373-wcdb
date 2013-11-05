@@ -38,45 +38,5 @@
 			"name":"Benjamin Netanyahu",
 			"kind":"Israeli Prime Minister"
 		}
-	},	
-	{
-		"model":"crises.People",
-		"pk":6,
-		"fields":{
-			"name":"Barack Obama",
-			"kind":"POTUS"
-		}
-	},
-	{
-		"model":"crises.People",
-		"pk":7,
-		"fields":{
-			"name":" ",
-			"kind":""
-		}
-	},
-	{
-		"model":"crises.People",
-		"pk":8,
-		"fields":{
-			"name":" ",
-			"kind":""
-		}
-	},
-	{
-		"model":"crises.People",
-		"pk":9,
-		"fields":{
-			"name":" ",
-			"kind":""
-		}
-	},
-	{
-		"model":"crises.People",
-		"pk":10,
-		"fields":{
-			"name":" ",
-			"kind":""
-		}
 	}
 ]

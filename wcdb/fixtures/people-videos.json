@@ -38,45 +38,5 @@
 			"video":"http://www.youtube.com/watch?v=CCDcdnEjJHA",
 			"people":5
 		}
-	},
-	{
-		"model":"crises.PeopleVideos",
-		"pk":6,
-		"fields":{
-			"video":"http://www.youtube.com/watch?v=CKwE2EGsfMk",
-			"people":6
-		}
-	},
-	{
-		"model":"crises.PeopleVideos",
-		"pk":7,
-		"fields":{
-			"video":"",
-			"people":7
-		}
-	},
-	{
-		"model":"crises.PeopleVideos",
-		"pk":8,
-		"fields":{
-			"video":"",
-			"people":8
-		}
-	},
-	{
-		"model":"crises.PeopleVideos",
-		"pk":9,
-		"fields":{
-			"video":"",
-			"people":9
-		}
-	},
-	{
-		"model":"crises.PeopleVideos",
-		"pk":10,
-		"fields":{
-			"video":"",
-			"people":10
-		}
 	}
 ]
