@@ -7,7 +7,8 @@ from django.conf import settings
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$',  'views.home', name='home'),
+    url(r'^$',  'views.home'),
+    url(r'^about/$', 'views.about'),
     url(r'^', include('wcdb.crises.urls')),
 
     #Heroku setting to serve static files
