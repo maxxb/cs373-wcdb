@@ -1,0 +1,44 @@
+[
+	{
+		"model":"crises.OrganizationsData",
+		"pk":1,
+		"fields":{
+
+			"org":1,
+			"description":"UNSCEAR was established in 1955 by the General Assembly of the United Nations. The organizations purpose in the United Nations system is to assess and report levels and effects of exposure to ionizing radiation. Governments and organizations throughout the world rely on the Committee's estimates as the scientific basis for evaluating radiation risk and for establishing protective measures. UNSCEAR was involved in the assessment of radiation exposures and health effects early on during the Chernobyl accident in 1986.",
+			"location": "Sessions are held in Vienna International Centre, Vienna, Austria.",
+			"date_established":"1955-01-01",
+			"contact_info": 1,
+			"people":[3],
+			"crises":[2]
+		}
+	},
+	{
+		"model":"crises.OrganizationsData",
+		"pk":2,
+		"fields":{
+
+			"org":2,
+			"description":"Umbrella political organization claiming to represent the world's Palestinians - those Arabs, and their descendants, who lived in  mandated Palestine before the creation of the State of Israel in 1948. It was formed in 1964 to centralize the leadership of various Palestine groups that previously had operated as clandestine resistance movements. It came into prominence only after the Six-Day War of June 1967, however, and engaged in a protracted guerrilla war against Israel during the 1960s, ’70s, and ’80s before entering into peace negotiations with that country in the 1990s.",
+			"location": "Sessions are held in Vienna International Centre, Vienna, Austria.",
+			"date_established":"1964-06-02",
+			"contact_info": 2,
+			"people":[2],
+			"crises":[1]
+		}
+	},
+	{
+		"model":"crises.OrganizationsData",
+		"pk":3,
+		"fields":{
+
+			"org":3,
+			"description":"Union Carbide Corporation is a wholly owned subsidiary of The Dow Chemical Company. UCC is a chemical and polymers company with over 2,400 employees. The company possesses some of the industry's most advanced process and catalyst technologies, and operates some of the most cost-efficient, large-scale production facilities in the world. Union Carbide primarily produces chemicals and polymers that undergo one or more further conversions by customers before reaching consumers. Some of these materials are high-volume commodities, while others are specialty products meeting the needs of smaller market niches.",
+			"location": "Bound Brook, NJ, Greensburg, LA, Houston (Corporate Center), St. Charles Operations, LA,Seadrift, TX,Texas City, TX ",
+			"date_established":"1917-01-01",
+			"contact_info": 3,
+			"people":[1],
+			"crises":[4]
+		}
+	}
+]

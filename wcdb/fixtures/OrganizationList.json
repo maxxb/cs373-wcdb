@@ -1,0 +1,26 @@
+[
+	{
+		"model":"crises.Organizations",
+		"pk":1,
+		"fields":{
+			"name":"United Nations Scientific Committee on the Effects of Atomic Radiation (UNSCEAR)",
+			"kind":"Committee"
+		}
+	},
+	{
+		"model":"crises.Organizations",
+		"pk":2,
+		"fields":{
+			"name":"Palestine Liberation Organization (PLO)",
+			"kind":"Political Organization"
+		}
+	},
+	{
+		"model":"crises.Organizations",
+		"pk":3,
+		"fields":{
+			"name":"Union Carbide Corporation",
+			"kind":"Corporation"
+		}
+	}
+]
