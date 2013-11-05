@@ -145,6 +145,4 @@ class OrganizationsData(models.Model):
 	people = models.ManyToManyField(People)
 
 	def __unicode__(self):
-		return self.org.name	
-
-			
+		return self.org.name

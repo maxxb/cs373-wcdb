@@ -43,30 +43,20 @@
               <p>{{p.name}}</p>
             {% endfor %}  
           </li>
-					<li><b>Resources Needed</b>: 
-						{% for x in crisis_data.crisis.crisesresourses_set.all %}
-							<p>{{x.resourses}}</p>
-						{% endfor %}
-					</li>
+          <li><b>Related people</b>:
+            {% for p in org_data.people.all %}
+              <p>{{p.name}}</p>
+            {% endfor %}  
+          </li>
+          <li><b>Citations</b>: 
+            {% for x in org_data.org.orgcitations_set.all %}
+              <a href="{{x.citations}}">{{x.citations}}</a><br>
+            {% endfor %}
+          </li>
 					<li><b>External Links</b>: 
-						{% for x in crisis_data.crisis.criseslinks_set.all %}
+						{% for x in org_data.org.orglinks_set.all %}
 							<a href="{{x.external_links}}">{{x.external_links}}</a><br>
 						{% endfor %}
-					</li>
-					<li><b>Citations</b>: 
-						{% for x in crisis_data.crisis.crisescitations_set.all %}
-							<a href="{{x.citations}}">{{x.citations}}</a><br>
-						{% endfor %}
-					</li>
-					<li><b>Related people</b>:
-						{% for p in crisis_data.people.all %}
-							<p>{{p.name}}</p>
-						{% endfor %}	
-					</li>
-					<li><b>Related organizations</b>:
-						{% for o in crisis_data.orgs.all %}
-							<p>{{o.name}}</p>
-						{% endfor %}	
 					</li>
 				</ul>
       		</div>
@@ -83,7 +73,7 @@
     	<div id="collapseThree" class="panel-collapse collapse">
       		<div class="panel-body">
       			<br>
-        		{% for x in crisis_data.crisis.crisesimages_set.all %}
+        		{% for x in org_data.org.orgimages_set.all %}
 					<center><a><img src = "{{x.image}}"></a></center><br>
 				{% endfor %}
       		</div>
@@ -100,7 +90,7 @@
     	<div id="collapseFour" class="panel-collapse collapse">
       		<div class="panel-body">
       			<br>
-      			{% for x in crisis_data.crisis.crisesvideos_set.all %}
+      			{% for x in org_data.org.orgvideos_set.all %}
 					<center><iframe width="420" height="315" src="{{x.video}}" frameborder="0" allowfullscreen></iframe></center><br>
 				{% endfor %}
       		</div>
@@ -117,7 +107,7 @@
     	<div id="collapseFive" class="panel-collapse collapse">
       		<div class="panel-body">
       			<br>
-      			{% for x in crisis_data.crisis.crisesmaps_set.all %}
+      			{% for x in org_data.org.orgmaps_set.all %}
 					<center><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{x.maps}}"></iframe></center><br>
 				{% endfor %}
       		</div>
@@ -133,7 +123,7 @@
     	</div>
     	<div id="collapseSix" class="panel-collapse collapse">
     		<br>
-    		{% for x in crisis_data.crisis.crisestwitter_set.all %}
+    		{% for x in org_data.org.orgtwitter_set.all %}
 				<center><a class="twitter-timeline"  href="{{x.twitter}}"  data-widget-id="{{x.widget_id}}"></a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><center><br>
 			{% endfor %}
