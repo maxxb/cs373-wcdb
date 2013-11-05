@@ -76,7 +76,7 @@ class PeopleMaps(models.Model):
 class PeopleImages(models.Model):
 	image = models.URLField(max_length=500)
 	people = models.ForeignKey(People)
-
+	
 class PeopleVideos(models.Model):
 	video = models.URLField(max_length=500)
 	people = models.ForeignKey(People)
@@ -147,6 +147,4 @@ class OrganizationsData(models.Model):
 	people = models.ManyToManyField(People)
 
 	def __unicode__(self):
-		return self.org.name	
-
-			
+		return self.org.name

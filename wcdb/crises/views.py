@@ -24,3 +24,4 @@ def org_index(request, oid):
 def person_index(request, pid):
 	people_data = PeopleData.objects.get(pk=pid)
 	return render(request, 'people_index.html', {'people_data': people_data})
+
