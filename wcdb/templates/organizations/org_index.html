@@ -2,53 +2,143 @@
 
 {% block title %}{{org_data.org.name}}{% endblock %}
 
-{% block about %}
-<h1>{{org_data.org.name}}</h1>
-<p><br>{{org_data.common.description}}</p><br>
-{% endblock about %}
-
-{% block image %}
-<a><img src = "{{org_data.common.image}}" width="450" height="300"></a>
-{% endblock %}
-
-
-{% block data %}
-<center><h3>Article Data</h3></center>
+{% block crisis %}  
+<center><h1>{{org_data.org.name}}</h1></center>
 <br>
-<ul>
-        <li><b>Type</b>: {{org_data.org.kind}}</li>
-        <li><b>Established</b>: {{org_data.date_established}}</li>
-        <li><b>Location</b>:{{org_data.common.location}}</li>
-        <li><b>Contact Info</b>:
-                <p>{{org_data.contact_info}}
-                </p>
-
-        </li>
-        <li><b>External Links</b>: <a href="{{org_data.common.external_links}}">{{org_data.common.external_links}}</a></li>
-        <li><b>Citations</b>: <a href="{{org_data.common.citations}}">{{org_data.common.external_links}}</a></li>
-        <li><b>Related people</b>:
-                {% for p in org_data.people.all %}
-                        <p>{{p.name}}</p>
-                {% endfor %}
-        </li>
-        <li><b>Related crisies</b>:
-                {% for c in org_data.crises.all %}
-                        <p>{{c.name}}</p>
-                {% endfor %}
-        </li>
-</ul>
+<div class="panel-group" id="accordion" style="height: 348px;">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+      		<h1 class="panel-title">
+        	<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          	Overview
+        	</a>
+      		</h1>
+    	</div>
+    	<div id="collapseOne" class="panel-collapse collapse in">
+      		<div class="panel-body">
+        		<p>{{org_data.description}}</p>
+      		</div>
+    	</div>
+  	</div>
+  	<div class="panel panel-default">
+   		<div class="panel-heading">
+      		<h1 class="panel-title">
+        	<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          		Additional Information
+        	</a>
+      		</h1>
+    	</div>
+    	<div id="collapseTwo" class="panel-collapse collapse">
+      		<div class="panel-body">
+	        	<ul>
+					<li><b>Type</b>: {{org_data.org.kind}}</li>
+					<li><b>Date Established</b>: {{org_data.date_established}}</li>
+					<li><b>Location</b>: {{org_data.location}}</li>
+					<li><b>Name</b>: {{org_data.contact_info.name}}</li>
+          <li><b>Address</b>: {{org_data.contact_info.address}}</li>
+          <li><b>Email</b>: {{org_data.contact_info.email}}</li>
+          <li><b>Phone</b>: {{org_data.contact_info.phone}}</li>
+					<li><b>Crises</b>:
+            {% for p in org_data.crises.all %}
+              <p>{{p.name}}</p>
+            {% endfor %}  
+          </li>
+					<li><b>Resources Needed</b>: 
+						{% for x in crisis_data.crisis.crisesresourses_set.all %}
+							<p>{{x.resourses}}</p>
+						{% endfor %}
+					</li>
+					<li><b>External Links</b>: 
+						{% for x in crisis_data.crisis.criseslinks_set.all %}
+							<a href="{{x.external_links}}">{{x.external_links}}</a><br>
+						{% endfor %}
+					</li>
+					<li><b>Citations</b>: 
+						{% for x in crisis_data.crisis.crisescitations_set.all %}
+							<a href="{{x.citations}}">{{x.citations}}</a><br>
+						{% endfor %}
+					</li>
+					<li><b>Related people</b>:
+						{% for p in crisis_data.people.all %}
+							<p>{{p.name}}</p>
+						{% endfor %}	
+					</li>
+					<li><b>Related organizations</b>:
+						{% for o in crisis_data.orgs.all %}
+							<p>{{o.name}}</p>
+						{% endfor %}	
+					</li>
+				</ul>
+      		</div>
+    	</div>
+  	</div>
+  	<div class="panel panel-default">
+    	<div class="panel-heading">
+      		<h1 class="panel-title">
+        	<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+          		Images
+        	</a>
+      		</h1>
+    	</div>
+    	<div id="collapseThree" class="panel-collapse collapse">
+      		<div class="panel-body">
+      			<br>
+        		{% for x in crisis_data.crisis.crisesimages_set.all %}
+					<center><a><img src = "{{x.image}}"></a></center><br>
+				{% endfor %}
+      		</div>
+    	</div>
+  	</div>
+  	<div class="panel panel-default">
+    	<div class="panel-heading">
+      		<h1 class="panel-title">
+        	<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+          		Videos
+        	</a>
+      		</h1>
+    	</div>
+    	<div id="collapseFour" class="panel-collapse collapse">
+      		<div class="panel-body">
+      			<br>
+      			{% for x in crisis_data.crisis.crisesvideos_set.all %}
+					<center><iframe width="420" height="315" src="{{x.video}}" frameborder="0" allowfullscreen></iframe></center><br>
+				{% endfor %}
+      		</div>
+    	</div>
+  	</div>
+  	<div class="panel panel-default">
+    	<div class="panel-heading">
+	      	<h1 class="panel-title">
+	        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+	        Maps
+	        </a>
+	      	</h1>
+    	</div>
+    	<div id="collapseFive" class="panel-collapse collapse">
+      		<div class="panel-body">
+      			<br>
+      			{% for x in crisis_data.crisis.crisesmaps_set.all %}
+					<center><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{x.maps}}"></iframe></center><br>
+				{% endfor %}
+      		</div>
+    	</div>
+  	</div>
+  	<div class="panel panel-default">
+    	<div class="panel-heading">
+      		<h1 class="panel-title">
+        	<a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+          	Public Opinion
+        	</a>
+      		</h1>
+    	</div>
+    	<div id="collapseSix" class="panel-collapse collapse">
+    		<br>
+    		{% for x in crisis_data.crisis.crisestwitter_set.all %}
+				<center><a class="twitter-timeline"  href="{{x.twitter}}"  data-widget-id="{{x.widget_id}}"></a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><center><br>
+			{% endfor %}
+    	</div>
+  	</div>
 </div>
-{% endblock %}
 
-{% block video %}
-<iframe width="500" height="350" src="{{org_data.common.video}}" frameborder="0" allowfullscreen></iframe>
-{% endblock %}
-
-{% block maps %}
-<div style="width:400px;height:400px"><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{org_data.common.maps}}"></iframe><br><table width="425" cellpadding="0" cellspacing="0" border="0"><tr><td align="left"><small><a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near">View Larger Map</a></small></td><td align="right"><small><a href="http://www.embedgooglemap.com">embed google map</a></small></td></tr></table></div>
-{% endblock %}
-
-{% block twitter %}
-<a class="twitter-timeline" href="{{org_data.common.twitter}}" data-widget-id="393146817866518528">Tweets about "isreal palestine"</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 {% endblock %}
