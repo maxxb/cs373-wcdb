@@ -1,3 +1,54 @@
-{% with "organizations/organization"|add:org_id|add:".html" as organization %}
-{% include organization %}
-{% endwith %}
+{% extends "base.html" %}
+
+{% block title %}{{org_data.org.name}}{% endblock %}
+
+{% block about %}
+<h1>{{org_data.org.name}}</h1>
+<p><br>{{org_data.common.description}}</p><br>
+{% endblock about %}
+
+{% block image %}
+<a><img src = "{{org_data.common.image}}" width="450" height="300"></a>
+{% endblock %}
+
+
+{% block data %}
+<center><h3>Article Data</h3></center>
+<br>
+<ul>
+        <li><b>Type</b>: {{org_data.org.kind}}</li>
+        <li><b>Established</b>: {{org_data.date_established}}</li>
+        <li><b>Location</b>:{{org_data.common.location}}</li>
+        <li><b>Contact Info</b>:
+                <p>{{org_data.contact_info}}
+                </p>
+
+        </li>
+        <li><b>External Links</b>: <a href="{{org_data.common.external_links}}">{{org_data.common.external_links}}</a></li>
+        <li><b>Citations</b>: <a href="{{org_data.common.citations}}">{{org_data.common.external_links}}</a></li>
+        <li><b>Related people</b>:
+                {% for p in org_data.people.all %}
+                        <p>{{p.name}}</p>
+                {% endfor %}
+        </li>
+        <li><b>Related crisies</b>:
+                {% for c in org_data.crises.all %}
+                        <p>{{c.name}}</p>
+                {% endfor %}
+        </li>
+</ul>
+</div>
+{% endblock %}
+
+{% block video %}
+<iframe width="500" height="350" src="{{org_data.common.video}}" frameborder="0" allowfullscreen></iframe>
+{% endblock %}
+
+{% block maps %}
+<div style="width:400px;height:400px"><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{org_data.common.maps}}"></iframe><br><table width="425" cellpadding="0" cellspacing="0" border="0"><tr><td align="left"><small><a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near">View Larger Map</a></small></td><td align="right"><small><a href="http://www.embedgooglemap.com">embed google map</a></small></td></tr></table></div>
+{% endblock %}
+
+{% block twitter %}
+<a class="twitter-timeline" href="{{org_data.common.twitter}}" data-widget-id="393146817866518528">Tweets about "isreal palestine"</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endblock %}
