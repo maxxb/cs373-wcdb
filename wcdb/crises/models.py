@@ -109,9 +109,9 @@ class ContactInfo(models.Model):
 	email = models.EmailField(max_length=50)
 	phone = models.DecimalField(max_digits=10, decimal_places=2)
 
-class PeopleMaps(models.Model):
+class OrgMaps(models.Model):
 	maps = models.URLField(max_length=500)
-	people = models.ForeignKey(People)
+	org = models.ForeignKey(Organizations)
 
 class OrgImages(models.Model):
 	image = models.URLField(max_length=500)
