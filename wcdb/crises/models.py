@@ -35,6 +35,7 @@ class CrisesVideos(models.Model):
 
 class CrisesTwitter(models.Model):
 	twitter = models.URLField(max_length=500)
+	widget_id = models.DecimalField(max_digits=20, decimal_places=2)
 	crisis = models.ForeignKey(Crises)
 
 class CrisesHelp(models.Model):
@@ -124,6 +125,7 @@ class OrgVideos(models.Model):
 
 class OrgTwitter(models.Model):
 	twitter = models.URLField(max_length=500)
+	widget_id = models.CharField(max_length=20)
 	org = models.ForeignKey(Organizations)
 
 class OrgLinks(models.Model):
