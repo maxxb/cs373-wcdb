@@ -153,9 +153,8 @@ class RestTests(TestCase):
         self.assertTrue(type(responseJson) == type({}))
         self.assertEquals(responseJson, CRISIS_B)
 
-    @skipIf(True, "don't want to run yet")
     def test_rest_post_crisis(self):
-        rPost = self.client.post('/api/crises', CRISES_DATA)
+        rPost = self.client.post('/api/crises', CRISIS_A)
         self.assertEquals(rPost.status_code, 201)
         rPostJson = json.loads(rPost.content)
         self.assertTrue(type(rPostJson) == type({}))
@@ -169,8 +168,7 @@ class RestTests(TestCase):
             rGet = self.client.get('/api/crisis/%s' % rId)
             self.assertTrue(rGet.status_code, 200)
             rGetJson = json.loads(rGet.content)
-            self.assertEquals(rGetJson["name"], "Cambodian Genocide")
-            self.assertEquals(rGetJson["kind"], "Attack")
+            self.assertEquals(rGetJson, CRISIS_A)
 
 
 

@@ -66,6 +66,9 @@ def get_all_crises():
         })
     return jsonResponse(simplejson.dumps(data), 200)
 
+def post_new_crisis(request):
+    pass
+
 def get_crisis(request, cid):
     # filter will return an empty list when there are no matches
     matches = CrisesData.objects.filter(crisis__pk=cid)
@@ -76,6 +79,11 @@ def get_crisis(request, cid):
     return jsonResponse(simplejson.dumps(data), 200)
 
 def get_crisis_dict(crisisData):
+    """
+    crisisData is a row from the CrisesData table
+    This gathers all the info about the crisis into a single dict 
+        (per the API) and returns it
+    """
     cid = crisisData.crisis.pk
     
     # grab everything we need from the database
