@@ -1,0 +1,42 @@
+[
+	{
+		"model":"crises.CrisesVideos",
+		"pk":1,
+		"fields":{
+			"video":"http://www.youtube.com/embed/GdtGOY8T5XE?",
+			"crisis":1
+		}
+	},
+	{
+		"model":"crises.CrisesVideos",
+		"pk":2,
+		"fields":{
+			"video":"//www.youtube.com/embed/ldYeFLZqh3Q",
+			"crisis":2
+		}
+	},
+	{
+		"model":"crises.CrisesVideos",
+		"pk":3,
+		"fields":{
+			"video":"//www.youtube.com/embed/RDOuwMj7Xzo" ,
+			"crisis":3
+		}
+	},
+	{
+		"model":"crises.CrisesVideos",
+		"pk":4,
+		"fields":{
+			"video":"//www.youtube.com/embed/0uzmXeyJDCI",
+			"crisis":4
+		}
+	},
+	{
+		"model":"crises.CrisesVideos",
+		"pk":5,
+		"fields":{
+			"video":"//www.youtube.com/embed/lS_3XoBr78A",
+			"crisis":5
+		}
+	}
+]				
