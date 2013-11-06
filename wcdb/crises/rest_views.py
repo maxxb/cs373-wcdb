@@ -1,6 +1,18 @@
-from django.shortcuts import render
 from crises.models import *
-from django.template import *
+from django.utils import simplejson
+from django.http import HttpResponse
+from django.core import serializers
+
+#############################################
+# Some utility methods
+#############################################
+JSON_CONTENT = 'application/json'
+
+def methodNotSupported():
+    return HttpResponse(content_type=JSON_CONTENT, status=405)
+
+def jsonResponse(jsonData, status_code):
+    return HttpResponse(jsonData, content_type=JSON_CONTENT, status=status_code)
 
 #############################################
 # Crisis REST views
@@ -10,7 +22,18 @@ def crises(request):
     GET     Lists the crises in the database 
     POST    Create a new entry for a crisis
     """
-    pass
+    if request.method == 'GET':
+        return get_all_crises()
+    elif request.method == 'POST':
+        return post_new_crisis(request)
+    else:
+        return methodNotSupported()
+
+def get_all_crises():
+    cData = CrisesData.objects.all()
+    jsonData = serializers.serialize('json', cData)
+    return jsonResponse(jsonData, 200)
+
 
 def crisis(request, cid):
     """ 
