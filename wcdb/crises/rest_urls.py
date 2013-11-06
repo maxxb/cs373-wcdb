@@ -1,19 +1,19 @@
 from django.conf.urls.defaults import patterns, include, url
 
 urlpatterns = patterns('',
-    url(r'^crises$', 'views.rest.crises'),
-    url(r'^crises/(\d+)$', 'views.rest.crisis'),
-    url(r'^crises/(\d+)/organizations$', 'views.rest.crisis_orgs'),
-    url(r'^crises/(\d+)/people$', 'views.rest.crisis_people'),
+    url(r'^crises$', 'rest_views.crises'),
+    url(r'^crises/(\d+)$', 'rest_views.crisis'),
+    url(r'^crises/(\d+)/organizations$', 'rest_views.crisis_orgs'),
+    url(r'^crises/(\d+)/people$', 'rest_views.crisis_people'),
 
-    url(r'^people$', 'views.rest.people'),
-    url(r'^people/(\d+)$', 'views.rest.person'),
-    url(r'^people/(\d+)/organizations$', 'views.rest.person_orgs'),
-    url(r'^people/(\d+)/crisis$', 'views.rest.person_crises'),
+    url(r'^people$', 'rest_views.people'),
+    url(r'^people/(\d+)$', 'rest_views.person'),
+    url(r'^people/(\d+)/organizations$', 'rest_views.person_orgs'),
+    url(r'^people/(\d+)/crisis$', 'rest_views.person_crises'),
 
-    url(r'^organizations$', 'views.rest.organizations'),
-    url(r'^organizations/(\d+)$', 'views.rest.organization'),
-    url(r'^organizations/(\d+)/crisis$', 'views.rest.organization_crises'),
-    url(r'^organizations/(\d+)/people$', 'views.rest.organization_people'),
+    url(r'^organizations$', 'rest_views.organizations'),
+    url(r'^organizations/(\d+)$', 'rest_views.organization'),
+    url(r'^organizations/(\d+)/crisis$', 'rest_views.organization_crises'),
+    url(r'^organizations/(\d+)/people$', 'rest_views.organization_people'),
 ),
 
