@@ -8,8 +8,11 @@ from django.core import serializers
 #############################################
 JSON_CONTENT = 'application/json'
 
-def methodNotSupported():
+def method_not_supported():
     return HttpResponse(content_type=JSON_CONTENT, status=405)
+
+def resource_not_found():
+    return HttpResponse(content_type=JSON_CONTENT, status=404)
 
 def jsonResponse(jsonData, status_code):
     return HttpResponse(jsonData, content_type=JSON_CONTENT, status=status_code)
@@ -27,13 +30,7 @@ def crises(request):
     elif request.method == 'POST':
         return post_new_crisis(request)
     else:
-        return methodNotSupported()
-
-def get_all_crises():
-    cData = CrisesData.objects.all()
-    jsonData = serializers.serialize('json', cData)
-    return jsonResponse(jsonData, 200)
-
+        return method_not_supported()
 
 def crisis(request, cid):
     """ 
@@ -41,7 +38,15 @@ def crisis(request, cid):
     PUT     Update an existing crisis
     DELETE  Delete an existing crisis
     """
-    pass
+    # filter will return empty lists when there are no matches
+    if request.method == 'GET':
+        return get_crisis(request, cid)
+    elif request.method == 'PUT':
+        return put_crisis(request, cid)
+    elif request.method == 'DELETE':
+        return delete_crisis(request, cid)
+    else:
+        return method_not_supported()
 
 def crisis_orgs(request, cid):
     """ List all related organizations """
@@ -50,6 +55,59 @@ def crisis_orgs(request, cid):
 def crisis_people(request, cid):
     """ List all related people """
     pass
+
+def get_all_crises():
+    data = []
+    for row in Crises.objects.all():
+        data.append({
+            "name": row.name,
+            "id" : row.pk,
+            "kind" : row.kind
+        })
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def get_crisis(request, cid):
+    # filter will return an empty list when there are no matches
+    matches = CrisesData.objects.filter(crisis__pk=cid)
+    if not matches:
+        return resource_not_found()
+    cData = matches[0]
+
+    # grab everything we need from the database
+    cMaps       = [x.maps for x in CrisesMaps.objects.filter(crisis__pk=cid)]
+    cImages     = [x.image for x in CrisesImages.objects.filter(crisis__pk=cid)]
+    cVideos     = [x.video for x in CrisesVideos.objects.filter(crisis__pk=cid)]
+    cSocial     = [x.twitter for x in CrisesTwitter.objects.filter(crisis__pk=cid)]
+    cHelp       = [x.help for x in CrisesHelp.objects.filter(crisis__pk=cid)]
+    cResources  = [x.resourses for x in CrisesResourses.objects.filter(crisis__pk=cid)]
+    cLinks      = [x.external_links for x in CrisesLinks.objects.filter(crisis__pk=cid)]
+    cCitations  = [x.citations for x in CrisesCitations.objects.filter(crisis__pk=cid)]
+    cPeople     = [x.pk for x in cData.people.all()]
+    cOrgs       = [x.pk for x in cData.orgs.all()]
+
+    # construct the response data
+    data = {
+        "name"              : cData.crisis.name,
+        "id"                : cData.crisis.pk,
+        "start_date"        : str(cData.start_date),
+        "end_date"          : str(cData.end_date),
+        "location"          : cData.location,
+        "kind"              : cData.crisis.kind,
+        "description"       : cData.description,
+        "human_impact"      : cData.human_impact,
+        "economic_impact"   : cData.economic_impact,
+        "maps"              : cMaps,
+        "images"            : cImages,
+        "videos"            : cVideos,
+        "social_media"      : cSocial,
+        "ways_to_help"      : cHelp,
+        "resources_needed"  : cResources,
+        "people"            : cPeople,
+        "organizations"     : cOrgs,
+        "external_links"    : cLinks,
+        "citations"         : cCitations,
+    }
+    return jsonResponse(simplejson.dumps(data), 200)
 
 #############################################
 # Person REST views

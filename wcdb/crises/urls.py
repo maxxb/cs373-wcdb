@@ -10,5 +10,5 @@ urlpatterns = patterns('',
 
     url(r'^people/(\d+)/$', 'crises.views.person_index'),
 
-    url(r'^api', include('rest_urls.py')),
+    url(r'^api/', include('crises.rest_urls')),
 )
