@@ -9,4 +9,6 @@ urlpatterns = patterns('',
     url(r'^organizations/(\d+)/$', 'crises.views.org_index'),
 
     url(r'^people/(\d+)/$', 'crises.views.person_index'),
+
+    url(r'^api', include('rest_urls.py')),
 )
