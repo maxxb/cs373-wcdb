@@ -71,8 +71,13 @@ def get_crisis(request, cid):
     matches = CrisesData.objects.filter(crisis__pk=cid)
     if not matches:
         return resource_not_found()
-    cData = matches[0]
+    crisisData = matches[0]
+    data = get_crisis_dict(crisisData)
+    return jsonResponse(simplejson.dumps(data), 200)
 
+def get_crisis_dict(crisisData):
+    cid = crisisData.crisis.pk
+    
     # grab everything we need from the database
     cMaps       = [x.maps for x in CrisesMaps.objects.filter(crisis__pk=cid)]
     cImages     = [x.image for x in CrisesImages.objects.filter(crisis__pk=cid)]
@@ -82,20 +87,20 @@ def get_crisis(request, cid):
     cResources  = [x.resourses for x in CrisesResourses.objects.filter(crisis__pk=cid)]
     cLinks      = [x.external_links for x in CrisesLinks.objects.filter(crisis__pk=cid)]
     cCitations  = [x.citations for x in CrisesCitations.objects.filter(crisis__pk=cid)]
-    cPeople     = [x.pk for x in cData.people.all()]
-    cOrgs       = [x.pk for x in cData.orgs.all()]
+    cPeople     = [x.pk for x in crisisData.people.all()]
+    cOrgs       = [x.pk for x in crisisData.orgs.all()]
 
     # construct the response data
-    data = {
-        "name"              : cData.crisis.name,
-        "id"                : cData.crisis.pk,
-        "start_date"        : str(cData.start_date),
-        "end_date"          : str(cData.end_date),
-        "location"          : cData.location,
-        "kind"              : cData.crisis.kind,
-        "description"       : cData.description,
-        "human_impact"      : cData.human_impact,
-        "economic_impact"   : cData.economic_impact,
+    return {
+        "name"              : crisisData.crisis.name,
+        "id"                : crisisData.crisis.pk,
+        "start_date"        : str(crisisData.start_date),
+        "end_date"          : str(crisisData.end_date),
+        "location"          : crisisData.location,
+        "kind"              : crisisData.crisis.kind,
+        "description"       : crisisData.description,
+        "human_impact"      : crisisData.human_impact,
+        "economic_impact"   : crisisData.economic_impact,
         "maps"              : cMaps,
         "images"            : cImages,
         "videos"            : cVideos,
@@ -107,7 +112,7 @@ def get_crisis(request, cid):
         "external_links"    : cLinks,
         "citations"         : cCitations,
     }
-    return jsonResponse(simplejson.dumps(data), 200)
+
 
 #############################################
 # Person REST views

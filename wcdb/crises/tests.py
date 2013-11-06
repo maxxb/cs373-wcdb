@@ -130,8 +130,6 @@ CRISIS_B = {
 class RestTests(TestCase):
     fixtures = ['test.json']
 
-    
-
     def test_rest_get_crises(self):
         r = self.client.get('/api/crises')
         self.assertEquals(r.status_code, 200)
@@ -153,8 +151,6 @@ class RestTests(TestCase):
         self.assertEquals(r.status_code, 200)
         responseJson = json.loads(r.content)
         self.assertTrue(type(responseJson) == type({}))
-        self.assertTrue(responseJson["name"] == u"Israeli-Palestinian conflict")
-        self.assertTrue(responseJson["kind"] == u"political")
         self.assertEquals(responseJson, CRISIS_B)
 
     @skipIf(True, "don't want to run yet")
