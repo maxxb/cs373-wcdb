@@ -190,12 +190,17 @@ class OrganizationTests(TestCase):
         self.assertEquals(oData.pk, 1)
         self.assertEquals(oData.org.pk, 1)
         self.assertEquals(oData.org.name, u"UNSCEAR")
-        self.assertEquals(oData.description, u"UNSCEAR was established in 1955 by the General Assembly of the United Nations. The organizations purpose in the United Nations system is to assess and report levels and effects of exposure to ionizing radiation. Governments and organizations throughout the world rely on the Committee's estimates as the scientific basis for evaluating radiation risk and for establishing protective measures. UNSCEAR was involved in the assessment of radiation exposures and health effects early on during the Chernobyl accident in 1986.")
+        self.assertEquals(oData.org.kind, u"Committee")
+	self.assertEquals(oData.description, u"UNSCEAR was established in 1955 by the General Assembly of the United Nations. The organizations purpose in the United Nations system is to assess and report levels and effects of exposure to ionizing radiation. Governments and organizations throughout the world rely on the Committee's estimates as the scientific basis for evaluating radiation risk and for establishing protective measures. UNSCEAR was involved in the assessment of radiation exposures and health effects early on during the Chernobyl accident in 1986.")
         self.assertEquals(oData.location, u"Sessions are held in Vienna International Centre, Vienna, Austria.")
         self.assertEquals(oData.date_established, date(1955, 1, 1))
-        self.assertEquals(oData.contact_info.get(pk=1), ContactInfo.objects.get(pk=1)) #FIXME: fails with "no attribute 'get'"
+        self.assertEquals(oData.contact_info.pk, 1)
+        self.assertEquals(oData.contact_info.name, u"UNSCEAR secretariat")
+        self.assertEquals(oData.contact_info.address, u"UNITED NATIONS Vienna International Centre P.O. Box 500 A-1400 Vienna, AUSTRIA")
+        self.assertEquals(oData.contact_info.email, u"notfound@notfound.com")
+        self.assertEquals(oData.contact_info.phone, u'1260604330')
         self.assertEquals(oData.people.get(pk=3), People.objects.get(pk=3)) #3rd person not defined in test-data.json
-        self.assertEquals(oData.orgs.get(pk=2), Organizations.objects.get(pk=2))
+        self.assertEquals(oData.crises.get(pk=2), Crises.objects.get(pk=2))
 
 CRISIS_A = {
     u"name": u"Cambodian Genocide",

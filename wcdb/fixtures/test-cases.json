@@ -32,6 +32,14 @@
     }
 },  
 {
+    "model":"crises.People",
+    "pk":3,
+    "fields":{
+        "name":"Mikhail Gorbachev",
+        "kind":"political leader"
+    }
+},
+{
     "model":"crises.Organizations",
     "pk":1,
     "fields":{
@@ -285,7 +293,7 @@
         "maps":"https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=palestine&amp;sll=33.238688,34.024658&amp;sspn=9.36671,5.866699&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Palestine&amp;ll=31.952162,35.233154&amp;spn=1.041069,1.466675&amp;z=9&amp;output=embed",
         "org":2
     }
-},  
+},
 {
     "model":"crises.OrgImages",
     "pk":1,

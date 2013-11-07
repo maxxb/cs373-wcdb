@@ -55,15 +55,37 @@ def crisis(request, cid):
 
 def crisis_orgs(request, cid):
     """ List all related organizations """
+    #TODO: use a subquery
     pass
 
 def crisis_people(request, cid):
     """ List all related people """
+    #TODO: use a subquery
     pass
 
 def get_all_crises():
     data = []
     for row in Crises.objects.all():
+        data.append({
+            "name": row.name,
+            "id" : row.pk,
+            "kind" : row.kind
+        })
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def get_all_people():
+    data = []
+    for row in People.objects.all():
+        data.append({
+            "name": row.name,
+            "id" : row.pk,
+            "kind" : row.kind
+        })
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def get_all_orgs():
+    data = []
+    for row in Organizations.objects.all():
         data.append({
             "name": row.name,
             "id" : row.pk,
@@ -123,6 +145,36 @@ def post_new_crisis(request):
 
     return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
+def post_new_organization(request):
+    #TODO: just copy above (try to reduce redundancy)
+    pass
+
+def post_new_person(request):
+    #TODO: just copy above (try to reduce redundancy)
+    pass
+
+# PUT implementations #
+def put_crisis(crisis):
+    #TODO: use an insert?
+    pass
+
+def put_person(person):
+    pass
+
+def put_org(org):
+    pass
+
+# DELETE Implementations #
+def delete_crisis(crisis):
+    #TODO: use a delete statement on that id?
+    pass
+
+def delete_person(person):
+    pass
+    
+def delete_org(org):
+    pass    
+
 def get_crisis(request, cid):
     # filter will return an empty list when there are no matches
     matches = CrisesData.objects.filter(crisis__pk=cid)
@@ -130,6 +182,24 @@ def get_crisis(request, cid):
         return resource_not_found()
     crisisData = matches[0]
     data = get_crisis_dict(crisisData)
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def get_person(request, cid):
+    # filter will return an empty list when there are no matches
+    matches = PeopleData.objects.filter(people__pk=cid)
+    if not matches:
+        return resource_not_found()
+    personData = matches[0]
+    data = get_people_dict(personData)
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def get_org(request, cid):
+    # filter will return an empty list when there are no matches
+    matches = OrganizationsData.objects.filter(org__pk=cid)
+    if not matches:
+        return resource_not_found()
+    orgData = matches[0]
+    data = get_org_dict(orgData)
     return jsonResponse(simplejson.dumps(data), 200)
 
 def get_crisis_dict(crisisData):
@@ -175,6 +245,12 @@ def get_crisis_dict(crisisData):
         "citations"         : cCitations,
     }
 
+def get_people_dict(peopleData):
+    #TODO: use a subquery
+    pass
+
+def get_org_dict(orgData):
+    pass
 
 #############################################
 # Person REST views
@@ -184,7 +260,12 @@ def people(request):
     GET     Lists the people in the database 
     POST    Create a new entry for a person
     """
-    pass
+    if request.method == 'GET':
+        return get_all_people()
+    elif request.method == 'POST':
+        return post_new_person(request)
+    else:
+        return method_not_supported()
 
 def person(request, pid):
     """ 
@@ -192,7 +273,15 @@ def person(request, pid):
     PUT     Update an existing person
     DELETE  Delete an existing person
     """
-    pass
+    # filter will return empty lists when there are no matches
+    if request.method == 'GET':
+        return get_person(request, cid)
+    elif request.method == 'PUT':
+        return put_person(request, cid)
+    elif request.method == 'DELETE':
+        return delete_person(request, cid)
+    else:
+        return method_not_supported()
 
 def person_orgs(request, pid):
     """ List all related organizations """
@@ -210,7 +299,12 @@ def organizations(request):
     GET     Lists the organizations in the database 
     POST    Create a new entry for an organization
     """
-    pass
+    if request.method == 'GET':
+        return get_all_orgs()
+    elif request.method == 'POST':
+        return post_new_organization(request)
+    else:
+        return method_not_supported()
 
 def organization(request, oid):
     """ 
@@ -218,7 +312,15 @@ def organization(request, oid):
     PUT     Update an existing organization
     DELETE  Delete an existing organization
     """
-    pass
+    # filter will return empty lists when there are no matches
+    if request.method == 'GET':
+        return get_org(request, cid)
+    elif request.method == 'PUT':
+        return put_org(request, cid)
+    elif request.method == 'DELETE':
+        return delete_org(request, cid)
+    else:
+        return method_not_supported()
 
 def organization_people(request, oid):
     """ List all related people """
