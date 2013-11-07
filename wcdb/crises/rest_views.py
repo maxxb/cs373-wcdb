@@ -56,20 +56,30 @@ def crisis(request, cid):
 def crisis_orgs(request, cid):
     """ List all related organizations """
     if request.method == 'GET':
-        matches = CrisesData.objects.filter(crises__pk=cid)
+        matches = CrisesData.objects.filter(crisis__pk=cid)
         if not matches:
             return resourceNotFound()
         cData = matches[0]
         result = []
         for org in cData.orgs.all():
-            result.append(get_org_dict(org))
+            orgDataMatches = OrganizationsData.objects.filter(org__pk=org.pk)
+            if orgDataMatches:
+                result.append(get_org_dict(orgDataMatches[0]))
         return jsonResponse(simplejson.dumps(result), 200)
     else:
         return method_not_supported()
 
 def crisis_people(request, cid):
     """ List all related people """
-    #TODO: use a subquery
+    if request.method == 'GET':
+        matches = PeopleData.objects.filter(crisis_pk=cid)
+        if not matches:
+            return resourceNotFound()
+        cData = matches[0]
+        resutlt = []
+        for person in cData.people.all():
+            result.append(get_person_dict(person))
+
     pass
 
 def get_all_crises():
@@ -441,10 +451,10 @@ def get_contact_info_dict(orgData):
     Return a dict containing the contact info for the organization.
     """
     return {
-        "name"      : "FEMA",
-        "address"   : "P.O. Box 10055 Hyattsville, MD 20782-8055"
-        "email"     : "None",
-        "phone": "800-621-3362"}
+        "name"    : orgData.contact_info.name,
+        "address" : orgData.contact_info.address,
+        "email"   : orgData.contact_info.email,
+        "phone"   : orgData.contact_info.phone,
     }
 
 def get_org_dict(orgData):
@@ -453,40 +463,34 @@ def get_org_dict(orgData):
     This gathers all the info about the org into a single dict 
         (per the API) and returns it
     """
-    cid = orgData.org.pk
+    oid = orgData.org.pk
     
     # grab everything we need from the database
-    oMaps       = [x.maps for x in OrgMaps.objects.filter(org__pk=cid)]
-    oImages     = [x.image for x in OrgImages.objects.filter(org__pk=cid)]
-    oVideos     = [x.video for x in OrgVideos.objects.filter(org__pk=cid)]
-    oSocial     = [x.twitter for x in OrgTwitter.objects.filter(org__pk=cid)]
-    oLinks      = [x.external_links for x in OrgLinks.objects.filter(org__pk=cid)]
-    oCitations  = [x.citations for x in OrgCitations.objects.filter(org__pk=cid)]
+    oMaps       = [x.maps for x in OrgMaps.objects.filter(org__pk=oid)]
+    oImages     = [x.image for x in OrgImages.objects.filter(org__pk=oid)]
+    oVideos     = [x.video for x in OrgVideos.objects.filter(org__pk=oid)]
+    oSocial     = [x.twitter for x in OrgTwitter.objects.filter(org__pk=oid)]
+    oLinks      = [x.external_links for x in OrgLinks.objects.filter(org__pk=oid)]
+    oCitations  = [x.citations for x in OrgCitations.objects.filter(org__pk=oid)]
     oPeople     = [x.pk for x in orgData.people.all()]
     oCrises     = [x.pk for x in orgData.crises.all()]
     
 
     # construct the response data
     return {
-        "name"              : orgData.org.name,
-        "id"                : orgData.org.pk,
-        "start_date"        : str(orgData.start_date),
-        "end_date"          : str(orgData.end_date),
-        "location"          : orgData.location,
-        "kind"              : orgData.org.kind,
-        "description"       : orgData.description,
-        "human_impact"      : orgData.human_impact,
-        "economic_impact"   : orgData.economic_impact,
-        "maps"              : oMaps,
-        "images"            : oImages,
-        "videos"            : oVideos,
-        "social_media"      : oSocial,
-        "ways_to_help"      : oHelp,
-        "resources_needed"  : oResources,
-        "people"            : oPeople,
-        "organizations"     : oOrgs,
-        "external_links"    : oLinks,
-        "citations"         : oCitations,
+        "id"            : oid,
+        "name"          : orgData.org.name,
+        # date_established is a datetime object
+        "established"   : str(orgData.date_established),
+        "location"      : orgData.location,
+        "kind"          : orgData.org.kind, 
+        "description"   : orgData.description,
+        "images"        : oImages,
+        "videos"        : oVideos, 
+        "maps"          : oMaps,
+        "social_media"  : oSocial,
+        "external_links": oLinks, 
+        "citations"     : oCitations,
+        "contact_info"  : get_contact_info_dict(orgData),
     }
-
 
