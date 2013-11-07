@@ -12,6 +12,7 @@ All of the following should be executed from the `wcdb` directory (where `manage
 * Run test cases: `python manage.py test crises --settings=settings.local`
 
 Get the database working again after model changes ("migrating"):
+
 1. Delete `mydb.db` to destroy the existing database
 2. Recreate the database: `python manage.py syncdb --settings=settings.local`
 3. Reload the data: `python manage.py loaddata fixtures/*.json --settings=settings.local`
