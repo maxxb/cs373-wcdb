@@ -96,6 +96,7 @@ class PeopleCitations(models.Model):
 
 class PeopleData(models.Model):
 	person = models.OneToOneField(People, primary_key=True)
+	description = models.CharField(max_length=1000)
 	dob = models.DateField()
 	location = models.CharField(max_length=100)		
 
