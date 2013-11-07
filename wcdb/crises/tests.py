@@ -41,6 +41,7 @@ class CrisesTests(TestCase):
         cTwitter = CrisesTwitter.objects.get(crisis__pk=1)
         self.assertEquals(cTwitter.pk, 1)
         self.assertEquals(cTwitter.crisis.pk, 1)
+        self.assertEquals(cTwitter.widget_id, 397556788456738816)
         self.assertEquals(cTwitter.twitter, u"https://twitter.com/search?q=isreal+palestine")
 
     def test_crisis_help(self):
@@ -85,6 +86,62 @@ class CrisesTests(TestCase):
         self.assertEquals(cMap.crisis.pk, 1)
         self.assertEquals(cMap.maps, u"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed")
 
+class PeopleTests(TestCase):
+    fixtures = ['test-cases.json']
+
+    def test_people_data(self):
+        # get the PeopleData row associated with the row People with primary key 1
+        pData = PeopleData.objects.get(person__pk=1)
+        self.assertEquals(pData.pk, 1)
+        self.assertEquals(pData.person.pk, 1)
+        self.assertEquals(pData.person.name, u"Yasser Arafat") 
+        self.assertEquals(pData.dob, date(1929, 8, 24))
+        self.assertEquals(pData.location, u"Cairo, Egypt")
+        self.assertEquals(pData.crises.get(pk=1), Crises.objects.get(pk=1))
+        self.assertEquals(pData.orgs.get(pk=2), Organizations.objects.get(pk=2))
+
+    def test_person_twitter(self):
+        pTwitter = PeopleTwitter.objects.get(people__pk=1)
+        self.assertEquals(pTwitter.pk, 1)
+        self.assertEquals(pTwitter.people.pk, 1)
+        self.assertEquals(pTwitter.widget_id, u"397557839859687424")
+        self.assertEquals(pTwitter.twitter, u"http://twitter.com/search?q=yasser+arafat")
+
+    def test_person_links(self):
+        pLink = PeopleLinks.objects.get(people__pk=1)
+        self.assertEquals(pLink.pk, 1)
+        self.assertEquals(pLink.people.pk, 1)
+        self.assertEquals(pLink.external_links, u"http://www.nndb.com/people/403/000022337/")
+
+    def test_people_citations(self):
+        pCite = PeopleCitations.objects.get(people__pk=1)
+        self.assertEquals(pCite.pk, 1)
+        self.assertEquals(pCite.people.pk, 1)
+        self.assertEquals(pCite.citations, u"http://en.wikipedia.org/wiki/Yasser_Arafat")
+
+    def test_people_videos(self):
+        pVideo = PeopleVideos.objects.get(people__pk=1)
+        self.assertEquals(pVideo.pk, 1)
+        self.assertEquals(pVideo.people.pk, 1)
+        self.assertEquals(pVideo.video, u"http://www.youtube.com/watch?v=a0tbZ3iYgCs")
+
+    def test_people_images(self):
+        pImage = PeopleImages.objects.filter(people__pk=1).order_by("pk")
+
+        self.assertEquals(pImage[0].pk, 1)
+        self.assertEquals(pImage[0].people.pk, 1)
+        self.assertEquals(pImage[0].image, u"http://upload.wikimedia.org/wikipedia/commons/thumb/3/37/ArafatEconomicForum.jpg/415px-ArafatEconomicForum.jpg")
+
+        self.assertEquals(pImage[1].pk, 2)
+        self.assertEquals(pImage[1].people.pk, 1)
+        self.assertEquals(pImage[1].image, u"http://upload.wikimedia.org/wikipedia/commons/9/9a/Flickr_-_Government_Press_Office_%28GPO%29_-_THE_NOBEL_PEACE_PRIZE_LAUREATES_FOR_1994_IN_OSLO..jpg")
+
+    def test_people_maps(self):
+        pMap = PeopleMaps.objects.get(people__pk=1)
+        self.assertEquals(pMap.pk, 1)
+        self.assertEquals(pMap.people.pk, 1)
+        self.assertEquals(pMap.maps, u"http://goo.gl/maps/oOQCX")
+
 CRISIS_A = {
     u"name": u"Cambodian Genocide",
     u"start_date": u"1975-01-01",
@@ -97,7 +154,7 @@ CRISIS_A = {
     u"maps": [u"http://goo.gl/maps/PKI5L"],
     u"images": [u"http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
     # I have an issue on the CS machines where the '=' here causes django to see the 
-    # string as a key-value pair when I make a post request when testing with this data
+    # string as a key-value pair when I make a post request when testing 
     # u"videos": [u"http://www.youtube.com/watch?v=1-SI8RF6wDE"],
     u"videos": [u"http://www.youtube.com/watch?v..."],
     u"social_media": [u"https://twitter.com/UN"],

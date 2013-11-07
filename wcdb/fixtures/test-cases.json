@@ -40,6 +40,14 @@
     }
 },
 {
+    "model":"crises.Organizations",
+    "pk":2,
+    "fields":{
+        "name":"WHO",
+        "kind":"health organization"
+    }
+},
+{
     "model":"crises.CrisesMaps",
     "pk":1,
     "fields":{
@@ -120,6 +128,126 @@
 
         "people":[1,2],
         "orgs":[1]          
+    }
+},
+{
+    "model":"crises.PeopleData",
+    "pk":1,
+    "fields":{
+        "person":1,
+        "dob":"1929-08-24",
+        "location":"Cairo, Egypt",
+        "crises":[1],
+        "orgs":[2]			
+    }
+},
+{
+    "model":"crises.PeopleData",
+    "pk":2,
+    "fields":{
+        "person":2,
+        "dob":"1921-01-01",
+        "location":"Brooklyn, NY",
+        "crises":[4],
+        "orgs":[3]			
+    }
+},
+{
+    "model":"crises.PeopleMaps",
+    "pk":1,
+    "fields":{
+        "maps":"http://goo.gl/maps/oOQCX",
+        "people":1
+    }
+},
+{
+    "model":"crises.PeopleMaps",
+    "pk":2,
+    "fields":{
+        "maps":"http://goo.gl/maps/3tPTc",
+        "people":2
+    }
+},
+{
+    "model":"crises.PeopleImages",
+    "pk":1,
+    "fields":{
+        "image": "http://upload.wikimedia.org/wikipedia/commons/thumb/3/37/ArafatEconomicForum.jpg/415px-ArafatEconomicForum.jpg",
+        "people":1
+    }
+},
+{
+    "model":"crises.PeopleImages",
+    "pk":2,
+    "fields":{
+        "image": "http://upload.wikimedia.org/wikipedia/commons/9/9a/Flickr_-_Government_Press_Office_%28GPO%29_-_THE_NOBEL_PEACE_PRIZE_LAUREATES_FOR_1994_IN_OSLO..jpg",
+        "people":1
+    }
+},
+{
+    "model":"crises.PeopleVideos",
+    "pk":1,
+    "fields":{
+        "video":"http://www.youtube.com/watch?v=a0tbZ3iYgCs",
+        "people":1
+    }                                                  
+},
+{
+    "model":"crises.PeopleVideos",
+    "pk":2,
+    "fields":{
+        "video":"http://www.youtube.com/watch?v=yhmVRckHHxM",
+        "people":2
+    }
+},
+{
+    "model":"crises.PeopleLinks",
+    "pk":1,
+    "fields":{
+        "external_links":"http://www.nndb.com/people/403/000022337/",
+        "people":1
+    }
+},	
+{
+    "model":"crises.PeopleLinks",
+    "pk":2,
+    "fields":{
+        "external_links":"http://www.cbsnews.com/stories/2009/08/01/national/main5204098.shtml",
+        "people":2
+    }
+},
+{
+    "model":"crises.PeopleCitations",
+    "pk":1,
+    "fields":{
+        "citations":"http://en.wikipedia.org/wiki/Yasser_Arafat",
+        "people":1
+    }
+},
+{
+    "model":"crises.PeopleCitations",
+    "pk":2,
+    "fields":{
+        "citations":"http://en.wikipedia.org/wiki/Warren_Anderson_%28American_businessman%29",
+        "people":2
+    }
+},
+{
+    "model":"crises.PeopleTwitter",
+    "pk":1,
+    "fields":{
+        "twitter":"http://twitter.com/search?q=yasser+arafat",
+        "widget_id": 397557839859687424,
+        "people":1
+    }
+},	
+{
+    "model":"crises.PeopleTwitter",
+    "pk":2,
+    "fields":{
+        "twitter":"http://twitter.com/search?q=warren+anderson+bhopal" ,
+        "widget_id": 397559394017095680,
+        "people":2
     }
 }
 ]
