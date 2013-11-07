@@ -1,0 +1,122 @@
+[
+	{
+		"model":"crises.CrisesData",
+		"pk":1,
+		"fields":{
+
+			"crisis":1,
+			
+			"description":"The Israeli–Palestinian conflict is the ongoing struggle between Israelis and Palestinians that began in the mid 20th century. The conflict is wide-ranging, and the term is sometimes also used in reference to the earlier sectarian conflict in Mandatory Palestine, between the Zionist yishuv and the Arab population under British rule. The Israeli–Palestinian conflict has formed the core part of the wider Arab–Israeli conflict.",
+			
+			"location": "West Bank and Gaza Strip",			
+			
+			"start_date":"1960-01-01",
+			
+			"end_date":"1960-01-01",
+			
+			"human_impact":"One of the world's longest refugee crisis. Nearly 50 percent of Palestinians in the West Bank and Gaza. 2.1 million people are refugees, many of whom live in crowded camps.",
+
+			"economic_impact":"Economic life has suffered and relief organisations have found it difficult to get aid to the Palestinian population.",
+
+			"people":[1,4],
+			"orgs":[2,4]			
+		}
+	},
+
+	{
+		"model":"crises.CrisesData",
+		"pk":2,
+		"fields":{
+
+			"crisis":2,
+			
+			"description":"On April 26, 1986, a sudden surge of power during a reactor systems test destroyed Unit 4 of the nuclear power station at Chernobyl, Ukraine, in the former Soviet Union. The accident and the fire that followed released massive amounts of radioactive material into the environment. Emergency crews responding to the accident used helicopters to pour sand and boron on the reactor debris. The sand was to stop the fire and additional releases of radioactive material; the boron was to prevent additional nuclear reactions. A few weeks after the accident, the crews completely covered the damaged unit in a temporary concrete structure, called the “sarcophagus,” to limit further release of radioactive material. The Soviet government also cut down and buried about a square mile of pine forest near the plant to reduce radioactive contamination at and near the site. Chernobyl’s three other reactors were subsequently restarted but all eventually shut down for good, with the last reactor closing in 1999. The Soviet nuclear power authorities presented their initial accident report to an International Atomic Energy Agency meeting in Vienna, Austria, in August 1986.",
+			
+			"location": "About 130 km north of Kiev, Ukraine",			
+			
+			"start_date":"1986-04-26",
+			
+			"end_date":"1986-04-26",
+			
+			"human_impact":"The Chernobyl accident is severe radiation effects killed 28 of the site’s 600 workers in the first four months after the event. Another 106 workers received high enough doses to cause acute radiation sickness. Two workers died within hours of the reactor explosion from non-radiological causes. Another 200,000 cleanup workers in 1986 and 1987 received doses of between 1 and 100 rem (The average annual radiation dose for a U.S. citizen is about .6 rem).",
+
+			"economic_impact":"Estimated cost of 18 billion rubles (5.6 US Dollars) for containment.",
+
+			"people":[3],
+			"orgs":[1]			
+		}
+	},	
+
+	{
+		"model":"crises.CrisesData",
+		"pk":3,
+		"fields":{
+
+			"crisis":3,
+			
+			"description":"The December 26, 2004 Indian Ocean tsunami was caused by an earthquake that is thought to have had the energy of 23,000 Hiroshima-type atomic bombs. The epicenter of the 9.0 magnitude quake was under the Indian Ocean near the west coast of the Indonesian island of Sumatra. The shifting of the earth’s plates in the Indian Ocean on Dec. 26, 2004 caused a rupture more than 600 miles long, displacing the seafloor above the rupture by perhaps 10 yards horizontally and several yards vertically. As a result, trillions of tons of rock were moved along hundreds of miles and caused the planet to shudder with the largest magnitude earthquake in 40 years. Many people in Indonesian reported that they saw animals fleeing for high ground minutes before the tsunami arrived – very few animal bodies were found afterward.",
+			
+			"location": "Near the west coast of the Indonesian Island of Sumatra",			
+			
+			"start_date":"2004-12-26",
+			
+			"end_date":"2004-12-26",
+			
+			"human_impact":"By the end of the day more than 150,000 people were dead or missing and millions more were homeless in 11 countries.",
+
+			"economic_impact":"Damages that exceeded $10 billion",
+
+			"people":[],
+			"orgs":[4]			
+		}
+	},		
+
+
+	{
+		"model":"crises.CrisesData",
+		"pk":4,
+		"fields":{
+
+			"crisis":4,
+			
+			"description":"On December 3 1984, more than 40 tons of methyl isocyanate gas leaked from a pesticide plant in Bhopal, India, immediately killing at least 3,800 people and causing significant morbidity and premature death for many thousands more. The company involved in what became the worst industrial accident in history immediately tried to dissociate itself from legal responsibility. Eventually it reached a settlement with the Indian Government through mediation of that country's Supreme Court and accepted moral responsibility. It paid $470 million in compensation, a relatively small amount of based on significant underestimations of the long-term health consequences of exposure and the number of people exposed. The disaster indicated a need for enforceable international standards for environmental safety, preventative strategies to avoid similar accidents and industrial disaster preparedness.",
+			
+			"location": "Bhopal, Madhya Pradesh, India",			
+			
+			"start_date":"1984-12-02",
+			
+			"end_date":"1984-12-03",
+			
+			"human_impact":"More than 8,000 people were killed in just the first few days following the leak, mainly from cardiac and respiratory arrest.",
+
+			"economic_impact":"The chemical factory responsible for this disaster belonged to Union Carbide, which negotiated a settlement with the Indian Government in 1989 for $470 million - a total of only $370 to $533 per victim - a sum too small to pay for most medical bills",
+
+			"people":[2],
+			"orgs":[3]			
+		}
+	},		
+
+	{
+		"model":"crises.CrisesData",
+		"pk":5,
+		"fields":{
+
+			"crisis":5,
+			
+			"description":"On December 3 1984, more than 40 tons of methyl isocyanate gas leaked from a pesticide plant in Bhopal, India, immediately killing at least 3,800 people and causing significant morbidity and premature death for many thousands more. The company involved in what became the worst industrial accident in history immediately tried to dissociate itself from legal responsibility. Eventually it reached a settlement with the Indian Government through mediation of that country's Supreme Court and accepted moral responsibility. It paid $470 million in compensation, a relatively small amount of based on significant underestimations of the long-term health consequences of exposure and the number of people exposed. The disaster indicated a need for enforceable international standards for environmental safety, preventative strategies to avoid similar accidents and industrial disaster preparedness.",
+			
+			"location": "Bhopal, Madhya Pradesh, India",			
+			
+			"start_date":"1989-10-17",
+			
+			"end_date":"1989-10-17",
+			
+			"human_impact":"57 deaths. 3757 people were injured and 400 of them were severly hurt. 42 of the deaths resulted from a collapsed overpass. The death toll was relatively due to the 1989 World Series game; most people were off of work early and the streets were less crowded than usual.",
+
+			"economic_impact":"The quake caused an estimated $6 billion in property damage, becoming one of the most expensive natural disasters in U.S. history at the time.",
+
+			"people":[],
+			"orgs":[]			
+		}
+	}	
+]

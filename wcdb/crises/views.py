@@ -15,12 +15,13 @@ def links(request,entity):
 
 def crisis_index(request, cid):
 	crisis_data = CrisesData.objects.get(pk=cid)
-	return render(request, 'crises/crises_index.html', {'crisis_data':crisis_data})
+	return render(request, 'crises_index.html', {'crisis_data':crisis_data})
 
 def org_index(request, oid):
 	org_data = OrganizationsData.objects.get(pk=oid)
-	return render(request, 'organizations/org_index.html', {'org_data':org_data})
+	return render(request, 'org_index.html', {'org_data':org_data})
 
 def person_index(request, pid):
 	people_data = PeopleData.objects.get(pk=pid)
-	return render(request, 'people/people_index.html', {'people_data': people_data})
+	return render(request, 'people_index.html', {'people_data': people_data})
+
