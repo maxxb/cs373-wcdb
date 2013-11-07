@@ -56,8 +56,8 @@ class CrisesCitations(models.Model):
 
 class CrisesData(models.Model):
 	crisis = models.OneToOneField(Crises, primary_key=True)
-	description = models.CharField(max_length=1000)
-	location = models.CharField(max_length=100)		
+	description = models.CharField(max_length=2000)
+	location = models.CharField(max_length=500)		
 	start_date = models.DateField()
 	end_date = models.DateField()
 	human_impact = models.CharField(max_length=500)
@@ -96,9 +96,9 @@ class PeopleCitations(models.Model):
 
 class PeopleData(models.Model):
 	person = models.OneToOneField(People, primary_key=True)
-	description = models.CharField(max_length=1000)
+	description = models.CharField(max_length=2000)
 	dob = models.DateField()
-	location = models.CharField(max_length=100)		
+	location = models.CharField(max_length=500)		
 
 	crises = models.ManyToManyField(Crises)
 	orgs = models.ManyToManyField(Organizations)
@@ -140,8 +140,8 @@ class OrgCitations(models.Model):
 class OrganizationsData(models.Model):
 	org = models.OneToOneField(Organizations, primary_key=True)
 	date_established = models.DateField()
-	description = models.CharField(max_length=1000)
-	location = models.CharField(max_length=100)	
+	description = models.CharField(max_length=2000)
+	location = models.CharField(max_length=500)	
 
 	contact_info = models.OneToOneField(ContactInfo)
 	crises = models.ManyToManyField(Crises)
