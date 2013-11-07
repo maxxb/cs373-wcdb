@@ -4,6 +4,7 @@
 		"pk":1,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=UNSCEAR",
+			"widget_id": 0,
 			"org":1
 		}
 	},
@@ -12,6 +13,7 @@
 		"pk":2,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=Palestine+Liberation+Organization",
+			"widget_id": 0,
 			"org":2
 		}
 	},
@@ -20,7 +22,26 @@
 		"pk":3,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=Union+Carbide",
+			"widget_id": 0,
 			"org":3
+		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":4,
+		"fields":{
+			"twitter":"",
+			"widget_id": 0,
+			"org":4
+		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":5,
+		"fields":{
+			"twitter":"",
+			"widget_id": 0,
+			"org":5
 		}
 	}
 ]

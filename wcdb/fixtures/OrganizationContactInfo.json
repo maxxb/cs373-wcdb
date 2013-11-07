@@ -28,5 +28,25 @@
 			"email": "mediarelations@unioncarbide.com",
 			"phone": 6464351553
 		}
+	},
+	{
+		"model":"crises.ContactInfo",
+		"pk":4,
+		"fields":{
+			"name": "FOCUS International Coordinating Committee (FICC) Secretariat",
+			"address": "Suite 201, 789 Don Mills Road Don Mills Ontario M3C 1T5",
+			"email": "ficc@focushumanitarian.org",
+			"phone": 14164220177
+		}
+	},
+	{
+		"model":"crises.ContactInfo",
+		"pk":5,
+		"fields":{
+			"name": "Main Office",
+			"address": "500 Fifth Avenue North Seattle, WA 98102",
+			"email": "info@gatesfoundation.org",
+			"phone": 2067093100
+		}
 	}
 ]

@@ -22,5 +22,21 @@
 			"name":"Union Carbide Corporation",
 			"kind":"Corporation"
 		}
+	},
+	{
+		"model":"crises.Organizations",
+		"pk":4,
+		"fields":{
+			"name":"Focus Humanitarian Assistance (FOCUS)",
+			"kind":"International Group of Agencies"
+		}
+	},
+	{
+		"model":"crises.Organizations",
+		"pk":5,
+		"fields":{
+			"name":"Bill & Melinda Gates Foundation",
+			"kind":"Private Foundation"
+		}
 	}
 ]

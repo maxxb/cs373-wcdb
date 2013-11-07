@@ -22,5 +22,21 @@
 			"external_links":"http://en.wikipedia.org/wiki/Union_Carbide",
 			"org":3
 		}
+	},
+	{
+		"model":"crises.OrgLinks",
+		"pk":4,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/Focus_Humanitarian_Assistance",
+			"org":4
+		}
+	},
+	{
+		"model":"crises.OrgLinks",
+		"pk":5,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/Bill_&_Melinda_Gates_Foundation",
+			"org":5
+		}
 	}
 ]
