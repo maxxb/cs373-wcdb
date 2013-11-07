@@ -3,7 +3,7 @@
 		"model":"crises.OrgImages",
 		"pk":1,
 		"fields":{
-			"image": "http://www.irpa.net/images/stories/logo/unscear.gif",
+			"image": "http://www.ncbj.gov.pl/sites/default/files/imagecache/300pxV/images/2012/05/unscear.png",
 			"org":1
 		}
 	},

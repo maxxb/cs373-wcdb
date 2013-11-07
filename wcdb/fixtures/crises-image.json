@@ -43,7 +43,7 @@
 		"model":"crises.CrisesImages",
 		"pk":6,
 		"fields":{
-			"image": "http://upload.wikimedia.org/wikipedia/commons/1/18/Cypress_structure.jpeg",
+			"image": "http://www.realclearsports.com/blognetwork/rcs_sidelines/worldseries1989earthquake.jpg",
 			"crisis":5
 		}
 	}
