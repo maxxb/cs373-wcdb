@@ -38,25 +38,25 @@
           <li><b>Address</b>: {{org_data.contact_info.address}}</li>
           <li><b>Email</b>: {{org_data.contact_info.email}}</li>
           <li><b>Phone</b>: {{org_data.contact_info.phone}}</li>
-					<li><b>Crises</b>:
-            {% for p in org_data.crises.all %}
-              <p>{{p.name}}</p>
-            {% endfor %}  
-          </li>
-          <li><b>Related people</b>:
-            {% for p in org_data.people.all %}
-              <p>{{p.name}}</p>
-            {% endfor %}  
-          </li>
-          <li><b>Citations</b>: 
-            {% for x in org_data.org.orgcitations_set.all %}
-              <a href="{{x.citations}}">{{x.citations}}</a><br>
-            {% endfor %}
-          </li>
 					<li><b>External Links</b>: 
 						{% for x in org_data.org.orglinks_set.all %}
 							<a href="{{x.external_links}}">{{x.external_links}}</a><br>
 						{% endfor %}
+					</li>
+					<li><b>Citations</b>: 
+						{% for x in org_data.org.orgcitations_set.all %}
+							<a href="{{x.citations}}">{{x.citations}}</a><br>
+						{% endfor %}
+					</li>
+					<li><b>Related people</b>:
+						{% for p in org_data.people.all %}
+							<p>{{p.name}}</p>
+						{% endfor %}	
+					</li>
+					<li><b>Related crises</b>:
+						{% for o in org_data.crises.all %}
+							<p>{{o.name}}</p>
+						{% endfor %}	
 					</li>
 				</ul>
       		</div>

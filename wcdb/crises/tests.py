@@ -6,10 +6,12 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from django.test.client import Client
 from datetime import date
 from crises.models import *
+import json
 
-class SimpleTest(TestCase):
+class CrisesTests(TestCase):
     fixtures = ['test.json']
 
     def test_crises_data(self):
@@ -80,6 +82,62 @@ class SimpleTest(TestCase):
         self.assertEquals(cMap.pk, 1)
         self.assertEquals(cMap.crisis.pk, 1)
         self.assertEquals(cMap.maps, u"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed")
+
+
+class RestTests(TestCase):
+    fixtures = ['test.json']
+
+    def test_rest_get_crises(self):
+        r = self.client.get('/api/crises')
+        self.assertEquals(r.status_code, 200)
+        responseJson = json.loads(r.content)
+        self.assertTrue(type(responseJson) == type([]))
+        self.assertTrue(len(responseJson) == 2)
+
+    def test_rest_get_crisis(self):
+        r = Client().get('/api/crises/1')
+        self.assertEquals(r.status_code, 200)
+        responseJson = json.loads(r.content)
+        self.assertTrue(type(responseJson) == type({}))
+        self.assertTrue(responseJson["name"] == u"Israeli-Palestinian conflict")
+        self.assertTrue(responseJson["kind"] == u"political")
+
+    def test_rest_post_crisis(self):
+        rPost = self.client.post('/api/crises', {
+            "name": "Cambodian Genocide",
+            "start_date": "1975-MM-DD",
+            "end_date": "1978-MM-DD",
+            "location": "Cambodia",
+            "kind": "Attack",
+            "description": "Long text description of the Cambodian Genocide",
+            "human_impact": "Lost 25% of population over three years",
+            "economic_impact": "Peasant farming society centralized",
+            "maps": ["http://goo.gl/maps/PKI5L"],
+            "images": ["http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
+            "videos": ["http://www.youtube.com/watch?v=1-SI8RF6wDE"],
+            "social_media": ["https://twitter.com/UN"],
+            "ways_to_help": ["Donation"],
+            "resources_needed": ["Monetary donation"],
+            "people": [1],
+            "organizations": [1],
+            "external_links": ["unfoundation.org"],
+            "citations": ["http://worldwithoutgenocide.org/genocides-and-conflicts/cambodian-genocide"],
+        })
+        self.assertEquals(rPost.status_code, 201)
+        rPostJson = json.loads(rPost.content)
+        self.assertTrue(type(rPostJson) == type({}))
+
+        rId = None
+        try:
+            rId = int(responseJson["id"])
+        except ValueError:
+            self.assertTrue(False)
+        else:
+            rGet = self.client.get('/api/crisis/%s' % rId)
+            self.assertTrue(rGet.status_code, 200)
+            rGetJson = json.loads(rGet.content)
+            self.assertEquals(rGetJson["name"], "Cambodian Genocide")
+            self.assertEquals(rGetJson["kind"], "Attack")
 
 
 

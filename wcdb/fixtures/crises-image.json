@@ -1,0 +1,50 @@
+[
+	{
+		"model":"crises.CrisesImages",
+		"pk":1,
+		"fields":{
+			"image": "http://www.globalresearch.ca/wp-content/uploads/2012/11/Israel_Palestine_Flag.png",
+			"crisis":1
+		}
+	},
+	{
+		"model":"crises.CrisesImages",
+		"pk":2,
+		"fields":{
+			"image": "http://msnbcmedia.msn.com/j/MSNBC/Components/Photo/_new/pb-130515-palestinian-jm-006.photoblog900.jpg",
+			"crisis":1
+		}
+	},	
+	{
+		"model":"crises.CrisesImages",
+		"pk":3,
+		"fields":{
+			"image": "http://upload.wikimedia.org/wikipedia/en/1/1b/Chernobyl_Disaster.jpg",
+			"crisis":2
+		}
+	},
+	{
+		"model":"crises.CrisesImages",
+		"pk":4,
+		"fields":{
+			"image": "http://norisximena.files.wordpress.com/2013/04/tsunami-wave.jpg",
+			"crisis":3
+		}
+	},
+	{
+		"model":"crises.CrisesImages",
+		"pk":5,
+		"fields":{
+			"image": "http://www.centralchronicle.com/wp-content/uploads/2011/09/13gas.jpg",
+			"crisis":4
+		}
+	},
+	{
+		"model":"crises.CrisesImages",
+		"pk":6,
+		"fields":{
+			"image": "http://upload.wikimedia.org/wikipedia/commons/1/18/Cypress_structure.jpeg",
+			"crisis":5
+		}
+	}
+]

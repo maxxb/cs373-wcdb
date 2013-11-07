@@ -1,0 +1,26 @@
+[
+	{
+		"model":"crises.OrgTwitter",
+		"pk":1,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=UNSCEAR",
+			"org":1
+		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":2,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Palestine+Liberation+Organization",
+			"org":2
+		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":3,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Union+Carbide",
+			"org":3
+		}
+	}
+]

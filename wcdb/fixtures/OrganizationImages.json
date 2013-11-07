@@ -1,0 +1,26 @@
+[
+	{
+		"model":"crises.OrgImages",
+		"pk":1,
+		"fields":{
+			"image": "http://www.irpa.net/images/stories/logo/unscear.gif",
+			"org":1
+		}
+	},
+	{
+		"model":"crises.OrgImages",
+		"pk":2,
+		"fields":{
+			"image": "http://www.forbiddensymbols.com/wp-content/uploads/plo_palestinian_liberation_organisation_flag.jpg",
+			"org":2
+		}
+	},
+	{
+		"model":"crises.OrgImages",
+		"pk":3,
+		"fields":{
+			"image": "http://www.bhopal.org/wp-content/uploads/2011/04/unioncarbide_1.gif",
+			"org":3
+		}
+	}
+]

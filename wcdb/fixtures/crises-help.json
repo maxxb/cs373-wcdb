@@ -1,0 +1,50 @@
+[
+	{
+		"model":"crises.CrisesHelp",
+		"pk":1,
+		"fields":{
+			"help":"Peaceful Negotiations between the parties",			
+			"crisis":1
+		}
+	},
+	{
+		"model":"crises.CrisesHelp",
+		"pk":2,
+		"fields":{
+			"help":"Recognition of the Palestinain nation in the UN",			
+			"crisis":1
+		}
+	},	
+	{
+		"model":"crises.CrisesHelp",
+		"pk":3,
+		"fields":{
+			"help":"Minimize consumption of nuclear energy sources",			
+			"crisis":2
+		}
+	},
+	{
+		"model":"crises.CrisesHelp",
+		"pk":4,
+		"fields":{
+			"help":"Support rebuilding efforts",			
+			"crisis":3
+		}
+	},
+	{
+		"model":"crises.CrisesHelp",
+		"pk":5,
+		"fields":{
+			"help":"Medical care for affected victims",			
+			"crisis":4
+		}
+	},
+	{
+		"model":"crises.CrisesHelp",
+		"pk":6,
+		"fields":{
+			"help":"None",			
+			"crisis":5
+		}
+	}
+]

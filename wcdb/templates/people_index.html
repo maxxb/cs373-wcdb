@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}{{org_data.org.name}}{% endblock %}
+{% block title %}{{people_data.person.name}}{% endblock %}
 
 {% block crisis %}  
-<center><h1>{{org_data.org.name}}</h1></center>
+<center><h1>{{people_data.person.name}}</h1></center>
 <br>
 <div class="panel-group" id="accordion" style="height: 348px;">
 	<div class="panel panel-default">
@@ -16,7 +16,7 @@
     	</div>
     	<div id="collapseOne" class="panel-collapse collapse in">
       		<div class="panel-body">
-        		<p>{{org_data.description}}</p>
+        		<p>{{people_data.description}}</p>
       		</div>
     	</div>
   	</div>
@@ -31,32 +31,28 @@
     	<div id="collapseTwo" class="panel-collapse collapse">
       		<div class="panel-body">
 	        	<ul>
-					<li><b>Type</b>: {{org_data.org.kind}}</li>
-					<li><b>Date Established</b>: {{org_data.date_established}}</li>
-					<li><b>Location</b>: {{org_data.location}}</li>
-					<li><b>Name</b>: {{org_data.contact_info.name}}</li>
-          <li><b>Address</b>: {{org_data.contact_info.address}}</li>
-          <li><b>Email</b>: {{org_data.contact_info.email}}</li>
-          <li><b>Phone</b>: {{org_data.contact_info.phone}}</li>
-					<li><b>Crises</b>:
-            {% for p in org_data.crises.all %}
-              <p>{{p.name}}</p>
-            {% endfor %}  
-          </li>
-          <li><b>Related people</b>:
-            {% for p in org_data.people.all %}
-              <p>{{p.name}}</p>
-            {% endfor %}  
-          </li>
-          <li><b>Citations</b>: 
-            {% for x in org_data.org.orgcitations_set.all %}
-              <a href="{{x.citations}}">{{x.citations}}</a><br>
-            {% endfor %}
-          </li>
+					<li><b>Type</b>: {{people_data.person.kind}}</li>
+					<li><b>Time Frame</b>: {{people_data.start_date}} to {{people_data.end_date}}</li>
+					<li><b>Location</b>: {{people_data.location}}</li>
 					<li><b>External Links</b>: 
-						{% for x in org_data.org.orglinks_set.all %}
+						{% for x in people_data.person.peoplelinks_set.all %}
 							<a href="{{x.external_links}}">{{x.external_links}}</a><br>
 						{% endfor %}
+					</li>
+					<li><b>Citations</b>: 
+						{% for x in people_data.person.peoplecitations_set.all %}
+							<a href="{{x.citations}}">{{x.citations}}</a><br>
+						{% endfor %}
+					</li>
+					<li><b>Related crises</b>:
+						{% for p in people_data.crises.all %}
+							<p>{{p.name}}</p>
+						{% endfor %}	
+					</li>
+					<li><b>Related organizations</b>:
+						{% for o in people_data.orgs.all %}
+							<p>{{o.name}}</p>
+						{% endfor %}	
 					</li>
 				</ul>
       		</div>
@@ -73,7 +69,7 @@
     	<div id="collapseThree" class="panel-collapse collapse">
       		<div class="panel-body">
       			<br>
-        		{% for x in org_data.org.orgimages_set.all %}
+        		{% for x in people_data.person.peopleimages_set.all %}
 					<center><a><img src = "{{x.image}}"></a></center><br>
 				{% endfor %}
       		</div>
@@ -90,7 +86,7 @@
     	<div id="collapseFour" class="panel-collapse collapse">
       		<div class="panel-body">
       			<br>
-      			{% for x in org_data.org.orgvideos_set.all %}
+      			{% for x in people_data.person.peoplevideos_set.all %}
 					<center><iframe width="420" height="315" src="{{x.video}}" frameborder="0" allowfullscreen></iframe></center><br>
 				{% endfor %}
       		</div>
@@ -107,7 +103,7 @@
     	<div id="collapseFive" class="panel-collapse collapse">
       		<div class="panel-body">
       			<br>
-      			{% for x in org_data.org.orgmaps_set.all %}
+      			{% for x in people_data.person.peoplemaps_set.all %}
 					<center><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{x.maps}}"></iframe></center><br>
 				{% endfor %}
       		</div>
@@ -123,7 +119,7 @@
     	</div>
     	<div id="collapseSix" class="panel-collapse collapse">
     		<br>
-    		{% for x in org_data.org.orgtwitter_set.all %}
+    		{% for x in people_data.person.peopletwitter_set.all %}
 				<center><a class="twitter-timeline"  href="{{x.twitter}}"  data-widget-id="{{x.widget_id}}"></a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><center><br>
 			{% endfor %}
