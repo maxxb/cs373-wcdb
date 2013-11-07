@@ -25,6 +25,11 @@ p {
 	font-weight: 300;
 	font-family: 'Open Sans', sans-serif;
 }
+a:link{
+	font-size: 17pt;
+	font-weight: 300;
+	font-family: 'Open Sans', sans-serif;
+}
 p1 {
 	font-size: 22pt;
 	font-weight: 300;
@@ -34,10 +39,6 @@ li {
 	font-size: 17pt;
 	font-weight: 300;
 	font-family: 'Open Sans', sans-serif;
-}
-img {
-	width: 100%;
-	max-width: 500px;
 }
 .col-md-4, .col-md-6{
 	padding: 35px;
