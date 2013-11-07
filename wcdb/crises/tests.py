@@ -142,6 +142,61 @@ class PeopleTests(TestCase):
         self.assertEquals(pMap.people.pk, 1)
         self.assertEquals(pMap.maps, u"http://goo.gl/maps/oOQCX")
 
+class OrganizationTests(TestCase):
+    fixtures = ['test-cases.json']
+
+    def test_organization_maps(self):
+        oMap = OrgMaps.objects.get(org__pk=1)
+        self.assertEquals(oMap.pk, 1)
+        self.assertEquals(oMap.org.pk, 1)
+        self.assertEquals(oMap.maps, u"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed")
+
+    def test_organization_images(self):
+        oImage = OrgImages.objects.filter(org__pk=1).order_by("pk")
+
+        self.assertEquals(oImage[0].pk, 1)
+        self.assertEquals(oImage[0].org.pk, 1)
+        self.assertEquals(oImage[0].image, u"http://www.irpa.net/images/stories/logo/unscear.gif")
+        #TODO: test multiple images
+
+    def test_organization_videos(self):
+        oVideo = OrgVideos.objects.get(org__pk=1)
+        self.assertEquals(oVideo.pk, 1)
+        self.assertEquals(oVideo.org.pk, 1)
+        self.assertEquals(oVideo.video, u"http://www.youtube.com/embed/gyLDNq3VBMU")
+
+    def test_organization_twitter(self):
+        oTwitter = OrgTwitter.objects.get(org__pk=1)
+        self.assertEquals(oTwitter.pk, 1)
+        self.assertEquals(oTwitter.org.pk, 1)
+        self.assertEquals(oTwitter.widget_id, u"398316028322541568")
+        self.assertEquals(oTwitter.twitter, u"https://twitter.com/search?q=UNSCEAR")
+
+    def test_organization_links(self):
+        oLink = OrgLinks.objects.get(org__pk=1)
+        self.assertEquals(oLink.pk, 1)
+        self.assertEquals(oLink.org.pk, 1)
+        self.assertEquals(oLink.external_links, u"http://www.bmeia.gv.at/en/austrian-mission/austrian-mission-vienna/organizations-in-vienna/with-offices-at-the-vic/unscear.html")
+
+    def test_organization_citations(self):
+        oCite = OrgCitations.objects.get(org__pk=1)
+        self.assertEquals(oCite.pk, 1)
+        self.assertEquals(oCite.org.pk, 1)
+        self.assertEquals(oCite.citations, u"http://www.unscear.org/")
+
+    def test_organization_data(self):
+        # get the OrganizationData row associated with the row Organization with primary key 1
+        oData = OrganizationsData.objects.get(org__pk=1)
+        self.assertEquals(oData.pk, 1)
+        self.assertEquals(oData.org.pk, 1)
+        self.assertEquals(oData.org.name, u"UNSCEAR")
+        self.assertEquals(oData.description, u"UNSCEAR was established in 1955 by the General Assembly of the United Nations. The organizations purpose in the United Nations system is to assess and report levels and effects of exposure to ionizing radiation. Governments and organizations throughout the world rely on the Committee's estimates as the scientific basis for evaluating radiation risk and for establishing protective measures. UNSCEAR was involved in the assessment of radiation exposures and health effects early on during the Chernobyl accident in 1986.")
+        self.assertEquals(oData.location, u"Sessions are held in Vienna International Centre, Vienna, Austria.")
+        self.assertEquals(oData.date_established, date(1955, 1, 1))
+        self.assertEquals(oData.contact_info.get(pk=1), ContactInfo.objects.get(pk=1)) #FIXME: fails with "no attribute 'get'"
+        self.assertEquals(oData.people.get(pk=3), People.objects.get(pk=3)) #3rd person not defined in test-data.json
+        self.assertEquals(oData.orgs.get(pk=2), Organizations.objects.get(pk=2))
+
 CRISIS_A = {
     u"name": u"Cambodian Genocide",
     u"start_date": u"1975-01-01",

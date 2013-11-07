@@ -4,6 +4,7 @@
 		"pk":1,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=UNSCEAR",
+			"widget_id":"398316028322541568",
 			"org":1
 		}
 	},
@@ -12,6 +13,7 @@
 		"pk":2,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=Palestine+Liberation+Organization",
+			"widget_id":"398316309189898240",
 			"org":2
 		}
 	},
@@ -20,6 +22,7 @@
 		"pk":3,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=Union+Carbide",
+			"widget_id":"398316573301026816",
 			"org":3
 		}
 	}
