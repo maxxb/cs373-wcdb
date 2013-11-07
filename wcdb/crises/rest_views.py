@@ -146,12 +146,107 @@ def post_new_crisis(request):
     return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
 def post_new_organization(request):
-    #TODO: just copy above (try to reduce redundancy)
-    pass
+    #TODO: reduce redundancy with above
+    #TODO: Handle authentication here
+
+    # In Django 1.5, there's request.body or request.content.
+    # Django 1.3 (CS machines) has POST, which is a dictlike object
+    # that contains the entire json string as the key for some reason.
+    b = simplejson.loads(request.POST.keys()[0])
+
+    # create the org and get its auto-assigned primary key
+    org = Organizations(name=b[u"name"], kind=b[u"kind"])
+    org.save()
+    cid = org.pk
+
+    # TODO: test
+    # create the contact info object directly from post request?
+    contact_info = ContactInfo(
+        name = b[u"contact_name"], # TODO: figure out what keys are expected in the post request
+        address = b[u"address"],
+        email = b[u"contact_email"], #how to set email fields?
+        phone = b[u"phone"],
+    )
+
+    contact_info.save()
+
+    # create the org data 
+    orgData = OrganizationsData(
+        org = org,
+        date_established = dateFromString(b[u"date_established"]),
+        description = b[u"description"],
+        location = b[u"location"],
+        contact_info = contact_info,
+    )
+
+    # update the org's associations 
+    people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
+    crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
+    orgData.people.add(*people)
+    orgData.crises.add(*orgs)
+    orgData.save()
+
+    # create the org's maps, images, etc
+    for x in b[u"maps"]:
+        OrgMaps(maps=x, org=org).save()
+    for x in b[u"images"]:
+        OrgImages(image=x, org=org).save()
+    for x in b[u"videos"]:
+        OrgVideos(video=x, org=org).save()
+    for x in b[u"social_media"]:
+        # TODO: get widget_id from table
+        OrgTwitter(twitter=x, widget_id=123456789, org=org).save()
+    for x in b[u"external_links"]:
+        OrgLinks(external_links=x, org=org).save()
+    for x in b[u"citations"]:
+        OrgCitations(citations=x, org=org).save()
+
+    return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
 def post_new_person(request):
-    #TODO: just copy above (try to reduce redundancy)
-    pass
+    #TODO: reduce redundancy with above
+    #TODO: Handle authentication here
+
+    # In Django 1.5, there's request.body or request.content.
+    # Django 1.3 (CS machines) has POST, which is a dictlike object
+    # that contains the entire json string as the key for some reason.
+    b = simplejson.loads(request.POST.keys()[0])
+
+    # create the person and get its auto-assigned primary key
+    person = People(name=b[u"name"], kind=b[u"kind"])
+    person.save()
+    cid = person.pk
+
+    # create the person data 
+    personData = PeopleData(
+        person = person,
+        dob = dateFromString(b[u"dob"]),
+        location = b[u"location"],
+    )
+
+    # update the person's associations 
+    orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), b[u"organizations"]))
+    crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
+    personData.orgs.add(*orgs)
+    personData.crises.add(*crises)
+    personData.save()
+
+    # create the person's maps, images, etc
+    for x in b[u"maps"]:
+        PeopleMaps(maps=x, people=people).save()
+    for x in b[u"images"]:
+        PeopleImages(image=x, people=people).save()
+    for x in b[u"videos"]:
+        PeopleVideos(video=x, people=people).save()
+    for x in b[u"social_media"]:
+        # TODO: get widget_id from table
+        PeopleTwitter(twitter=x, widget_id=123456789, people=people).save()
+    for x in b[u"external_links"]:
+        PeopleLinks(external_links=x, people=people).save()
+    for x in b[u"citations"]:
+        PeopleCitations(citations=x, people=people).save()
+
+    return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
 # PUT implementations #
 def put_crisis(crisis):
