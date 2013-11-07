@@ -6,20 +6,7 @@
 <center><h1>{{people_data.people.name}}</h1></center>
 <br>
 <div class="panel-group" id="accordion" style="height: 348px;">
-<div class="panel panel-default">
-<div class="panel-heading">
-<h1 class="panel-title">
-<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-Overview
-</a>
-</h1>
-</div>
-<div id="collapseOne" class="panel-collapse collapse in">
-<div class="panel-body">
-<p>{{people_data.description}}</p>
-</div>
-</div>
-</div>
+
 <div class="panel panel-default">
 <div class="panel-heading">
 <h1 class="panel-title">
@@ -31,6 +18,8 @@ Additional Information
 <div id="collapseTwo" class="panel-collapse collapse">
 <div class="panel-body">
 <ul>
+<li><b>Date of Birth</b>: {{people_data.dob}}</li>
+<li><b>Location</b>: {{people_data.location}}</li>
 <li><b>Type</b>: {{people_data.people.kind}}</li>
 <li><b>External Links</b>:
 {% for x in people_data.people.peoplelinks_set.all %}

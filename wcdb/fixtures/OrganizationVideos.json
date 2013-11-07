@@ -3,7 +3,7 @@
 		"model":"crises.OrgVideos",
 		"pk":1,
 		"fields":{
-			"video":"http://www.youtube.com/embed/gyLDNq3VBMU",
+			"video":"//www.youtube.com/embed/gyLDNq3VBMU",
 			"org":1
 		}
 	},
@@ -11,7 +11,7 @@
 		"model":"crises.OrgVideos",
 		"pk":2,
 		"fields":{
-			"video":"Http://www.youtube.com/embed/m8rd33qPJ78",
+			"video":"//www.youtube.com/embed/m8rd33qPJ78",
 			"org":2
 		}
 	},
@@ -19,8 +19,24 @@
 		"model":"crises.OrgVideos",
 		"pk":3,
 		"fields":{
-			"video":"http://www.youtube.com/embed/8Xt_Ddltzn4",
+			"video":"//www.youtube.com/embed/8Xt_Ddltzn4",
 			"org":3
+		}
+	},
+	{
+		"model":"crises.OrgVideos",
+		"pk":4,
+		"fields":{
+			"video":"//www.youtube.com/embed/BslxH_8m7pc",
+			"org":4
+		}
+	},
+	{
+		"model":"crises.OrgVideos",
+		"pk":5,
+		"fields":{
+			"video":"//www.youtube.com/embed/YqCY9cYfJ7A",
+			"org":5
 		}
 	}
 ]

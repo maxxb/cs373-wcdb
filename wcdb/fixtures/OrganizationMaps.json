@@ -22,5 +22,21 @@
 			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Bhopal,+Madhya+Pradesh,+India&aq=0&oq=Bopal&sll=30.307761,-97.753401&sspn=1.209298,0.733337&t=h&ie=UTF8&hq=&hnear=Bhopal,+Madhya+Pradesh,+India&z=11&ll=23.259933,77.412615&output=embed",
 			"org":3
 		}
+	},
+	{
+		"model":"crises.OrgMaps",
+		"pk":4,
+		"fields":{
+			"maps":"",
+			"org":4
+		}
+	},
+	{
+		"model":"crises.OrgMaps",
+		"pk":5,
+		"fields":{
+			"maps":"",
+			"org":5
+		}
 	}
 ]
