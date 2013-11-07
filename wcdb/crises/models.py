@@ -47,11 +47,11 @@ class CrisesResourses(models.Model):
 	crisis = models.ForeignKey(Crises)
 
 class CrisesLinks(models.Model):
-	external_links = models.URLField(max_length=100)
+	external_links = models.URLField(max_length=500)
 	crisis = models.ForeignKey(Crises)
 
 class CrisesCitations(models.Model):
-	citations = models.URLField(max_length=100)
+	citations = models.URLField(max_length=500)
 	crisis = models.ForeignKey(Crises)	
 
 class CrisesData(models.Model):
@@ -87,11 +87,11 @@ class PeopleTwitter(models.Model):
 	people = models.ForeignKey(People)
 
 class PeopleLinks(models.Model):
-	external_links = models.URLField(max_length=100)
+	external_links = models.URLField(max_length=500)
 	people = models.ForeignKey(People)
 
 class PeopleCitations(models.Model):
-	citations = models.URLField(max_length=100)
+	citations = models.URLField(max_length=500)
 	people = models.ForeignKey(People)	
 
 class PeopleData(models.Model):
