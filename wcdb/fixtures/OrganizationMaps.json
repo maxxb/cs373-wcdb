@@ -27,7 +27,7 @@
 		"model":"crises.OrgMaps",
 		"pk":4,
 		"fields":{
-			"maps":"",
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Suite+201,+789+Don+Mills+Road+Don+Mills+Ontario+M3C+1T5&aq=&sll=30.307761,-97.753401&sspn=1.243671,2.024231&ie=UTF8&hq=&hnear=789+Don+Mills+Rd+%23201,+Toronto,+Toronto+Division,+Ontario+M3C+1T5,+Canada&t=m&z=14&ll=43.71841,-79.337774&output=embed",
 			"org":4
 		}
 	},
@@ -35,7 +35,7 @@
 		"model":"crises.OrgMaps",
 		"pk":5,
 		"fields":{
-			"maps":"",
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=440+5th+Ave+N.,+Seattle,+WA+98109&aq=&sll=43.71841,-79.337774&sspn=0.008134,0.015814&ie=UTF8&hq=&hnear=440+5th+Ave+N,+Seattle,+Washington+98109&t=m&z=14&ll=47.621961,-122.347509&output=embed",
 			"org":5
 		}
 	}
