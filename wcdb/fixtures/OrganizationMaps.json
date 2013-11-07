@@ -11,7 +11,7 @@
 		"model":"crises.OrgMaps",
 		"pk":2,
 		"fields":{
-			"maps":"https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=palestine&amp;sll=33.238688,34.024658&amp;sspn=9.36671,5.866699&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Palestine&amp;ll=31.952162,35.233154&amp;spn=1.041069,1.466675&amp;z=9&amp;output=embed",
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=palestine&sll=33.238688,34.024658&sspn=9.36671,5.866699&t=h&ie=UTF8&hq=&hnear=Palestine&ll=31.952162,35.233154&spn=1.041069,1.466675&z=9&output=embed",
 			"org":2
 		}
 	},
@@ -19,7 +19,7 @@
 		"model":"crises.OrgMaps",
 		"pk":3,
 		"fields":{
-			"maps":"https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Bhopal,+Madhya+Pradesh,+India&amp;aq=0&amp;oq=Bopal&amp;sll=30.307761,-97.753401&amp;sspn=1.209298,0.733337&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Bhopal,+Madhya+Pradesh,+India&amp;z=11&amp;ll=23.259933,77.412615&amp;output=embed",
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Bhopal,+Madhya+Pradesh,+India&aq=0&oq=Bopal&sll=30.307761,-97.753401&sspn=1.209298,0.733337&t=h&ie=UTF8&hq=&hnear=Bhopal,+Madhya+Pradesh,+India&z=11&ll=23.259933,77.412615&output=embed",
 			"org":3
 		}
 	}
