@@ -43,5 +43,51 @@
 			"widget_id": "398314708932911104",
 			"org":5
 		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":6,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=FBI ",
+			"widget_id": "398594586680885248",
+			"org":6
+		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":7,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=United+Nations",
+			"widget_id": "398594924234297344",
+			"org":7
+		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":8,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=DEA",
+			"widget_id": "398595355387760640",
+			"org":8
+		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":9,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=NATO",
+			"widget_id": "398595562238267392",
+			"org":9
+		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":10,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=BP",
+			"widget_id": "398595773211742208",
+			"org":10
+		}
 	}
+	
 ]

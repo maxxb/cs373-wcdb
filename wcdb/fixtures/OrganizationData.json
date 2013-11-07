@@ -80,7 +80,7 @@
 			"date_established":"1935-01-01",
 			"contact_info": 6,
 			"people":[],
-			"crises":[]
+			"crises":[9, 8, 6]
 		}
 	},
 	{
@@ -108,7 +108,7 @@
 			"date_established":"1973-01-06",
 			"contact_info": 8,
 			"people":[],
-			"crises":[]
+			"crises":[9]
 		}
 	},
 	{
@@ -136,7 +136,7 @@
 			"date_established":"1909-01-01",
 			"contact_info": 10,
 			"people":[],
-			"crises":[]
+			"crises":[7]
 		}
 	}
 ]
