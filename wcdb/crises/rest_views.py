@@ -160,12 +160,12 @@ def post_new_organization(request):
     cid = org.pk
 
     # TODO: test
-    # create the contact info object directly from post request?
+    # create the contact info object from post request
     contact_info = ContactInfo(
-        name = b[u"contact_name"], # TODO: figure out what keys are expected in the post request
-        address = b[u"address"],
-        email = b[u"contact_email"], #how to set email fields?
-        phone = b[u"phone"],
+        name = b[u"contact_info"][u"name"], # not sure if this is how nested json can be read in
+        address = b[u"contact_info"][u"address"],
+        email = b[u"contact_info"][u"email"], #how to set email fields?
+        phone = b[u"contact_info"][u"phone"],
     )
 
     contact_info.save()
@@ -250,7 +250,8 @@ def post_new_person(request):
 
 # PUT implementations #
 def put_crisis(crisis):
-    #TODO: use an insert?
+    #TODO: check for existing crisis, if exists, do an update on it
+    #if doesn't exist, create it? or just do nothing?
     pass
 
 def put_person(person):
