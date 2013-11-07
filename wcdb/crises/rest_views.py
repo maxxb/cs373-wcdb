@@ -55,8 +55,17 @@ def crisis(request, cid):
 
 def crisis_orgs(request, cid):
     """ List all related organizations """
-    #TODO: use a subquery
-    pass
+    if request.method == 'GET':
+        matches = CrisesData.objects.filter(crises__pk=cid)
+        if not matches:
+            return resourceNotFound()
+        cData = matches[0]
+        result = []
+        for org in cData.orgs.all():
+            result.append(get_org_dict(org))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
 
 def crisis_people(request, cid):
     """ List all related people """
@@ -425,5 +434,59 @@ def organization_people(request, oid):
 def organization_crises(request, oid):
     """ List all related crises """
     pass
+
+def get_contact_info_dict(orgData):
+    """
+    orgData is a row from the OrganizationsData table.
+    Return a dict containing the contact info for the organization.
+    """
+    return {
+        "name"      : "FEMA",
+        "address"   : "P.O. Box 10055 Hyattsville, MD 20782-8055"
+        "email"     : "None",
+        "phone": "800-621-3362"}
+    }
+
+def get_org_dict(orgData):
+    """
+    orgData is a row from the OrganizationsData table
+    This gathers all the info about the org into a single dict 
+        (per the API) and returns it
+    """
+    cid = orgData.org.pk
+    
+    # grab everything we need from the database
+    oMaps       = [x.maps for x in OrgMaps.objects.filter(org__pk=cid)]
+    oImages     = [x.image for x in OrgImages.objects.filter(org__pk=cid)]
+    oVideos     = [x.video for x in OrgVideos.objects.filter(org__pk=cid)]
+    oSocial     = [x.twitter for x in OrgTwitter.objects.filter(org__pk=cid)]
+    oLinks      = [x.external_links for x in OrgLinks.objects.filter(org__pk=cid)]
+    oCitations  = [x.citations for x in OrgCitations.objects.filter(org__pk=cid)]
+    oPeople     = [x.pk for x in orgData.people.all()]
+    oCrises     = [x.pk for x in orgData.crises.all()]
+    
+
+    # construct the response data
+    return {
+        "name"              : orgData.org.name,
+        "id"                : orgData.org.pk,
+        "start_date"        : str(orgData.start_date),
+        "end_date"          : str(orgData.end_date),
+        "location"          : orgData.location,
+        "kind"              : orgData.org.kind,
+        "description"       : orgData.description,
+        "human_impact"      : orgData.human_impact,
+        "economic_impact"   : orgData.economic_impact,
+        "maps"              : oMaps,
+        "images"            : oImages,
+        "videos"            : oVideos,
+        "social_media"      : oSocial,
+        "ways_to_help"      : oHelp,
+        "resources_needed"  : oResources,
+        "people"            : oPeople,
+        "organizations"     : oOrgs,
+        "external_links"    : oLinks,
+        "citations"         : oCitations,
+    }
 
 
