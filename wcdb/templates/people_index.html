@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}{{people_data.people.name}}{% endblock %}
+{% block title %}{{people_data.person.name}}{% endblock %}
 
 {% block crisis %}
-<center><h1>{{people_data.people.name}}</h1></center>
+<center><h1>{{people_data.person.name}}</h1></center>
 <br>
 <div class="panel-group" id="accordion" style="height: 348px;">
 	<div class="panel panel-default">
@@ -19,14 +19,14 @@
 				<ul>
 					<li><b>Date of Birth</b>: {{people_data.dob}}</li>
 					<li><b>Location</b>: {{people_data.location}}</li>
-					<li><b>Type</b>: {{people_data.people.kind}}</li>
+					<li><b>Type</b>: {{people_data.person.kind}}</li>
 					<li><b>External Links</b>:
-					{% for x in people_data.people.peoplelinks_set.all %}
+					{% for x in people_data.person.peoplelinks_set.all %}
 						<a href="{{x.external_links}}">{{x.external_links}}</a><br>
 					{% endfor %}
 					</li>
 					<li><b>Citations</b>:
-					{% for x in people_data.people.peoplecitations_set.all %}
+					{% for x in people_data.person.peoplecitations_set.all %}
 						<a href="{{x.citations}}">{{x.citations}}</a><br>
 					{% endfor %}
 					</li>
@@ -55,7 +55,7 @@
 		<div id="collapseThree" class="panel-collapse collapse">
 			<div class="panel-body">
 				<br>
-			{% for x in people_data.people.peopleimages_set.all %}
+			{% for x in people_data.person.peopleimages_set.all %}
 				<center><a><img src = "{{x.image}}"></a></center><br>
 			{% endfor %}
 		</div>
@@ -72,7 +72,7 @@
 	<div id="collapseFour" class="panel-collapse collapse">
 		<div class="panel-body">
 			<br>
-			{% for x in people_data.people.peoplevideos_set.all %}
+			{% for x in people_data.person.peoplevideos_set.all %}
 				<center><iframe width="420" height="315" src="{{x.video}}" frameborder="0" allowfullscreen></iframe></center><br>
 			{% endfor %}
 		</div>
@@ -89,7 +89,7 @@
 	<div id="collapseFive" class="panel-collapse collapse">
 		<div class="panel-body">
 			<br>
-			{% for x in people_data.people.peoplemaps_set.all %}
+			{% for x in people_data.person.peoplemaps_set.all %}
 				<center><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{x.maps}}"></iframe></center><br>
 			{% endfor %}
 		</div>
@@ -105,7 +105,7 @@
 	</div>
 	<div id="collapseSix" class="panel-collapse collapse">
 		<br>
-		{% for x in people_data.people.peopletwitter_set.all %}
+		{% for x in people_data.person.peopletwitter_set.all %}
 			<center><a class="twitter-timeline"  href="{{x.twitter}}"  data-widget-id="{{x.widget_id}}"></a>
 			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><center><br>
 		{% endfor %}
