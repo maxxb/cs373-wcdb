@@ -72,20 +72,17 @@ def get_all_crises():
     return jsonResponse(simplejson.dumps(data), 200)
 
 def post_new_crisis(request):
-    print request
+    #TODO: Handle authentication here
 
     # In Django 1.5, there's request.body or request.content.
     # Django 1.3 (CS machines) has POST, which is a dictlike object
     # that contains the entire json string as the key for some reason.
     b = simplejson.loads(request.POST.keys()[0])
-    print b    
 
     # create the crisis and get its auto-assigned primary key
     crisis = Crises(name=b[u"name"], kind=b[u"kind"])
     crisis.save()
     cid = crisis.pk
-    print cid
-    print dateFromString(b[u'start_date'])
 
     # create the crisis data 
     crisisData = CrisesData(
@@ -107,30 +104,22 @@ def post_new_crisis(request):
 
     # create the crisis's maps, images, etc
     for x in b[u"maps"]:
-        a = CrisesMaps(maps=x, crisis=crisis)
-        a.save()
+        CrisesMaps(maps=x, crisis=crisis).save()
     for x in b[u"images"]:
-        a = CrisesImages(image=x, crisis=crisis)
-        a.save()
+        CrisesImages(image=x, crisis=crisis).save()
     for x in b[u"videos"]:
-        a = CrisesVideos(video=x, crisis=crisis)
-        a.save()
+        CrisesVideos(video=x, crisis=crisis).save()
     for x in b[u"social_media"]:
         # TODO: can we get the widget_id from the url?
-        a = CrisesTwitter(twitter=x, widget_id=0, crisis=crisis)
-        a.save()
+        CrisesTwitter(twitter=x, widget_id=123456789, crisis=crisis).save()
     for x in b[u"ways_to_help"]:
-        a = CrisesHelp(help=x, crisis=crisis)
-        a.save()
-    for x in b[u"resourcesi_needed"]:
-        a = CrisesResourses(resourses=x, crisis=crisis)
-        a.save()
+        CrisesHelp(help=x, crisis=crisis).save()
+    for x in b[u"resources_needed"]:
+        CrisesResourses(resourses=x, crisis=crisis).save()
     for x in b[u"external_links"]:
-        a = CrisesLinks(external_links=x, crisis=crisis)
-        a.save()
+        CrisesLinks(external_links=x, crisis=crisis).save()
     for x in b[u"citations"]:
-        a = CrisesCitations(citations=x, crisis=crisis)
-        a.save()
+        CrisesCitations(citations=x, crisis=crisis).save()
 
     return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
@@ -173,7 +162,7 @@ def get_crisis_dict(crisisData):
         "kind"              : crisisData.crisis.kind,
         "description"       : crisisData.description,
         "human_impact"      : crisisData.human_impact,
-         "economic_impact"   : crisisData.economic_impact,
+        "economic_impact"   : crisisData.economic_impact,
         "maps"              : cMaps,
         "images"            : cImages,
         "videos"            : cVideos,

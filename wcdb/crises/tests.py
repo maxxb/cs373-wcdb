@@ -14,7 +14,7 @@ from crises.models import *
 import json
 
 class CrisesTests(TestCase):
-    fixtures = ['test.json']
+    fixtures = ['test-cases.json']
 
     def test_crises_data(self):
         # get the CrisesData row associated with the row Crises with primary key 1
@@ -23,7 +23,7 @@ class CrisesTests(TestCase):
         self.assertEquals(cData.crisis.pk, cData.pk)
         self.assertEquals(cData.crisis.name, u"Israeli-Palestinian conflict")
         self.assertEquals(cData.crisis.kind, u"political")
-        # I guess test.json has some fancy unicode characters in it 
+        # I guess test-cases.json has some fancy unicode characters in it 
         self.assertTrue(cData.description.startswith(
             u"The Israeli\u2013Palestinian conflict is the ongoing struggle between"))
         self.assertEquals(cData.location, u"West Bank and Gaza Strip")
@@ -132,7 +132,7 @@ CRISIS_B = {
 }
 
 class RestTests(TestCase):
-    fixtures = ['test.json']
+    fixtures = ['test-cases.json']
 
     def test_rest_get_crises(self):
         r = self.client.get('/api/crises')
@@ -168,14 +168,15 @@ class RestTests(TestCase):
         rId = None
         try:
             rId = int(rPostJson["id"])
-            print rId
         except ValueError:
             self.assertTrue(False)
         else:
+            expectedResponse = CRISIS_A
+            expectedResponse["id"] = rId
             rGet = self.client.get('/api/crises/%s' % rId)
             self.assertTrue(rGet.status_code, 200)
             rGetJson = json.loads(rGet.content)
-            self.assertEquals(rGetJson, CRISIS_A)
+            self.assertEquals(rGetJson, expectedResponse)
 
 
 
