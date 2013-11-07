@@ -150,7 +150,10 @@ class RestTests(TestCase):
         self.assertTrue(responseJson[1]["kind"] == "accident")
 
     def test_rest_get_crisis(self):
+        # By default the test harness hides diffs that are longer than some maximum
+        # Set maxDiff to None to show the diff.
         self.maxDiff = None
+
         r = self.client.get('/api/crises/1')
         self.assertEquals(r.status_code, 200)
         responseJson = json.loads(r.content)
@@ -158,13 +161,18 @@ class RestTests(TestCase):
         self.assertEquals(responseJson, CRISIS_B)
 
     def test_rest_post_crisis(self):
+        # By default the test harness hides diffs that are longer than some maximum
+        # Set maxDiff to None to show the diff.
         self.maxDiff = None
+
+        # Make the post request. The response is the id of the newly-created crisis
         rPost = self.client.post('/api/crises', data=simplejson.dumps(CRISIS_A), content_type='application/json')
         self.assertEquals(rPost.status_code, 201)
-        rPostJson = json.loads(rPost.content)
+        rPostJson = json.loads(rPost.content)    
         self.assertTrue(type(rPostJson) == type({}))
         self.assertTrue(rPostJson.has_key(u"id"))
 
+        # Do a get on the returned id for verification
         rId = None
         try:
             rId = int(rPostJson["id"])
