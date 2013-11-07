@@ -4,7 +4,7 @@
 		"pk":1,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=UNSCEAR",
-			"widget_id": 393181712336683010,
+			"widget_id":"398316028322541568",
 			"org":1
 		}
 	},
@@ -13,7 +13,7 @@
 		"pk":2,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=Palestine+Liberation+Organization",
-			"widget_id": 393185670824341505,
+			"widget_id":"398316309189898240",
 			"org":2
 		}
 	},
@@ -22,7 +22,7 @@
 		"pk":3,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=Union+Carbide",
-			"widget_id": 393187587713544192,
+			"widget_id":"398316573301026816",
 			"org":3
 		}
 	},
@@ -31,7 +31,7 @@
 		"pk":4,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=FOCUS",
-			"widget_id": 398314452090503168,
+			"widget_id": "398314452090503168",
 			"org":4
 		}
 	},
@@ -40,7 +40,7 @@
 		"pk":5,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=Bill+%26+Melinda+Gates+Foundation",
-			"widget_id": 398314708932911104,
+			"widget_id": "398314708932911104",
 			"org":5
 		}
 	}
