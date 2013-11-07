@@ -35,6 +35,10 @@ li {
 	font-weight: 300;
 	font-family: 'Open Sans', sans-serif;
 }
+img {
+	width: 100%;
+	max-width: 500px;
+}
 .col-md-4, .col-md-6{
 	padding: 35px;
 }
