@@ -32,6 +32,14 @@
     }
 },  
 {
+    "model":"crises.People",
+    "pk":3,
+    "fields":{
+        "name":"Mikhail Gorbachev",
+        "kind":"political leader"
+    }
+},
+{
     "model":"crises.Organizations",
     "pk":1,
     "fields":{
@@ -248,6 +256,150 @@
         "twitter":"http://twitter.com/search?q=warren+anderson+bhopal" ,
         "widget_id": 397559394017095680,
         "people":2
+    }
+},
+{
+    "model":"crises.OrganizationsData",
+    "pk":1,
+    "fields":{
+
+        "org":1,
+        "description":"UNSCEAR was established in 1955 by the General Assembly of the United Nations. The organizations purpose in the United Nations system is to assess and report levels and effects of exposure to ionizing radiation. Governments and organizations throughout the world rely on the Committee's estimates as the scientific basis for evaluating radiation risk and for establishing protective measures. UNSCEAR was involved in the assessment of radiation exposures and health effects early on during the Chernobyl accident in 1986.",
+        "location": "Sessions are held in Vienna International Centre, Vienna, Austria.",
+        "date_established":"1955-01-01",
+        "contact_info": 1,
+        "people":[3],
+        "crises":[2]
+    }
+},
+{
+    "model":"crises.OrganizationsData",
+    "pk":2,
+    "fields":{
+
+        "org":2,
+        "description":"Umbrella political organization claiming to represent the world's Palestinians - those Arabs, and their descendants, who lived in  mandated Palestine before the creation of the State of Israel in 1948. It was formed in 1964 to centralize the leadership of various Palestine groups that previously had operated as clandestine resistance movements. It came into prominence only after the Six-Day War of June 1967, however, and engaged in a protracted guerrilla war against Israel during the 1960s, ’70s, and ’80s before entering into peace negotiations with that country in the 1990s.",
+        "location": "Sessions are held in Vienna International Centre, Vienna, Austria.",
+        "date_established":"1964-06-02",
+        "contact_info": 2,
+        "people":[1],
+        "crises":[1]
+    }
+},
+{
+    "model":"crises.OrgMaps",
+    "pk":1,
+    "fields":{
+        "maps":"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgMaps",
+    "pk":2,
+    "fields":{
+        "maps":"https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=palestine&amp;sll=33.238688,34.024658&amp;sspn=9.36671,5.866699&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Palestine&amp;ll=31.952162,35.233154&amp;spn=1.041069,1.466675&amp;z=9&amp;output=embed",
+        "org":2
+    }
+},
+{
+    "model":"crises.OrgImages",
+    "pk":1,
+    "fields":{
+        "image": "http://www.irpa.net/images/stories/logo/unscear.gif",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgImages",
+    "pk":2,
+    "fields":{
+        "image": "http://www.forbiddensymbols.com/wp-content/uploads/plo_palestinian_liberation_organisation_flag.jpg",
+        "org":2
+    }
+},
+{
+    "model":"crises.OrgVideos",
+    "pk":1,
+    "fields":{
+        "video":"http://www.youtube.com/embed/gyLDNq3VBMU",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgVideos",
+    "pk":2,
+    "fields":{
+        "video":"Http://www.youtube.com/embed/m8rd33qPJ78",
+        "org":2
+    }
+},
+{
+    "model":"crises.OrgLinks",
+    "pk":1,
+    "fields":{
+        "external_links":"http://www.bmeia.gv.at/en/austrian-mission/austrian-mission-vienna/organizations-in-vienna/with-offices-at-the-vic/unscear.html",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgLinks",
+    "pk":2,
+    "fields":{
+        "external_links":"http://www.infoplease.com/encyclopedia/history/palestine-liberation-organization.html",
+        "org":2
+    }
+},
+{
+    "model":"crises.OrgTwitter",
+    "pk":1,
+    "fields":{
+        "twitter":"https://twitter.com/search?q=UNSCEAR",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgTwitter",
+    "pk":2,
+    "fields":{
+        "twitter":"https://twitter.com/search?q=Palestine+Liberation+Organization",
+        "org":2
+    }
+},
+{
+    "model":"crises.OrgCitations",
+    "pk":1,
+    "fields":{
+        "citations":"http://www.unscear.org/",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgCitations",
+    "pk":2,
+    "fields":{
+        "citations":"http://www.unioncarbide.com/",
+        "org":2
+    }
+},
+{
+    "model":"crises.ContactInfo",
+    "pk":1,
+    "fields":{
+        "name": "UNSCEAR secretariat",
+        "address": "UNITED NATIONS Vienna International Centre P.O. Box 500 A-1400 Vienna, AUSTRIA",
+        "email": "notfound@notfound.com",
+        "phone": 1260604330
+    }
+},
+{
+    "model":"crises.ContactInfo",
+    "pk":2,
+    "fields":{
+        "name": "N/A",
+        "address": "N/A",
+        "email": "notfound@notfound.com",
+        "phone": "N/A"
     }
 }
 ]

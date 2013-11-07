@@ -142,6 +142,60 @@ class PeopleTests(TestCase):
         self.assertEquals(pMap.people.pk, 1)
         self.assertEquals(pMap.maps, u"http://goo.gl/maps/oOQCX")
 
+class OrganizationTests(TestCase):
+    fixtures = ['test-cases.json']
+
+    def test_org_data(self):
+        oData = OrganizationsData.objects.get(org__pk=1)
+        self.assertEquals(oData.pk, 1)
+        self.assertEquals(oData.org.pk, 1)
+        self.assertEquals(oData.org.name, u"PLO")
+        self.assertEquals(oData.org.kind, u"political party")
+        self.assertTrue(oData.description.startswith(u"UNSCEAR was established in 1955 by the General Assembly of the United Nations."))
+        self.assertEquals(oData.location, u"Sessions are held in Vienna International Centre, Vienna, Austria.")
+        self.assertEquals(oData.date_established, date(1955, 1, 1))
+        self.assertEquals(oData.contact_info.pk, 1)
+        self.assertEquals(oData.contact_info.name, u"UNSCEAR secretariat")
+        self.assertEquals(oData.contact_info.address, u"UNITED NATIONS Vienna International Centre P.O. Box 500 A-1400 Vienna, AUSTRIA")
+        self.assertEquals(oData.contact_info.email, u"notfound@notfound.com")
+        self.assertEquals(oData.contact_info.phone, u'1260604330')
+
+    def test_org_maps(self):
+        oMap = OrgMaps.objects.get(org__pk=1)
+        self.assertEquals(oMap.pk, 1)
+        self.assertEquals(oMap.org.pk, 1)
+        self.assertEquals(oMap.maps, u"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed")
+        
+    def test_org_images(self):
+        oImage = OrgImages.objects.get(org__pk=1)
+        self.assertEquals(oImage.pk, 1)
+        self.assertEquals(oImage.org.pk, 1)
+        self.assertEquals(oImage.image, u"http://www.irpa.net/images/stories/logo/unscear.gif")
+
+    def test_org_videos(self):
+        oVideo = OrgVideos.objects.get(org__pk=1)
+        self.assertEquals(oVideo.pk, 1)
+        self.assertEquals(oVideo.org.pk, 1)
+        self.assertEquals(oVideo.video, u"http://www.youtube.com/embed/gyLDNq3VBMU")
+
+    def test_org_twitter(self):
+        oTwitter = OrgTwitter.objects.get(org__pk=1)
+        self.assertEquals(oTwitter.pk, 1)
+        self.assertEquals(oTwitter.org.pk, 1)
+        self.assertEquals(oTwitter.twitter, u"https://twitter.com/search?q=UNSCEAR")
+
+    def test_org_links(self):
+        oLink = OrgLinks.objects.get(org__pk=1)
+        self.assertEquals(oLink.pk, 1)
+        self.assertEquals(oLink.org.pk, 1)
+        self.assertEquals(oLink.external_links, u"http://www.bmeia.gv.at/en/austrian-mission/austrian-mission-vienna/organizations-in-vienna/with-offices-at-the-vic/unscear.html")
+
+    def test_org_citations(self):
+        oCite = OrgCitations.objects.get(org__pk=1)
+        self.assertEquals(oCite.pk, 1)
+        self.assertEquals(oCite.org.pk, 1)
+        self.assertEquals(oCite.citations, u"http://www.unscear.org/")
+
 CRISIS_A = {
     u"name": u"Cambodian Genocide",
     u"start_date": u"1975-01-01",
