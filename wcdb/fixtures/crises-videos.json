@@ -38,5 +38,45 @@
 			"video":"//www.youtube.com/embed/lS_3XoBr78A",
 			"crisis":5
 		}
+	},
+	{
+		"model":"crises.CrisesVideos",
+		"pk":6,
+		"fields":{
+			"video":"//www.youtube.com/embed/HC8FNNq9bb4",
+			"crisis":6
+		}
+	},
+	{
+		"model":"crises.CrisesVideos",
+		"pk":7,
+		"fields":{
+			"video":"//www.youtube.com/embed/QiF-X-Ez9Bs",
+			"crisis":7
+		}
+	},
+	{
+		"model":"crises.CrisesVideos",
+		"pk":8,
+		"fields":{
+			"video":"//www.youtube.com/embed/rENTl5JKzlQ",
+			"crisis":8
+		}
+	},
+	{
+		"model":"crises.CrisesVideos",
+		"pk":9,
+		"fields":{
+			"video":"//www.youtube.com/embed/HhbP61Iflv8",
+			"crisis":9
+		}
+	},
+	{
+		"model":"crises.CrisesVideos",
+		"pk":10,
+		"fields":{
+			"video":"//www.youtube.com/embed/PDMmOpfvyWw",
+			"crisis":10
+		}
 	}
 ]				

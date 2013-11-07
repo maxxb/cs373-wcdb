@@ -43,5 +43,50 @@
 			"widget_id":"397560899768033280",
 			"crisis":5
 		}
+	},
+	{
+		"model":"crises.CrisesTwitter",
+		"pk":6,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Sandy+Hook",
+			"widget_id":"398572302977085440",
+			"crisis":6
+		}
+	},
+	{
+		"model":"crises.CrisesTwitter",
+		"pk":7,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=BP+Oil+Spill",
+			"widget_id":"398576957014552576",
+			"crisis":7
+		}
+	},
+	{
+		"model":"crises.CrisesTwitter",
+		"pk":8,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=PRISM+Surveillance",
+			"widget_id":"398581337893773312",
+			"crisis":8
+		}
+	},
+	{
+		"model":"crises.CrisesTwitter",
+		"pk":9,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Mexican+Drug+War",
+			"widget_id":"398586029143097345",
+			"crisis":9
+		}
+	},
+	{
+		"model":"crises.CrisesTwitter",
+		"pk":10,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=West+Texas+Explosion",
+			"widget_id":"398588807068413952",
+			"crisis":10
+		}
 	}			
 ]

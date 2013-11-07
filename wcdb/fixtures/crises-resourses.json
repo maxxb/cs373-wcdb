@@ -38,5 +38,45 @@
 			"resourses":"none",
 			"crisis":5
 		}
+	},
+	{
+		"model":"crises.CrisesResourses",
+		"pk":6,
+		"fields":{
+			"resourses":"none",
+			"crisis":6
+		}
+	},
+	{
+		"model":"crises.CrisesResourses",
+		"pk":7,
+		"fields":{
+			"resourses":"Claims against BP",
+			"crisis":7
+		}
+	},
+	{
+		"model":"crises.CrisesResourses",
+		"pk":8,
+		"fields":{
+			"resourses":"None",
+			"crisis":8
+		}
+	},
+	{
+		"model":"crises.CrisesResourses",
+		"pk":9,
+		"fields":{
+			"resourses":"Drug policy reform",
+			"crisis":9
+		}
+	},
+	{
+		"model":"crises.CrisesResourses",
+		"pk":10,
+		"fields":{
+			"resourses":"None",
+			"crisis":10
+		}
 	}
 ]	

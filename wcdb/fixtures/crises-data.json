@@ -118,5 +118,125 @@
 			"people":[],
 			"orgs":[]			
 		}
-	}	
+	},
+
+	{
+		"model":"crises.CrisesData",
+		"pk":6,
+		"fields":{
+
+			"crisis":6,
+			
+			"description":"On December 14, 2012, 20-year-old Adam Lanza fatally shot twenty children and six adult staff members in a mass murder at Sandy Hook Elementary School in the village of Sandy Hook in Newtown, Connecticut. Before driving to the school, Lanza shot and killed his mother Nancy at their Newtown home. As first responders arrived, he committed suicide by shooting himself in the head. It was the second deadliest mass shooting by a single person in American history, after the 2007 Virginia Tech massacre, and the second deadliest mass murder at a U.S. elementary school, after the 1927 Bath School bombings in Michigan. The shootings prompted renewed debate about gun control in the United States, and a proposal for new legislation banning the sale and manufacture of certain types of semi-automatic firearms and magazines with more than ten rounds of ammunition.",
+			
+			"location": "Bhopal, Madhya Pradesh, India",			
+			
+			"start_date":"2012-12-14",
+			
+			"end_date":"2012-12-14",
+			
+			"human_impact":"20 children were murdered and several injured.",
+
+			"economic_impact":"Prompted a surge of anti-gun and anti-assualt weapon sentiment.",
+
+			"people":[],
+			"orgs":[6]
+		}
+	},	
+
+	{
+		"model":"crises.CrisesData",
+		"pk":7,
+		"fields":{
+
+			"crisis":7,
+			
+			"description":"The Deepwater Horizon oil spill (also referred to as the BP oil spill, the BP oil disaster, the Gulf of Mexico oil spill, and the Macondo blowout) began on 20 April 2010 in the Gulf of Mexico on the BP-operated Macondo Prospect. It claimed eleven lives and is considered the largest accidental marine oil spill in the history of the petroleum industry, an estimated 8% to 31% larger in volume than the previously largest, the Ixtoc I oil spill. Following the explosion and sinking of the Deepwater Horizon oil rig, a sea-floor oil gusher flowed for 87 days, until it was capped on 15 July 2010. The total discharge has been estimated at 4.9 million barrels (210 million US gal; 780,000 m3).",
+			
+			"location": "Gulf of Mexico",			
+			
+			"start_date":"2010-04-20",
+			
+			"end_date":"2010-07-15",
+			
+			"human_impact":"11 deaths and massive pollution of the Gulf of Mexico",
+
+			"economic_impact":"The clean up and lost profit was in the billions",
+
+			"people":[],
+			"orgs":[10]			
+		}
+	},
+
+	{
+		"model":"crises.CrisesData",
+		"pk":8,
+		"fields":{
+
+			"crisis":8,
+			
+			"description":"PRISM is a clandestine mass electronic surveillance data mining program known to have been operated by the United States National Security Agency (NSA) since 2007. PRISM is a government code name for a data-collection effort known officially by the SIGAD US-984XN. The Prism program collects stored Internet communications based on demands made to Internet companies such as Google Inc. under Section 702 of the FISA Amendments Act of 2008 to turn over any data that match court-approved search terms. The NSA can use these Prism requests to target communications that were encrypted when they traveled across the Internet backbone, to focus on stored data that telecommunication filtering systems discarded earlier, and to get data that is easier to handle, among other things.",
+			
+			"location": "Worldwide",			
+			
+			"start_date":"2007-01-01",
+			
+			"end_date":"2014-01-01",
+			
+			"human_impact":"A massive invasion of privacy by the United States Government.",
+
+			"economic_impact":"A loss in the trust of major tech companies.",
+
+			"people":[4],
+			"orgs":[6]			
+		}
+	},
+
+	{
+		"model":"crises.CrisesData",
+		"pk":9,
+		"fields":{
+
+			"crisis":9,
+			
+			"description":"The Mexican Drug War is an ongoing armed conflict among rival drug cartels fighting each other for regional control and against the Mexican government forces and civilian vigilante groups. Since 2006, when intervention with the Mexican military began, the government's principal goal has been to put down the drug-related violence. Additionally, the Mexican government has claimed that their primary focus is on dismantling the powerful drug cartels, rather than on preventing drug trafficking, which is left to U.S. functionaries.",
+			
+			"location": "United States and Mexico",			
+			
+			"start_date":"2006-12-06",
+			
+			"end_date":"2014-01-01",
+			
+			"human_impact":"Countless murders.",
+
+			"economic_impact":"The Mexican drug industry yields over $15 billion and the cost of combating it costs billions as well",
+
+			"people":[9],
+			"orgs":[6,8]			
+		}
+	},
+
+	{
+		"model":"crises.CrisesData",
+		"pk":10,
+		"fields":{
+
+			"crisis":10,
+			
+			"description":"On April 17, 2013, an ammonium nitrate explosion occurred at the West Fertilizer Company storage and distribution facility in West, Texas, eighteen miles (29 km) north of Waco while emergency services personnel were responding to a fire at the facility. At least fifteen people were killed, more than 160 were injured, and more than 150 buildings were damaged or destroyed. Investigators have confirmed that ammonium nitrate was the trigger for the explosion, but the cause of the initial fire is as yet unknown.",
+			
+			"location": "West, Texas",			
+			
+			"start_date":"2013-04-17",
+			
+			"end_date":"2013-04-17",
+			
+			"human_impact":"15 deaths and 160 injuries.",
+
+			"economic_impact":"Storage unit, 50-unit apartment, and 60–80 homes destroyed.",
+
+			"people":[],
+			"orgs":[]			
+		}
+	}
 ]
