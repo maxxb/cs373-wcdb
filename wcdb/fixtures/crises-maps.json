@@ -38,5 +38,45 @@
 		"maps":"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=+Quake+of+'89&aq=&sll=37.294176,-120.943376&sspn=2.174004,4.22699&t=h&ie=UTF8&hq=&hnear=1989+Loma+Prieta+earthquake&ll=37.04,-121.877&spn=2.175645,4.22699&z=9&output=embed",			
 		"crisis":5
 		}
-	}	
+	},
+	{
+		"model":"crises.CrisesMaps",
+		"pk":6,
+		"fields":{
+		"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Sandy+Hook,+Newtown,+CT&aq=0&oq=sandy+hook&sll=30.307761,-97.753401&sspn=1.101405,2.024231&t=h&ie=UTF8&hq=&hnear=Sandy+Hook,+Newtown,+Fairfield,+Connecticut&z=14&ll=41.420096,-73.282061&output=embed",			
+		"crisis":6
+		}
+	},
+	{
+		"model":"crises.CrisesMaps",
+		"pk":7,
+		"fields":{
+		"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&q=Deepwater+Horizon+oil+spill&aq=&sll=30.307761,-97.753401&sspn=1.101405,2.024231&t=h&ie=UTF8&geocode=FZ18tgEdp1G7-g&split=0&hq=&hnear=Deepwater+Horizon+oil+spill&z=9&ll=28.736669,-88.387161&output=embed",			
+		"crisis":7
+		}
+	},
+	{
+		"model":"crises.CrisesMaps",
+		"pk":8,
+		"fields":{
+		"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Washington,+D.C.,+DC&aq=0&oq=Washing&sll=30.307761,-97.753401&sspn=1.059917,2.024231&t=h&ie=UTF8&hq=&hnear=Washington,+District+of+Columbia&z=12&ll=38.907231,-77.036464&output=embed",			
+		"crisis":8
+		}
+	},
+	{
+		"model":"crises.CrisesMaps",
+		"pk":9,
+		"fields":{
+		"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Mexico&aq=&sll=38.907231,-77.036464&sspn=0.238842,0.506058&t=h&ie=UTF8&hq=&hnear=Mexico&ll=23.634501,-102.552784&spn=8.659625,16.193848&z=7&output=embed",			
+		"crisis":9
+		}
+	},
+	{
+		"model":"crises.CrisesMaps",
+		"pk":10,
+		"fields":{
+		"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=West,+Texas&aq=0&oq=west,+texas&sll=28.081674,-106.611328&sspn=8.659625,16.193848&t=h&ie=UTF8&hq=&hnear=West,+McLennan,+Texas&z=14&ll=31.802383,-97.091669&output=embed",			
+		"crisis":10
+		}
+	}
 ]

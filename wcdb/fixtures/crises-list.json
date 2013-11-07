@@ -38,5 +38,45 @@
 			"name":"1989 Loma Prieta Earthquake",
 			"kind":"Natural Disaster"
 		}
+	},
+	{
+		"model":"crises.Crises",
+		"pk":6,
+		"fields":{
+			"name":"Sandy Hook Elementary School Shooting",
+			"kind":"Mass Shooting"
+		}
+	},
+	{
+		"model":"crises.Crises",
+		"pk":7,
+		"fields":{
+			"name":"BP Oil Spill",
+			"kind":"Enviornmental Disaster"
+		}
+	},
+	{
+		"model":"crises.Crises",
+		"pk":8,
+		"fields":{
+			"name":"PRISM",
+			"kind":"Secret Government Program"
+		}
+	},
+	{
+		"model":"crises.Crises",
+		"pk":9,
+		"fields":{
+			"name":"Mexican Drug War",
+			"kind":"International Conflict"
+		}
+	},
+	{
+		"model":"crises.Crises",
+		"pk":10,
+		"fields":{
+			"name":"West, Texas Explosion",
+			"kind":"Enviornmental Disaster"
+		}
 	}
 ]

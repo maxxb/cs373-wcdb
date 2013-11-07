@@ -46,5 +46,45 @@
 			"help":"None",			
 			"crisis":5
 		}
+	},
+	{
+		"model":"crises.CrisesHelp",
+		"pk":7,
+		"fields":{
+			"help":"Donate to the Sandy Hook School fund, support stronger gun control",			
+			"crisis":6
+		}
+	},
+	{
+		"model":"crises.CrisesHelp",
+		"pk":8,
+		"fields":{
+			"help":"None",			
+			"crisis":7
+		}
+	},
+	{
+		"model":"crises.CrisesHelp",
+		"pk":9,
+		"fields":{
+			"help":"Protest the invasion of privacy",			
+			"crisis":8
+		}
+	},
+	{
+		"model":"crises.CrisesHelp",
+		"pk":10,
+		"fields":{
+			"help":"None",			
+			"crisis":9
+		}
+	},
+	{
+		"model":"crises.CrisesHelp",
+		"pk":11,
+		"fields":{
+			"help":"None",			
+			"crisis":10
+		}
 	}
 ]
