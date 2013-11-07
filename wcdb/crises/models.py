@@ -130,11 +130,11 @@ class OrgTwitter(models.Model):
 	org = models.ForeignKey(Organizations)
 
 class OrgLinks(models.Model):
-	external_links = models.URLField(max_length=100)
+	external_links = models.URLField(max_length=500)
 	org = models.ForeignKey(Organizations)
 
 class OrgCitations(models.Model):
-	citations = models.URLField(max_length=100)
+	citations = models.URLField(max_length=500)
 	org = models.ForeignKey(Organizations)	
 
 class OrganizationsData(models.Model):
