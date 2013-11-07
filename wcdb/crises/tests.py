@@ -8,6 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from django.test.client import Client
 from django.utils.unittest import skipIf
+from django.utils import simplejson 
 from datetime import date
 from crises.models import *
 import json
@@ -85,24 +86,27 @@ class CrisesTests(TestCase):
         self.assertEquals(cMap.maps, u"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed")
 
 CRISIS_A = {
-    "name": "Cambodian Genocide",
-    "start_date": "1975-MM-DD",
-    "end_date": "1978-MM-DD",
-    "location": "Cambodia",
-    "kind": "Attack",
-    "description": "Long text description of the Cambodian Genocide",
-    "human_impact": "Lost 25% of population over three years",
-    "economic_impact": "Peasant farming society centralized",
-    "maps": ["http://goo.gl/maps/PKI5L"],
-    "images": ["http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
-    "videos": ["http://www.youtube.com/watch?v=1-SI8RF6wDE"],
-    "social_media": ["https://twitter.com/UN"],
-    "ways_to_help": ["Donation"],
-    "resources_needed": ["Monetary donation"],
-    "people": [1],
-    "organizations": [1],
-    "external_links": ["unfoundation.org"],
-    "citations": ["http://worldwithoutgenocide.org/genocides-and-conflicts/cambodian-genocide"],
+    u"name": u"Cambodian Genocide",
+    u"start_date": u"1975-01-01",
+    u"end_date": u"1978-01-01",
+    u"location": u"Cambodia",
+    u"kind": u"Attack",
+    u"description": u"Long text description of the Cambodian Genocide",
+    u"human_impact": u"Lost 25% of population over three years",
+    u"economic_impact": u"Peasant farming society centralized",
+    u"maps": [u"http://goo.gl/maps/PKI5L"],
+    u"images": [u"http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
+    # I have an issue on the CS machines where the '=' here causes django to see the 
+    # string as a key-value pair when I make a post request when testing with this data
+    # u"videos": [u"http://www.youtube.com/watch?v=1-SI8RF6wDE"],
+    u"videos": [u"http://www.youtube.com/watch?v..."],
+    u"social_media": [u"https://twitter.com/UN"],
+    u"ways_to_help": [u"Donation"],
+    u"resources_needed": [u"Monetary donation"],
+    u"people": [1],
+    u"organizations": [1],
+    u"external_links": [u"unfoundation.org"],
+    u"citations": [u"http://worldwithoutgenocide.org/genocides-and-conflicts/cambodian-genocide"],
 }
 
 CRISIS_B = {        
@@ -154,18 +158,21 @@ class RestTests(TestCase):
         self.assertEquals(responseJson, CRISIS_B)
 
     def test_rest_post_crisis(self):
-        rPost = self.client.post('/api/crises', CRISIS_A)
+        self.maxDiff = None
+        rPost = self.client.post('/api/crises', data=simplejson.dumps(CRISIS_A), content_type='application/json')
         self.assertEquals(rPost.status_code, 201)
         rPostJson = json.loads(rPost.content)
         self.assertTrue(type(rPostJson) == type({}))
+        self.assertTrue(rPostJson.has_key(u"id"))
 
         rId = None
         try:
-            rId = int(responseJson["id"])
+            rId = int(rPostJson["id"])
+            print rId
         except ValueError:
             self.assertTrue(False)
         else:
-            rGet = self.client.get('/api/crisis/%s' % rId)
+            rGet = self.client.get('/api/crises/%s' % rId)
             self.assertTrue(rGet.status_code, 200)
             rGetJson = json.loads(rGet.content)
             self.assertEquals(rGetJson, CRISIS_A)
