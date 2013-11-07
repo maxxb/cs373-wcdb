@@ -7,12 +7,14 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from django.test.client import Client
+from django.utils.unittest import skipIf
+from django.utils import simplejson 
 from datetime import date
 from crises.models import *
 import json
 
 class CrisesTests(TestCase):
-    fixtures = ['test.json']
+    fixtures = ['test-cases.json']
 
     def test_crises_data(self):
         # get the CrisesData row associated with the row Crises with primary key 1
@@ -21,7 +23,7 @@ class CrisesTests(TestCase):
         self.assertEquals(cData.crisis.pk, cData.pk)
         self.assertEquals(cData.crisis.name, u"Israeli-Palestinian conflict")
         self.assertEquals(cData.crisis.kind, u"political")
-        # I guess test.json has some fancy unicode characters in it 
+        # I guess test-cases.json has some fancy unicode characters in it 
         self.assertTrue(cData.description.startswith(
             u"The Israeli\u2013Palestinian conflict is the ongoing struggle between"))
         self.assertEquals(cData.location, u"West Bank and Gaza Strip")
@@ -39,6 +41,7 @@ class CrisesTests(TestCase):
         cTwitter = CrisesTwitter.objects.get(crisis__pk=1)
         self.assertEquals(cTwitter.pk, 1)
         self.assertEquals(cTwitter.crisis.pk, 1)
+        self.assertEquals(cTwitter.widget_id, 397556788456738816)
         self.assertEquals(cTwitter.twitter, u"https://twitter.com/search?q=isreal+palestine")
 
     def test_crisis_help(self):
@@ -83,9 +86,110 @@ class CrisesTests(TestCase):
         self.assertEquals(cMap.crisis.pk, 1)
         self.assertEquals(cMap.maps, u"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed")
 
+class PeopleTests(TestCase):
+    fixtures = ['test-cases.json']
+
+    def test_people_data(self):
+        # get the PeopleData row associated with the row People with primary key 1
+        pData = PeopleData.objects.get(person__pk=1)
+        self.assertEquals(pData.pk, 1)
+        self.assertEquals(pData.person.pk, 1)
+        self.assertEquals(pData.person.name, u"Yasser Arafat") 
+        self.assertEquals(pData.dob, date(1929, 8, 24))
+        self.assertEquals(pData.location, u"Cairo, Egypt")
+        self.assertEquals(pData.crises.get(pk=1), Crises.objects.get(pk=1))
+        self.assertEquals(pData.orgs.get(pk=2), Organizations.objects.get(pk=2))
+
+    def test_person_twitter(self):
+        pTwitter = PeopleTwitter.objects.get(people__pk=1)
+        self.assertEquals(pTwitter.pk, 1)
+        self.assertEquals(pTwitter.people.pk, 1)
+        self.assertEquals(pTwitter.widget_id, u"397557839859687424")
+        self.assertEquals(pTwitter.twitter, u"http://twitter.com/search?q=yasser+arafat")
+
+    def test_person_links(self):
+        pLink = PeopleLinks.objects.get(people__pk=1)
+        self.assertEquals(pLink.pk, 1)
+        self.assertEquals(pLink.people.pk, 1)
+        self.assertEquals(pLink.external_links, u"http://www.nndb.com/people/403/000022337/")
+
+    def test_people_citations(self):
+        pCite = PeopleCitations.objects.get(people__pk=1)
+        self.assertEquals(pCite.pk, 1)
+        self.assertEquals(pCite.people.pk, 1)
+        self.assertEquals(pCite.citations, u"http://en.wikipedia.org/wiki/Yasser_Arafat")
+
+    def test_people_videos(self):
+        pVideo = PeopleVideos.objects.get(people__pk=1)
+        self.assertEquals(pVideo.pk, 1)
+        self.assertEquals(pVideo.people.pk, 1)
+        self.assertEquals(pVideo.video, u"http://www.youtube.com/watch?v=a0tbZ3iYgCs")
+
+    def test_people_images(self):
+        pImage = PeopleImages.objects.filter(people__pk=1).order_by("pk")
+
+        self.assertEquals(pImage[0].pk, 1)
+        self.assertEquals(pImage[0].people.pk, 1)
+        self.assertEquals(pImage[0].image, u"http://upload.wikimedia.org/wikipedia/commons/thumb/3/37/ArafatEconomicForum.jpg/415px-ArafatEconomicForum.jpg")
+
+        self.assertEquals(pImage[1].pk, 2)
+        self.assertEquals(pImage[1].people.pk, 1)
+        self.assertEquals(pImage[1].image, u"http://upload.wikimedia.org/wikipedia/commons/9/9a/Flickr_-_Government_Press_Office_%28GPO%29_-_THE_NOBEL_PEACE_PRIZE_LAUREATES_FOR_1994_IN_OSLO..jpg")
+
+    def test_people_maps(self):
+        pMap = PeopleMaps.objects.get(people__pk=1)
+        self.assertEquals(pMap.pk, 1)
+        self.assertEquals(pMap.people.pk, 1)
+        self.assertEquals(pMap.maps, u"http://goo.gl/maps/oOQCX")
+
+CRISIS_A = {
+    u"name": u"Cambodian Genocide",
+    u"start_date": u"1975-01-01",
+    u"end_date": u"1978-01-01",
+    u"location": u"Cambodia",
+    u"kind": u"Attack",
+    u"description": u"Long text description of the Cambodian Genocide",
+    u"human_impact": u"Lost 25% of population over three years",
+    u"economic_impact": u"Peasant farming society centralized",
+    u"maps": [u"http://goo.gl/maps/PKI5L"],
+    u"images": [u"http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
+    # I have an issue on the CS machines where the '=' here causes django to see the 
+    # string as a key-value pair when I make a post request when testing 
+    # u"videos": [u"http://www.youtube.com/watch?v=1-SI8RF6wDE"],
+    u"videos": [u"http://www.youtube.com/watch?v..."],
+    u"social_media": [u"https://twitter.com/UN"],
+    u"ways_to_help": [u"Donation"],
+    u"resources_needed": [u"Monetary donation"],
+    u"people": [1],
+    u"organizations": [1],
+    u"external_links": [u"unfoundation.org"],
+    u"citations": [u"http://worldwithoutgenocide.org/genocides-and-conflicts/cambodian-genocide"],
+}
+
+CRISIS_B = {        
+        u"name": u"Israeli-Palestinian conflict",
+        u"id":1,
+        u"start_date": u"1960-01-01",
+        u"end_date": u"2013-11-01",
+        u"location": u"West Bank and Gaza Strip",         
+        u"kind": u"political",
+        u"description": u"The Israeli\u2013Palestinian conflict is the ongoing struggle between Israelis and Palestinians that began in the mid 20th century. The conflict is wide-ranging, and the term is sometimes also used in reference to the earlier sectarian conflict in Mandatory Palestine, between the Zionist yishuv and the Arab population under British rule. The Israeli\u2013Palestinian conflict has formed the core part of the wider Arab\u2013Israeli conflict.",
+        u"human_impact": u"One of the world's longest refugee crisis. Nearly 50 percent of Palestinians in the West Bank and Gaza. 2.1 million people are refugees, many of whom live in crowded camps.",
+        u"economic_impact": u"Economic life has suffered and relief organisations have found it difficult to get aid to the Palestinian population.",
+        u"maps": [u"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed"],
+        u"images": [u"http://www.globalresearch.ca/wp-content/uploads/2012/11/Israel_Palestine_Flag.png"],
+        u"videos": [u"http://www.youtube.com/embed/GdtGOY8T5XE?"],
+        u"social_media": [u"https://twitter.com/search?q=isreal+palestine"],
+        u"ways_to_help": [u"peaceful negotiations"],
+        u"resources_needed": [u"none"],
+        u"people": [1, 2],
+        u"organizations": [1], 
+        u"external_links": [u"http://www.trust.org/spotlight/Israeli-Palestinian-conflict"],
+        u"citations": [u"http://en.wikipedia.org/wiki/Israeli%E2%80%93Palestinian_conflict"],
+}
 
 class RestTests(TestCase):
-    fixtures = ['test.json']
+    fixtures = ['test-cases.json']
 
     def test_rest_get_crises(self):
         r = self.client.get('/api/crises')
@@ -93,51 +197,51 @@ class RestTests(TestCase):
         responseJson = json.loads(r.content)
         self.assertTrue(type(responseJson) == type([]))
         self.assertTrue(len(responseJson) == 2)
+        # check the first object
+        self.assertTrue(responseJson[0]["id"] == 1)
+        self.assertTrue(responseJson[0]["name"] == "Israeli-Palestinian conflict")
+        self.assertTrue(responseJson[0]["kind"] == "political")
+        # check the second object
+        self.assertTrue(responseJson[1]["id"] == 2)
+        self.assertTrue(responseJson[1]["name"] == "Chernobyl disaster")
+        self.assertTrue(responseJson[1]["kind"] == "accident")
 
     def test_rest_get_crisis(self):
-        r = Client().get('/api/crises/1')
+        # By default the test harness hides diffs that are longer than some maximum
+        # Set maxDiff to None to show the diff.
+        self.maxDiff = None
+
+        r = self.client.get('/api/crises/1')
         self.assertEquals(r.status_code, 200)
         responseJson = json.loads(r.content)
         self.assertTrue(type(responseJson) == type({}))
-        self.assertTrue(responseJson["name"] == u"Israeli-Palestinian conflict")
-        self.assertTrue(responseJson["kind"] == u"political")
+        self.assertEquals(responseJson, CRISIS_B)
 
     def test_rest_post_crisis(self):
-        rPost = self.client.post('/api/crises', {
-            "name": "Cambodian Genocide",
-            "start_date": "1975-MM-DD",
-            "end_date": "1978-MM-DD",
-            "location": "Cambodia",
-            "kind": "Attack",
-            "description": "Long text description of the Cambodian Genocide",
-            "human_impact": "Lost 25% of population over three years",
-            "economic_impact": "Peasant farming society centralized",
-            "maps": ["http://goo.gl/maps/PKI5L"],
-            "images": ["http://worldwithoutgenocide.org/wp-content/uploads/2010/01/Cambodia.jpg"],
-            "videos": ["http://www.youtube.com/watch?v=1-SI8RF6wDE"],
-            "social_media": ["https://twitter.com/UN"],
-            "ways_to_help": ["Donation"],
-            "resources_needed": ["Monetary donation"],
-            "people": [1],
-            "organizations": [1],
-            "external_links": ["unfoundation.org"],
-            "citations": ["http://worldwithoutgenocide.org/genocides-and-conflicts/cambodian-genocide"],
-        })
-        self.assertEquals(rPost.status_code, 201)
-        rPostJson = json.loads(rPost.content)
-        self.assertTrue(type(rPostJson) == type({}))
+        # By default the test harness hides diffs that are longer than some maximum
+        # Set maxDiff to None to show the diff.
+        self.maxDiff = None
 
+        # Make the post request. The response is the id of the newly-created crisis
+        rPost = self.client.post('/api/crises', data=simplejson.dumps(CRISIS_A), content_type='application/json')
+        self.assertEquals(rPost.status_code, 201)
+        rPostJson = json.loads(rPost.content)    
+        self.assertTrue(type(rPostJson) == type({}))
+        self.assertTrue(rPostJson.has_key(u"id"))
+
+        # Do a get on the returned id for verification
         rId = None
         try:
-            rId = int(responseJson["id"])
+            rId = int(rPostJson["id"])
         except ValueError:
             self.assertTrue(False)
         else:
-            rGet = self.client.get('/api/crisis/%s' % rId)
+            expectedResponse = CRISIS_A
+            expectedResponse["id"] = rId
+            rGet = self.client.get('/api/crises/%s' % rId)
             self.assertTrue(rGet.status_code, 200)
             rGetJson = json.loads(rGet.content)
-            self.assertEquals(rGetJson["name"], "Cambodian Genocide")
-            self.assertEquals(rGetJson["kind"], "Attack")
+            self.assertEquals(rGetJson, expectedResponse)
 
 
 
