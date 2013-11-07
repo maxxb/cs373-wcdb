@@ -38,5 +38,45 @@
 			"image": "http://connectnigeria.com/articles/wp-content/uploads/2013/03/Bill-and-Melinda-Gates-Foundation.jpg",
 			"org":5
 		}
+	},
+	{
+		"model":"crises.OrgImages",
+		"pk":6,
+		"fields":{
+			"image": "http://forexmagnates.com/wp-content/uploads/2013/10/fbi_logo_twitter.jpg",
+			"org":6
+		}
+	},
+	{
+		"model":"crises.OrgImages",
+		"pk":7,
+		"fields":{
+			"image": "http://www.unmalawi.org/images/logos/un%20logo.jpg",
+			"org":7
+		}
+	},
+	{
+		"model":"crises.OrgImages",
+		"pk":8,
+		"fields":{
+			"image": "http://www.taylormarsh.com/wp-content/uploads/2013/08/Dea_color_logo.jpg",
+			"org":8
+		}
+	},
+	{
+		"model":"crises.OrgImages",
+		"pk":9,
+		"fields":{
+			"image": "http://www.iranreview.org/file/cms/files/39(16).jpg",
+			"org":9
+		}
+	},
+	{
+		"model":"crises.OrgImages",
+		"pk":10,
+		"fields":{
+			"image": "http://images.fastcompany.com/upload/bp_logo.jpg",
+			"org":10
+		}
 	}
 ]

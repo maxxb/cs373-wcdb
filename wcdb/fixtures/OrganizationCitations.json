@@ -38,5 +38,45 @@
 			"citations":"http://www.gatesfoundation.org/",
 			"org":5
 		}
+	},
+	{
+		"model":"crises.OrgCitations",
+		"pk":6,
+		"fields":{
+			"citations":"http://www.fbi.gov/",
+			"org":6
+		}
+	},
+	{
+		"model":"crises.OrgCitations",
+		"pk":7,
+		"fields":{
+			"citations":"http://www.un.org/en/",
+			"org":7
+		}
+	},
+	{
+		"model":"crises.OrgCitations",
+		"pk":8,
+		"fields":{
+			"citations":"http://www.justice.gov/dea/index.shtml",
+			"org":8
+		}
+	},
+	{
+		"model":"crises.OrgCitations",
+		"pk":9,
+		"fields":{
+			"citations":"http://www.nato.int/",
+			"org":9
+		}
+	},
+	{
+		"model":"crises.OrgCitations",
+		"pk":10,
+		"fields":{
+			"citations":"http://www.bp.com/",
+			"org":10
+		}
 	}
 ]

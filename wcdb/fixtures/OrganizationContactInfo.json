@@ -48,5 +48,55 @@
 			"email": "info@gatesfoundation.org",
 			"phone": 2067093100
 		}
+	},
+	{
+		"model":"crises.ContactInfo",
+		"pk":6,
+		"fields":{
+			"name": "FBI",
+			"address": "935 Pennsylvania Ave NW, Washington, DC 20535",
+			"email": "notfound@notfound.com",
+			"phone": 2023243000
+		}
+	},
+	{
+		"model":"crises.ContactInfo",
+		"pk":7,
+		"fields":{
+			"name": "UN",
+			"address": "notfound@notfound.com",
+			"email": "2 United Nations Plz, New York, NY 10017",
+			"phone": 2129634475
+		}
+	},
+	{
+		"model":"crises.ContactInfo",
+		"pk":8,
+		"fields":{
+			"name": "Office of Diversion Control",
+			"address": "8701 Morrissette Drive Springfield, VA 22152",
+			"email": "notfound@notfound.com",
+			"phone": 8008829539
+		}
+	},
+	{
+		"model":"crises.ContactInfo",
+		"pk":9,
+		"fields":{
+			"name": "NATO",
+			"address": "Boulevard Leopold III, 1110 Brussels, Belgium",
+			"email": "notfound@notfound.com",
+			"phone": 0
+		}
+	},
+	{
+		"model":"crises.ContactInfo",
+		"pk":10,
+		"fields":{
+			"name": "International Headquarters",
+			"address": "BP p.l.c. 1 St James's Square London, SW1Y 4PD",
+			"email": "notfound@notfound.com",
+			"phone": 2074964000
+		}
 	}
 ]
