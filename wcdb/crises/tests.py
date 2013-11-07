@@ -303,5 +303,3 @@ class RestTests(TestCase):
             rGetJson = json.loads(rGet.content)
             self.assertEquals(rGetJson, expectedResponse)
 
-
-

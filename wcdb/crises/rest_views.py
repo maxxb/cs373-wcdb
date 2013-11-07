@@ -55,12 +55,31 @@ def crisis(request, cid):
 
 def crisis_orgs(request, cid):
     """ List all related organizations """
-    #TODO: use a subquery
-    pass
+    if request.method == 'GET':
+        matches = CrisesData.objects.filter(crisis__pk=cid)
+        if not matches:
+            return resourceNotFound()
+        cData = matches[0]
+        result = []
+        for org in cData.orgs.all():
+            orgDataMatches = OrganizationsData.objects.filter(org__pk=org.pk)
+            if orgDataMatches:
+                result.append(get_org_dict(orgDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
 
 def crisis_people(request, cid):
     """ List all related people """
-    #TODO: use a subquery
+    if request.method == 'GET':
+        matches = PeopleData.objects.filter(crisis_pk=cid)
+        if not matches:
+            return resourceNotFound()
+        cData = matches[0]
+        resutlt = []
+        for person in cData.people.all():
+            result.append(get_person_dict(person))
+
     pass
 
 def get_all_crises():
@@ -426,4 +445,52 @@ def organization_crises(request, oid):
     """ List all related crises """
     pass
 
+def get_contact_info_dict(orgData):
+    """
+    orgData is a row from the OrganizationsData table.
+    Return a dict containing the contact info for the organization.
+    """
+    return {
+        "name"    : orgData.contact_info.name,
+        "address" : orgData.contact_info.address,
+        "email"   : orgData.contact_info.email,
+        "phone"   : orgData.contact_info.phone,
+    }
+
+def get_org_dict(orgData):
+    """
+    orgData is a row from the OrganizationsData table
+    This gathers all the info about the org into a single dict 
+        (per the API) and returns it
+    """
+    oid = orgData.org.pk
+    
+    # grab everything we need from the database
+    oMaps       = [x.maps for x in OrgMaps.objects.filter(org__pk=oid)]
+    oImages     = [x.image for x in OrgImages.objects.filter(org__pk=oid)]
+    oVideos     = [x.video for x in OrgVideos.objects.filter(org__pk=oid)]
+    oSocial     = [x.twitter for x in OrgTwitter.objects.filter(org__pk=oid)]
+    oLinks      = [x.external_links for x in OrgLinks.objects.filter(org__pk=oid)]
+    oCitations  = [x.citations for x in OrgCitations.objects.filter(org__pk=oid)]
+    oPeople     = [x.pk for x in orgData.people.all()]
+    oCrises     = [x.pk for x in orgData.crises.all()]
+    
+
+    # construct the response data
+    return {
+        "id"            : oid,
+        "name"          : orgData.org.name,
+        # date_established is a datetime object
+        "established"   : str(orgData.date_established),
+        "location"      : orgData.location,
+        "kind"          : orgData.org.kind, 
+        "description"   : orgData.description,
+        "images"        : oImages,
+        "videos"        : oVideos, 
+        "maps"          : oMaps,
+        "social_media"  : oSocial,
+        "external_links": oLinks, 
+        "citations"     : oCitations,
+        "contact_info"  : get_contact_info_dict(orgData),
+    }
 
