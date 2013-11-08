@@ -86,7 +86,7 @@ def crisis_people(request, cid):
         cData = matches[0]
         result = []
         for person in cData.people.all():
-            pDataMatches = PeopleData.objects.filter(people__pk=person.pk)
+            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
             if pDataMatches:
                 result.append(get_person_dict(pDataMatches[0]))
         return jsonResponse(simplejson.dumps(result), 200)
@@ -149,10 +149,10 @@ def create_associated_crisis_data(data, crisis):
     #create associations
     for x in CrisesData.objects.filter(crisis__pk=pk):
         people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
-        for p in people
+        for p in people:
             x.people.add(p)
         orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
-        for o in orgs
+        for o in orgs:
             x.orgs.add(p)
 
 def delete_associated_crisis_data(crisis):
@@ -190,17 +190,17 @@ def create_associated_people_data(data, person):
     for x in data[u"citations"]:
         PeopleCitations(citations=x, people=people).save()
     #create associations
-    for x in PeopleData.objects.filter(people__pk=pk):
+    for x in PeopleData.objects.filter(person__pk=pk):
         crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
-        for c in crises
+        for c in crises:
             x.crises.add(c)
         orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
-        for o in orgs
+        for o in orgs:
             x.orgs.add(p)
 
 def delete_associated_people_data(person):
     pk = person.pk
-    for x in PeopleData.objects.filter(people__pk=pk):
+    for x in PeopleData.objects.filter(person__pk=pk):
         x.orgs.clear() #remove associations but preserve object
         x.crises.clear()
     map(lambda x: x.delete(), PeopleMaps.objects.filter(people__pk=pk))
@@ -232,10 +232,10 @@ def create_associated_org_data(data, org):
     #create associations
     for x in OrgData.objects.filter(org__pk=pk):
         people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
-        for p in people
+        for p in people:
             x.people.add(p)
         crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
-        for c in crises
+        for c in crises:
             x.crises.add(c)
 
 def delete_associated_org_data(org):
@@ -397,7 +397,7 @@ def put_crisis(request, cid):
     return success_no_content() 
 
 def put_person(request, pid): #TODO: verify pid, oid, cid?
-    pDataMatches = PeopleData.objects.filter(people__pk=pid)
+    pDataMatches = PeopleData.objects.filter(person__pk=pid)
     if not pDataMatches:
         return resource_not_found() 
     pData = pDataMatches[0]
@@ -456,7 +456,7 @@ def delete_crisis(request, cid): #prequest unused?
     return success_no_content()
 
 def delete_person(request, pid):
-    pDataMatches = PeopleData.objects.filter(people__pk=pid)
+    pDataMatches = PeopleData.objects.filter(person__pk=pid)
     if pDataMatches:
         pData = pDataMatches[0]
         #delete Maps, Images, etc.
@@ -490,7 +490,7 @@ def get_crisis(request, cid):
 
 def get_person(request, cid):
     # filter will return an empty list when there are no matches
-    matches = PeopleData.objects.filter(people__pk=cid)
+    matches = PeopleData.objects.filter(person__pk=cid)
     if not matches:
         return resource_not_found()
     personData = matches[0]
@@ -617,7 +617,7 @@ def person(request, pid):
 def person_orgs(request, pid):
     """ List all related organizations """
     if request.method == 'GET':
-        matches = PeopleData.objects.filter(people__pk=pid)
+        matches = PeopleData.objects.filter(person__pk=pid)
         if not matches:
             return resourceNotFound()
         data = matches[0]
@@ -633,7 +633,7 @@ def person_orgs(request, pid):
 def person_crises(request, pid):
     """ List all related crises """
     if request.method == 'GET':
-        matches = PeopleData.objects.filter(people__pk=pid)
+        matches = PeopleData.objects.filter(person__pk=pid)
         if not matches:
             return resourceNotFound()
         data = matches[0]
@@ -686,7 +686,7 @@ def organization_people(request, oid):
         data = matches[0]
         result = []
         for person in data.people.all():
-            pDataMatches = PeopleData.objects.filter(people__pk=person.pk)
+            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
             if pDataMatches:
                 result.append(get_person_dict(pDataMatches[0]))
         return jsonResponse(simplejson.dumps(result), 200)
