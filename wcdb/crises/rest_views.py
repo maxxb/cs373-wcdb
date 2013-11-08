@@ -147,7 +147,7 @@ def create_associated_crisis_data(data, crisis):
     for x in data[u"citations"]:
         CrisesCitations(citations=x, crisis=crisis).save()
     #create associations
-    for x in CrisesData.objects.filter(crises__pk=pk):
+    for x in CrisesData.objects.filter(crisis__pk=pk):
         people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
         for p in people
             x.people.add(p)
@@ -284,23 +284,6 @@ def post_new_crisis(request):
 
     # create the crisis's maps, images, etc
     create_associated_crisis_data(b, crisis) 
-    #for x in b[u"maps"]:
-    #    CrisesMaps(maps=x, crisis=crisis).save()
-    #for x in b[u"images"]:
-    #    CrisesImages(image=x, crisis=crisis).save()
-    #for x in b[u"videos"]:
-    #    CrisesVideos(video=x, crisis=crisis).save()
-    #for x in b[u"social_media"]:
-    #    # TODO: can we get the widget_id from the url?
-    #    CrisesTwitter(twitter=x, widget_id=123456789, crisis=crisis).save()
-    #for x in b[u"ways_to_help"]:
-    #    CrisesHelp(help=x, crisis=crisis).save()
-    #for x in b[u"resources_needed"]:
-    #    CrisesResourses(resourses=x, crisis=crisis).save()
-    #for x in b[u"external_links"]:
-    #    CrisesLinks(external_links=x, crisis=crisis).save()
-    #for x in b[u"citations"]:
-    #    CrisesCitations(citations=x, crisis=crisis).save()
 
     return {"id": cid}
     # return jsonResponse(simplejson.dumps({"id": cid}), 201)
@@ -485,21 +468,40 @@ def put_org(org, oid):
 
 # DELETE Implementations #
 def delete_crisis(request, cid):
-    #TODO: use a delete statement on that id?
     cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
     if cDataMatches:
         cData = cDataMatches[0]
+        #delete Maps, Images, etc.
+        delete_associated_crisis_data(cData.crisis);
+        #delete actual crisis
         cData.crisis.delete()
         cData.delete()
-        # TODO: delete Maps, Images, etc.
 
     return success_no_content()
 
 def delete_person(person):
-    pass
+    pDataMatches = PeopleData.objects.filter(people__pk=pid)
+    if pDataMatches:
+        pData = pDataMatches[0]
+        #delete Maps, Images, etc.
+        delete_associated_people_data(pData.person);
+        #delete actual person
+        pData.person.delete()
+        pData.delete()
+
+    return success_no_content()
     
 def delete_org(org):
-    pass    
+    oDataMatches = OrganizationsData.objects.filter(org__pk=oid)
+    if oDataMatches:
+        oData = oDataMatches[0]
+        #delete Maps, Images, etc.
+        delete_associated_org_data(oData.org);
+        #delete actual org
+        oData.org.delete()
+        oData.delete()
+
+    return success_no_content()  
 
 def get_crisis(request, cid):
     # filter will return an empty list when there are no matches
@@ -638,11 +640,35 @@ def person(request, pid):
 
 def person_orgs(request, pid):
     """ List all related organizations """
-    pass
+    if request.method == 'GET':
+        matches = PeopleData.objects.filter(people__pk=pid)
+        if not matches:
+            return resourceNotFound()
+        data = matches[0]
+        result = []
+        for org in data.orgs.all():
+            orgDataMatches = OrganizationsData.objects.filter(org__pk=org.pk)
+            if orgDataMatches:
+                result.append(get_org_dict(orgDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
 
 def person_crises(request, pid):
     """ List all related crises """
-    pass
+    if request.method == 'GET':
+        matches = PeopleData.objects.filter(people__pk=pid)
+        if not matches:
+            return resourceNotFound()
+        data = matches[0]
+        result = []
+        for crisis in data.crises.all():
+            crisisDataMatches = CrisesData.objects.filter(crisis__pk=crisis.pk)
+            if crisisDataMatches:
+                result.append(get_crisis_dict(crisisDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
 
 #############################################
 # Organization REST views
@@ -677,11 +703,35 @@ def organization(request, oid):
 
 def organization_people(request, oid):
     """ List all related people """
-    pass
+    if request.method == 'GET':
+        matches = OrganizationsData.objects.filter(org__pk=oid)
+        if not matches:
+            return resourceNotFound()
+        data = matches[0]
+        result = []
+        for person in data.people.all():
+            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
+            if pDataMatches:
+                result.append(get_person_dict(pDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
 
 def organization_crises(request, oid):
     """ List all related crises """
-    pass
+    if request.method == 'GET':
+        matches = OrganizationsData.objects.filter(org__pk=oid)
+        if not matches:
+            return resourceNotFound()
+        data = matches[0]
+        result = []
+        for crisis in data.crises.all():
+            crisisDataMatches = CrisesData.objects.filter(crisis__pk=crisis.pk)
+            if crisisDataMatches:
+                result.append(get_crisis_dict(crisisDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
 
 def get_contact_info_dict(orgData):
     """
