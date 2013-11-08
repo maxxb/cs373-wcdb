@@ -72,15 +72,18 @@ def crisis_orgs(request, cid):
 def crisis_people(request, cid):
     """ List all related people """
     if request.method == 'GET':
-        matches = PeopleData.objects.filter(crisis_pk=cid)
+        matches = CrisesData.objects.filter(crisis__pk=cid)
         if not matches:
             return resourceNotFound()
         cData = matches[0]
-        resutlt = []
+        result = []
         for person in cData.people.all():
-            result.append(get_person_dict(person))
-
-    pass
+            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
+            if pDataMatches:
+                result.append(get_person_dict(pDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
 
 def get_all_crises():
     data = []
@@ -360,12 +363,39 @@ def get_crisis_dict(crisisData):
         "citations"         : cCitations,
     }
 
-def get_people_dict(peopleData):
-    #TODO: use a subquery
-    pass
+def get_person_dict(personData):
+    """
+    personData is a row from the PeopleData table
+    This gathers all the info about the person into a single dict 
+        (per the API) and returns it
+    """
+    pid = personData.person.pk
+    
+    # grab everything we need from the database
+    pMaps       = [x.maps for x in PeopleMaps.objects.filter(people__pk=pid)]
+    pImages     = [x.image for x in PeopleImages.objects.filter(people__pk=pid)]
+    pVideos     = [x.video for x in PeopleVideos.objects.filter(people__pk=pid)]
+    pSocial     = [x.twitter for x in PeopleTwitter.objects.filter(people__pk=pid)]
+    pLinks      = [x.external_links for x in PeopleLinks.objects.filter(people__pk=pid)]
+    pCitations  = [x.citations for x in PeopleCitations.objects.filter(people__pk=pid)]
+    pCrises     = [x.pk for x in personData.crises.all()]
+    pOrgs       = [x.pk for x in personData.orgs.all()]
 
-def get_org_dict(orgData):
-    pass
+    # construct the response data
+    return {
+        "name"          : personData.person.name, 
+        "id"            : pid,
+        "DOB"           : str(personData.dob),
+        "location"      : personData.location,
+        "kind"          : personData.person.kind,
+        "description"   : personData.description,
+        "images"        : pImages,
+        "videos"        : pVideos,
+        "maps"          : pMaps,
+        "social_media"  : pSocial,
+        "external_links": pLinks,
+        "citations"     : pCitations,
+    }
 
 #############################################
 # Person REST views
