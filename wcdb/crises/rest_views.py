@@ -25,6 +25,10 @@ def dateFromString(ds):
     # http://docs.python.org/2/library/datetime.html#strftime-strptime-behavior
     return datetime.strptime(ds, "%Y-%m-%d").date()
 
+def jsonFromRequest(request):
+    jsonString = "".join(request.readlines())
+    return simplejson.loads(jsonString)
+
 #############################################
 # Crisis REST views
 #############################################
@@ -119,6 +123,40 @@ def get_all_orgs():
         })
     return jsonResponse(simplejson.dumps(data), 200)
 
+def create_associated_crisis_data(data, crisis):
+    """
+    data is a dict containing API keys: "maps", "images", etc.
+    crisis is a Crisis model object.
+    """
+    # create the crisis's maps, images, etc
+    for x in data[u"maps"]:
+        CrisesMaps(maps=x, crisis=crisis).save()
+    for x in data[u"images"]:
+        CrisesImages(image=x, crisis=crisis).save()
+    for x in data[u"videos"]:
+        CrisesVideos(video=x, crisis=crisis).save()
+    for x in data[u"social_media"]:
+        # TODO: can we get the widget_id from the url?
+        CrisesTwitter(twitter=x, widget_id=123456789, crisis=crisis).save()
+    for x in data[u"ways_to_help"]:
+        CrisesHelp(help=x, crisis=crisis).save()
+    for x in data[u"resources_needed"]:
+        CrisesResourses(resourses=x, crisis=crisis).save()
+    for x in data[u"external_links"]:
+        CrisesLinks(external_links=x, crisis=crisis).save()
+    for x in data[u"citations"]:
+        CrisesCitations(citations=x, crisis=crisis).save()
+
+def delete_associated_crisis_data(crisis):
+    map(lambda x: x.delete(), CrisesMaps.objects.filter(crisis__pk=crisis.pk))
+    map(lambda x: x.delete(), CrisesImages.objects.filter(crisis__pk=crisis.pk))
+    map(lambda x: x.delete(), CrisesVideos.objects.filter(crisis__pk=crisis.pk))
+    map(lambda x: x.delete(), CrisesTwitter.objects.filter(crisis__pk=crisis.pk))
+    map(lambda x: x.delete(), CrisesHelp.objects.filter(crisis__pk=crisis.pk))
+    map(lambda x: x.delete(), CrisesResourses.objects.filter(crisis__pk=crisis.pk))
+    map(lambda x: x.delete(), CrisesLinks.objects.filter(crisis__pk=crisis.pk))
+    map(lambda x: x.delete(), CrisesCitations.objects.filter(crisis__pk=crisis.pk))
+
 def post_new_crisis(request):
     #TODO: Handle authentication here
 
@@ -152,23 +190,24 @@ def post_new_crisis(request):
     crisisData.save()
 
     # create the crisis's maps, images, etc
-    for x in b[u"maps"]:
-        CrisesMaps(maps=x, crisis=crisis).save()
-    for x in b[u"images"]:
-        CrisesImages(image=x, crisis=crisis).save()
-    for x in b[u"videos"]:
-        CrisesVideos(video=x, crisis=crisis).save()
-    for x in b[u"social_media"]:
-        # TODO: can we get the widget_id from the url?
-        CrisesTwitter(twitter=x, widget_id=123456789, crisis=crisis).save()
-    for x in b[u"ways_to_help"]:
-        CrisesHelp(help=x, crisis=crisis).save()
-    for x in b[u"resources_needed"]:
-        CrisesResourses(resourses=x, crisis=crisis).save()
-    for x in b[u"external_links"]:
-        CrisesLinks(external_links=x, crisis=crisis).save()
-    for x in b[u"citations"]:
-        CrisesCitations(citations=x, crisis=crisis).save()
+    create_associated_crisis_data(b, crisis) 
+    #for x in b[u"maps"]:
+    #    CrisesMaps(maps=x, crisis=crisis).save()
+    #for x in b[u"images"]:
+    #    CrisesImages(image=x, crisis=crisis).save()
+    #for x in b[u"videos"]:
+    #    CrisesVideos(video=x, crisis=crisis).save()
+    #for x in b[u"social_media"]:
+    #    # TODO: can we get the widget_id from the url?
+    #    CrisesTwitter(twitter=x, widget_id=123456789, crisis=crisis).save()
+    #for x in b[u"ways_to_help"]:
+    #    CrisesHelp(help=x, crisis=crisis).save()
+    #for x in b[u"resources_needed"]:
+    #    CrisesResourses(resourses=x, crisis=crisis).save()
+    #for x in b[u"external_links"]:
+    #    CrisesLinks(external_links=x, crisis=crisis).save()
+    #for x in b[u"citations"]:
+    #    CrisesCitations(citations=x, crisis=crisis).save()
 
     return {"id": cid}
     # return jsonResponse(simplejson.dumps({"id": cid}), 201)
@@ -280,10 +319,6 @@ def post_new_person(request):
     return {"id" : cid}
     # return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
-def jsonFromRequest(request):
-    jsonString = "".join(request.readlines())
-    return simplejson.loads(jsonString)
-
 # PUT implementations #
 def put_crisis(request, cid):
     #TODO: check for existing crisis, if exists, do an update on it
@@ -292,16 +327,22 @@ def put_crisis(request, cid):
     if not cDataMatches:
         return resource_not_found() 
     cData = cDataMatches[0]
-
+    
     putData = jsonFromRequest(request)
-    cData.crisis.name = putData["name"]
-    cData.crisis.kind = putData["kind"]
-    cData.description = putData["description"]
-    cData.location = putData["location"]
-    cData.start_date = dateFromString(putData["start_date"])
-    cData.end_date = dateFromString(putData["end_date"])
-    cData.human_impact = putData["human_impact"]
-    cData.economic_impact = putData["economic_impact"]
+
+    delete_associated_crisis_data(cData.crisis)
+    create_associated_crisis_data(putData, cData.crisis)
+
+    cData.crisis.name       = putData["name"]
+    cData.crisis.kind       = putData["kind"]
+    cData.description       = putData["description"]
+    cData.location          = putData["location"]
+    cData.start_date        = dateFromString(putData["start_date"])
+    cData.end_date          = dateFromString(putData["end_date"])
+    cData.human_impact      = putData["human_impact"]
+    cData.economic_impact   = putData["economic_impact"]
+    cData.save()
+    cData.crisis.save()
     
     return success_no_content() 
 
@@ -316,7 +357,11 @@ def delete_crisis(request, cid):
     #TODO: use a delete statement on that id?
     cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
     if cDataMatches:
-        cDataMatches[0].delete()
+        cData = cDataMatches[0]
+        cData.crisis.delete()
+        cData.delete()
+        # TODO: delete Maps, Images, etc.
+
     return success_no_content()
 
 def delete_person(person):
