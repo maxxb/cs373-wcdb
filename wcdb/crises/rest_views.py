@@ -15,6 +15,9 @@ def method_not_supported():
 def resource_not_found():
     return HttpResponse(content_type=JSON_CONTENT, status=404)
 
+def success_no_content():
+    return HttpResponse(content_type=JSON_CONTENT, status=204)
+
 def jsonResponse(jsonData, status_code):
     return HttpResponse(jsonData, content_type=JSON_CONTENT, status=status_code)
 
@@ -33,7 +36,8 @@ def crises(request):
     if request.method == 'GET':
         return get_all_crises()
     elif request.method == 'POST':
-        return post_new_crisis(request)
+        jsonId = post_new_crisis(request)
+        return jsonResponse(simplejson.dumps(jsonId), 201)
     else:
         return method_not_supported()
 
@@ -72,15 +76,18 @@ def crisis_orgs(request, cid):
 def crisis_people(request, cid):
     """ List all related people """
     if request.method == 'GET':
-        matches = PeopleData.objects.filter(crisis_pk=cid)
+        matches = CrisesData.objects.filter(crisis__pk=cid)
         if not matches:
             return resourceNotFound()
         cData = matches[0]
-        resutlt = []
+        result = []
         for person in cData.people.all():
-            result.append(get_person_dict(person))
-
-    pass
+            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
+            if pDataMatches:
+                result.append(get_person_dict(pDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
 
 def get_all_crises():
     data = []
@@ -118,7 +125,8 @@ def post_new_crisis(request):
     # In Django 1.5, there's request.body or request.content.
     # Django 1.3 (CS machines) has POST, which is a dictlike object
     # that contains the entire json string as the key for some reason.
-    b = simplejson.loads(request.POST.keys()[0])
+    jsonString = "".join(request.readlines())
+    b = simplejson.loads(jsonString)
 
     # create the crisis and get its auto-assigned primary key
     crisis = Crises(name=b[u"name"], kind=b[u"kind"])
@@ -162,7 +170,8 @@ def post_new_crisis(request):
     for x in b[u"citations"]:
         CrisesCitations(citations=x, crisis=crisis).save()
 
-    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+    return {"id": cid}
+    # return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
 def post_new_organization(request):
     #TODO: reduce redundancy with above
@@ -171,7 +180,9 @@ def post_new_organization(request):
     # In Django 1.5, there's request.body or request.content.
     # Django 1.3 (CS machines) has POST, which is a dictlike object
     # that contains the entire json string as the key for some reason.
-    b = simplejson.loads(request.POST.keys()[0])
+#    b = simplejson.loads(request.POST.keys()[0])
+    jsonString = "".join(request.readlines())
+    b = simplejson.loads(jsonString)
 
     # create the org and get its auto-assigned primary key
     org = Organizations(name=b[u"name"], kind=b[u"kind"])
@@ -219,8 +230,9 @@ def post_new_organization(request):
         OrgLinks(external_links=x, org=org).save()
     for x in b[u"citations"]:
         OrgCitations(citations=x, org=org).save()
-
-    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+        
+    return {"id" : cid}
+    # return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
 def post_new_person(request):
     #TODO: reduce redundancy with above
@@ -265,13 +277,33 @@ def post_new_person(request):
     for x in b[u"citations"]:
         PeopleCitations(citations=x, people=people).save()
 
-    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+    return {"id" : cid}
+    # return jsonResponse(simplejson.dumps({"id": cid}), 201)
+
+def jsonFromRequest(request):
+    jsonString = "".join(request.readlines())
+    return simplejson.loads(jsonString)
 
 # PUT implementations #
-def put_crisis(crisis):
+def put_crisis(request, cid):
     #TODO: check for existing crisis, if exists, do an update on it
     #if doesn't exist, create it? or just do nothing?
-    pass
+    cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
+    if not cDataMatches:
+        return resource_not_found() 
+    cData = cDataMatches[0]
+
+    putData = jsonFromRequest(request)
+    cData.crisis.name = putData["name"]
+    cData.crisis.kind = putData["kind"]
+    cData.description = putData["description"]
+    cData.location = putData["location"]
+    cData.start_date = dateFromString(putData["start_date"])
+    cData.end_date = dateFromString(putData["end_date"])
+    cData.human_impact = putData["human_impact"]
+    cData.economic_impact = putData["economic_impact"]
+    
+    return success_no_content() 
 
 def put_person(person):
     pass
@@ -280,9 +312,12 @@ def put_org(org):
     pass
 
 # DELETE Implementations #
-def delete_crisis(crisis):
+def delete_crisis(request, cid):
     #TODO: use a delete statement on that id?
-    pass
+    cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
+    if cDataMatches:
+        cDataMatches[0].delete()
+    return success_no_content()
 
 def delete_person(person):
     pass
@@ -360,12 +395,39 @@ def get_crisis_dict(crisisData):
         "citations"         : cCitations,
     }
 
-def get_people_dict(peopleData):
-    #TODO: use a subquery
-    pass
+def get_person_dict(personData):
+    """
+    personData is a row from the PeopleData table
+    This gathers all the info about the person into a single dict 
+        (per the API) and returns it
+    """
+    pid = personData.person.pk
+    
+    # grab everything we need from the database
+    pMaps       = [x.maps for x in PeopleMaps.objects.filter(people__pk=pid)]
+    pImages     = [x.image for x in PeopleImages.objects.filter(people__pk=pid)]
+    pVideos     = [x.video for x in PeopleVideos.objects.filter(people__pk=pid)]
+    pSocial     = [x.twitter for x in PeopleTwitter.objects.filter(people__pk=pid)]
+    pLinks      = [x.external_links for x in PeopleLinks.objects.filter(people__pk=pid)]
+    pCitations  = [x.citations for x in PeopleCitations.objects.filter(people__pk=pid)]
+    pCrises     = [x.pk for x in personData.crises.all()]
+    pOrgs       = [x.pk for x in personData.orgs.all()]
 
-def get_org_dict(orgData):
-    pass
+    # construct the response data
+    return {
+        "name"          : personData.person.name, 
+        "id"            : pid,
+        "DOB"           : str(personData.dob),
+        "location"      : personData.location,
+        "kind"          : personData.person.kind,
+        "description"   : personData.description,
+        "images"        : pImages,
+        "videos"        : pVideos,
+        "maps"          : pMaps,
+        "social_media"  : pSocial,
+        "external_links": pLinks,
+        "citations"     : pCitations,
+    }
 
 #############################################
 # Person REST views
