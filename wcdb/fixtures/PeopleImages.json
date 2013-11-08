@@ -11,7 +11,7 @@
 		"model":"crises.PeopleImages",
 		"pk":2,
 		"fields":{
-			"image": "http://upload.wikimedia.org/wikipedia/commons/9/9a/Flickr_-_Government_Press_Office_%28GPO%29_-_THE_NOBEL_PEACE_PRIZE_LAUREATES_FOR_1994_IN_OSLO..jpg",
+			"image": "http://www.thetimes.co.uk/tto/multimedia/archive/00355/arafat_nica11656439_355545c.jpg",
 			"people":1
 		}
 	},
@@ -27,7 +27,7 @@
 		"model":"crises.PeopleImages",
 		"pk":4,
 		"fields":{
-			"image": "http://upload.wikimedia.org/wikipedia/commons/a/a2/Steve_Jobs_and_Bill_Gates_%28522695099%29.jpg",
+			"image": "http://i.telegraph.co.uk/multimedia/archive/02012/Bill-Gates_2012907b.jpg",
 			"people":4
 		}
 	},

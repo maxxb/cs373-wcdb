@@ -93,8 +93,8 @@
 			"location": "New York, NY",
 			"date_established":"1945-01-01",
 			"contact_info": 7,
-			"people":[],
-			"crises":[]
+			"people":[6, 9, 10],
+			"crises":[1]
 		}
 	},
 	{
