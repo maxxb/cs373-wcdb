@@ -146,19 +146,109 @@ def create_associated_crisis_data(data, crisis):
         CrisesLinks(external_links=x, crisis=crisis).save()
     for x in data[u"citations"]:
         CrisesCitations(citations=x, crisis=crisis).save()
+    #create associations
+    for x in CrisesData.objects.filter(crises__pk=pk):
+        people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
+        for p in people
+            x.people.add(p)
+        orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
+        for o in orgs
+            x.orgs.add(p)
 
 def delete_associated_crisis_data(crisis):
-    for x in CrisesData.objects.filter(crisis__pk=crisis.pk):
+    pk = crisis.pk
+    for x in CrisesData.objects.filter(crisis__pk=pk):
         x.orgs.clear() #remove associations but preserve object
         x.people.clear()
-    map(lambda x: x.delete(), CrisesMaps.objects.filter(crisis__pk=crisis.pk))
-    map(lambda x: x.delete(), CrisesImages.objects.filter(crisis__pk=crisis.pk))
-    map(lambda x: x.delete(), CrisesVideos.objects.filter(crisis__pk=crisis.pk))
-    map(lambda x: x.delete(), CrisesTwitter.objects.filter(crisis__pk=crisis.pk))
-    map(lambda x: x.delete(), CrisesHelp.objects.filter(crisis__pk=crisis.pk))
-    map(lambda x: x.delete(), CrisesResourses.objects.filter(crisis__pk=crisis.pk))
-    map(lambda x: x.delete(), CrisesLinks.objects.filter(crisis__pk=crisis.pk))
-    map(lambda x: x.delete(), CrisesCitations.objects.filter(crisis__pk=crisis.pk))
+    map(lambda x: x.delete(), CrisesMaps.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesImages.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesVideos.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesTwitter.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesHelp.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesResourses.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesLinks.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesCitations.objects.filter(crisis__pk=pk))
+
+
+def create_associated_people_data(data, person):
+    """
+    data is a dict containing API keys: "maps", "images", etc.
+    person is a People model object.
+    """
+    # create the person's maps, images, etc
+    for x in data[u"maps"]:
+        PeopleMaps(maps=x, people=people).save()
+    for x in data[u"images"]:
+        PeopleImages(image=x, people=people).save()
+    for x in data[u"videos"]:
+        PeopleVideos(video=x, people=people).save()
+    for x in data[u"social_media"]:
+        # TODO: can we get the widget_id from the url?
+        PeopleTwitter(twitter=x, widget_id=123456789, people=people).save()
+    for x in data[u"external_links"]:
+        PeopleLinks(external_links=x, people=people).save()
+    for x in data[u"citations"]:
+        PeopleCitations(citations=x, people=people).save()
+    #create associations
+    for x in PeopleData.objects.filter(people__pk=pk):
+        crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
+        for c in crises
+            x.crises.add(c)
+        orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
+        for o in orgs
+            x.orgs.add(p)
+
+def delete_associated_people_data(person):
+    pk = person.pk
+    for x in PeopleData.objects.filter(people__pk=pk):
+        x.orgs.clear() #remove associations but preserve object
+        x.crises.clear()
+    map(lambda x: x.delete(), PeopleMaps.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleImages.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleVideos.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleTwitter.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleLinks.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleCitations.objects.filter(people__pk=pk))
+
+def create_associated_org_data(data, org):
+    """
+    data is a dict containing API keys: "maps", "images", etc.
+    org is an Organization model object.
+    """
+    # create the org's maps, images, etc
+    for x in data[u"maps"]:
+        OrgMaps(maps=x, org=org).save()
+    for x in data[u"images"]:
+        OrgImages(image=x, org=org).save()
+    for x in data[u"videos"]:
+        OrgVideos(video=x, org=org).save()
+    for x in data[u"social_media"]:
+        # TODO: can we get the widget_id from the url?
+        OrgTwitter(twitter=x, widget_id=123456789, org=org).save()
+    for x in data[u"external_links"]:
+        OrgLinks(external_links=x, org=org).save()
+    for x in data[u"citations"]:
+        OrgCitations(citations=x, org=org).save()
+    #create associations
+    for x in OrgData.objects.filter(org__pk=pk):
+        people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
+        for p in people
+            x.people.add(p)
+        crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
+        for c in crises
+            x.crises.add(c)
+
+def delete_associated_org_data(org):
+    pk = org.pk
+    for x in OrganizationsData.objects.filter(org__pk=pk):
+        x.people.clear() #remove associations but preserve object
+        x.crises.clear()
+    map(lambda x: x.delete(), OrgMaps.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgImages.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgVideos.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgTwitter.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgLinks.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgCitations.objects.filter(org__pk=pk))
 
 def post_new_crisis(request):
     #TODO: Handle authentication here
@@ -355,8 +445,8 @@ def put_person(person, pid):
     
     putData = jsonFromRequest(request)
 
-    delete_associated_people_data(pData.person) #TODO: 
-    create_associated_people_data(putData, pData.person) #TODO:
+    delete_associated_people_data(pData.person) 
+    create_associated_people_data(putData, pData.person)
 
     pData.person.name       = putData["name"]
     pData.person.kind       = putData["kind"]
@@ -376,8 +466,8 @@ def put_org(org, oid):
     
     putData = jsonFromRequest(request)
 
-    delete_associated_org_data(oData.org) #TODO:
-    create_associated_org_data(putData, oData.org) #TODO:
+    delete_associated_org_data(oData.org) 
+    create_associated_org_data(putData, oData.org)
 
     oData.org.name       = putData["name"]
     oData.org.kind       = putData["kind"]
