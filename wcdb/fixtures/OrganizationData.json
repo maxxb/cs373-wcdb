@@ -68,5 +68,75 @@
 			"people":[4],
 			"crises":[3]
 		}
+	},
+	{
+		"model":"crises.OrganizationsData",
+		"pk":6,
+		"fields":{
+			
+			"org":6,
+			"description":"The Federal Bureau of Investigation (FBI) is a governmental agency belonging to the United States Department of Justice that serves as both a federal criminal investigative body and an internal intelligence agency (counterintelligence). Also, it is the government agency responsible for investigating crimes on Native American reservations in the United States under the Major Crimes Act. The bureau was established in 1908 as the Bureau of Investigation (BOI). Its name was changed to the Federal Bureau of Investigation (FBI) in 1935. The FBI headquarters is the J. Edgar Hoover Building, located in Washington, D.C. The bureau has fifty-six field offices located in major cities throughout the United States, and more than 400 resident agencies in lesser cities and areas across the nation.",
+			"location": "Washington, DC",
+			"date_established":"1935-01-01",
+			"contact_info": 6,
+			"people":[],
+			"crises":[9, 8, 6]
+		}
+	},
+	{
+		"model":"crises.OrganizationsData",
+		"pk":7,
+		"fields":{
+			
+			"org":7,
+			"description":"The name \"United Nations\", coined by United States President Franklin D. Roosevelt was first used in the Declaration by United Nations of 1 January 1942, during the Second World War, when representatives of 26 nations pledged their Governments to continue fighting together against the Axis Powers. States first established international organizations to cooperate on specific matters. The International Telecommunication Union was founded in 1865 as the International Telegraph Union, and the Universal Postal Union was established in 1874. Both are now United Nations specialized agencies.",
+			"location": "New York, NY",
+			"date_established":"1945-01-01",
+			"contact_info": 7,
+			"people":[6, 9, 10],
+			"crises":[1]
+		}
+	},
+	{
+		"model":"crises.OrganizationsData",
+		"pk":8,
+		"fields":{
+			
+			"org":8,
+			"description":"The mission of the Drug Enforcement Administration (DEA) is to enforce the controlled substances laws and regulations of the United States and bring to the criminal and civil justice system of the United States, or any other competent jurisdiction, those organizations and principal members of organizations, involved in the growing, manufacture, or distribution of controlled substances appearing in or destined for illicit traffic in the United States; and to recommend and support non-enforcement programs aimed at reducing the availability of illicit controlled substances on the domestic and international markets.",
+			"location": "Springfield, VA",
+			"date_established":"1973-01-06",
+			"contact_info": 8,
+			"people":[],
+			"crises":[9]
+		}
+	},
+	{
+		"model":"crises.OrganizationsData",
+		"pk":9,
+		"fields":{
+			
+			"org":9,
+			"description":"NATO is an active and leading contributor to peace and security on the international stage. Through its crisis-management operations, the Alliance demonstrates both its willingness to act as a positive force for change and its capacity to meet the security challenges of the 21st century. Since its first major peace-support operation in the Balkans in the early 1990s, the tempo and diversity of NATO operations have increased. NATO has been engaged in missions that cover the full spectrum of crisis-management operations – from combat and peacekeeping, to training and logistics support, to surveillance and humanitarian relief. Today, just under 100,000 military personnel are engaged in NATO missions around the world, successfully managing complex ground, air and naval operations in all types of environment. These forces are currently operating in Afghanistan, Kosovo, the Mediterranean, off the Horn of Africa and in Somalia.",
+			"location": "Brussels, Belgium",
+			"date_established":"1949-04-04",
+			"contact_info": 9,
+			"people":[],
+			"crises":[]
+		}
+	},
+	{
+		"model":"crises.OrganizationsData",
+		"pk":10,
+		"fields":{
+			
+			"org":10,
+			"description":"BP is a British multinational oil and gas company. It is the fifth-largest energy company by market capitalization, fifth-largest company in the world measured by 2012 revenues, and the sixth largest oil and gas company measured by 2012 production. It is one of the six oil and gas \"super majors\". BP is vertically integrated and operates in all areas of the oil and gas industry, including exploration and production, refining, distribution and marketing, petrochemicals, power generation and trading. It also has renewable energy activities in biofuels and wind power.",
+			"location": "London, England",
+			"date_established":"1909-01-01",
+			"contact_info": 10,
+			"people":[],
+			"crises":[7]
+		}
 	}
 ]

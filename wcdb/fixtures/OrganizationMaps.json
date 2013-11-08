@@ -38,5 +38,45 @@
 			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=440+5th+Ave+N.,+Seattle,+WA+98109&aq=&sll=43.71841,-79.337774&sspn=0.008134,0.015814&ie=UTF8&hq=&hnear=440+5th+Ave+N,+Seattle,+Washington+98109&t=m&z=14&ll=47.621961,-122.347509&output=embed",
 			"org":5
 		}
+	},
+	{
+		"model":"crises.OrgMaps",
+		"pk":6,
+		"fields":{
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=935+Pennsylvania+Ave+NW,+Washington,+DC+20535&aq=&sll=40.750445,-73.969013&sspn=0.013947,0.012424&ie=UTF8&hq=&hnear=935+Pennsylvania+Ave+NW,+Washington,+District+of+Columbia+20535&t=m&z=14&ll=38.894749,-77.024975&output=embed",
+			"org":6
+		}
+	},
+	{
+		"model":"crises.OrgMaps",
+		"pk":7,
+		"fields":{
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=2+United+Nations+Plz,+New+York,+NY+10017&aq=&sll=38.794452,-77.24376&sspn=0.014349,0.012424&ie=UTF8&hq=&hnear=2+United+Nations+Plaza,+New+York,+10017&t=m&z=14&ll=40.750445,-73.969013&output=embed",
+			"org":7
+		}
+	},
+	{
+		"model":"crises.OrgMaps",
+		"pk":8,
+		"fields":{
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=8701+Morrissette+Drive+Springfield,+VA+22152&aq=&sll=50.84908,4.354534&sspn=0.011624,0.012424&ie=UTF8&hq=&hnear=8701+Morrissette+Dr,+Springfield,+Virginia+22152&t=m&z=14&ll=38.794452,-77.24376&output=embed",
+			"org":8
+		}
+	},
+	{
+		"model":"crises.OrgMaps",
+		"pk":9,
+		"fields":{
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Boulevard+Leopold+III,+1110+Brussels,+Belgium&aq=&sll=51.507743,-0.13462&sspn=0.011459,0.012424&ie=UTF8&hq=&hnear=Rue+L%C3%A9opold+3,+1000+Bruxelles,+Belgium&t=m&z=14&ll=50.84908,4.354534&output=embed",
+			"org":9
+		}
+	},
+	{
+		"model":"crises.OrgMaps",
+		"pk":10,
+		"fields":{
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=BP+p.l.c.+1+St+James's+Square+London,+SW1Y+4PD&aq=&sll=30.289903,-98.53981&sspn=0.508714,0.397568&ie=UTF8&hq=bp+plc&hnear=1+St+James's+Square,+London+SW1Y+4PD,+United+Kingdom&t=m&ll=51.507743,-0.13462&spn=0.006295,0.006295&output=embed",
+			"org":10
+		}
 	}
 ]

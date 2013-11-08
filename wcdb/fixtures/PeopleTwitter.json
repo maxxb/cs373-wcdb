@@ -4,7 +4,7 @@
 		"pk":1,
 		"fields":{
 			"twitter":"http://twitter.com/search?q=yasser+arafat",
-			"widget_id": 397557839859687424,
+			"widget_id": "397557839859687424",
 			"people":1
 		}
 	},	
@@ -13,7 +13,7 @@
 		"pk":2,
 		"fields":{
 			"twitter":"http://twitter.com/search?q=warren+anderson+bhopal" ,
-			"widget_id": 397559394017095680,
+			"widget_id": "397559394017095680",
 			"people":2
 		}
 	},	
@@ -22,7 +22,7 @@
 		"pk":3,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=mikhail+gorbachev",
-			"widget_id": 397559772410417153,
+			"widget_id": "397559772410417153",
 			"people":3
 		}
 	},
@@ -31,7 +31,7 @@
 		"pk":4,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=bill+gates",
-			"widget_id": 397560219330293760,
+			"widget_id":"397560219330293760",
 			"people":4
 		}
 	},
@@ -40,8 +40,53 @@
 		"pk":5,
 		"fields":{
 			"twitter":"https://twitter.com/search?q=Netanyahu+benjamin",
-			"widget_id": 397560417926385664,
+			"widget_id": "397560417926385664",
 			"people":5
+		}
+	},
+	{
+		"model":"crises.PeopleTwitter",
+		"pk":6,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Kim+Jong+Un",
+			"widget_id": "398617811120971776",
+			"people":6
+		}
+	},
+	{
+		"model":"crises.PeopleTwitter",
+		"pk":7,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Al+Gore",
+			"widget_id": "398618109881225217",
+			"people":7
+		}
+	},
+	{
+		"model":"crises.PeopleTwitter",
+		"pk":8,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Dalai+Lama",
+			"widget_id": "398618360616738817",
+			"people":8
+		}
+	},
+	{
+		"model":"crises.PeopleTwitter",
+		"pk":9,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Barack+Obama",
+			"widget_id": "398618636870352896",
+			"people":9
+		}
+	},
+	{
+		"model":"crises.PeopleTwitter",
+		"pk":10,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Saddam+Hussein",
+			"widget_id": "398618843305615360",
+			"people":10
 		}
 	}
 ]

@@ -38,5 +38,45 @@
 			"external_links":"http://en.wikipedia.org/wiki/Bill_&_Melinda_Gates_Foundation",
 			"org":5
 		}
+	},
+	{
+		"model":"crises.OrgLinks",
+		"pk":6,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/Federal_Bureau_of_Investigation",
+			"org":6
+		}
+	},
+	{
+		"model":"crises.OrgLinks",
+		"pk":7,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/United_Nations",
+			"org":7
+		}
+	},
+	{
+		"model":"crises.OrgLinks",
+		"pk":8,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/Drug_Enforcement_Administration",
+			"org":8
+		}
+	},
+	{
+		"model":"crises.OrgLinks",
+		"pk":9,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/NATO",
+			"org":9
+		}
+	},
+	{
+		"model":"crises.OrgLinks",
+		"pk":10,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/BP",
+			"org":10
+		}
 	}
 ]

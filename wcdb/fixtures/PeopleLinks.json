@@ -38,5 +38,45 @@
 			"external_links":"http://www.netanyahu.org.il/en/",
 			"people":5
 		}
+	},
+	{
+		"model":"crises.PeopleLinks",
+		"pk":6,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/Kim_Jong-un",
+			"people":6
+		}
+	},
+	{
+		"model":"crises.PeopleLinks",
+		"pk":7,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/Al_Gore",
+			"people":7
+		}
+	},
+	{
+		"model":"crises.PeopleLinks",
+		"pk":8,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/Dalai_Lama_XIV",
+			"people":8
+		}
+	},
+	{
+		"model":"crises.PeopleLinks",
+		"pk":9,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/Barack_Obama",
+			"people":9
+		}
+	},
+	{
+		"model":"crises.PeopleLinks",
+		"pk":10,
+		"fields":{
+			"external_links":"http://en.wikipedia.org/wiki/Saddam_Hussein",
+			"people":10
+		}
 	}
 ]

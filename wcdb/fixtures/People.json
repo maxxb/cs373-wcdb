@@ -38,5 +38,45 @@
 			"name":"Benjamin Netanyahu",
 			"kind":"Israeli Prime Minister"
 		}
+	},
+	{
+		"model":"crises.People",
+		"pk":6,
+		"fields":{
+			"name":"Kim Jong Un",
+			"kind":"North Korean Supreme Leader"
+		}
+	},
+	{
+		"model":"crises.People",
+		"pk":7,
+		"fields":{
+			"name":"Al Gore",
+			"kind":"American Politican"
+		}
+	},
+	{
+		"model":"crises.People",
+		"pk":8,
+		"fields":{
+			"name":"Dalai Lama",
+			"kind":"Religious Leader"
+		}
+	},
+	{
+		"model":"crises.People",
+		"pk":9,
+		"fields":{
+			"name":"Barack Obama",
+			"kind":"President of the United States"
+		}
+	},
+	{
+		"model":"crises.People",
+		"pk":10,
+		"fields":{
+			"name":"Saddam Hussein",
+			"kind":"Former President of Iraq"
+		}
 	}
 ]

@@ -38,5 +38,45 @@
 			"name":"Bill & Melinda Gates Foundation",
 			"kind":"Private Foundation"
 		}
+	},
+	{
+		"model":"crises.Organizations",
+		"pk":6,
+		"fields":{
+			"name":"Federal Bureau of Investigation (FBI)",
+			"kind":"Government Agency"
+		}
+	},
+	{
+		"model":"crises.Organizations",
+		"pk":7,
+		"fields":{
+			"name":"United Nations (UN)",
+			"kind":"International Organization"
+		}
+	},
+	{
+		"model":"crises.Organizations",
+		"pk":8,
+		"fields":{
+			"name":"Drug Enforcement Administration (DEA)",
+			"kind":"Government Agency"
+		}
+	},
+	{
+		"model":"crises.Organizations",
+		"pk":9,
+		"fields":{
+			"name":"North Atlantic Treaty Organization (NATO)",
+			"kind":"A Political and Military Alliance"
+		}
+	},
+	{
+		"model":"crises.Organizations",
+		"pk":10,
+		"fields":{
+			"name":"British Petroleum (BP)",
+			"kind":"Group organization"
+		}
 	}
 ]

@@ -84,5 +84,45 @@
 			"citations":"http://en.wikipedia.org/wiki/1989_Loma_Prieta_earthquake",
 			"crisis":5
 		}
+	},
+	{
+		"model":"crises.CrisesCitations",
+		"pk":11,
+		"fields":{
+			"citations":"http://www.cnn.com/interactive/2012/12/us/sandy-hook-timeline/",
+			"crisis":6
+		}
+	},
+	{
+		"model":"crises.CrisesCitations",
+		"pk":12,
+		"fields":{
+			"citations":"http://en.wikipedia.org/wiki/Deepwater_Horizon_oil_spill",
+			"crisis":7
+		}
+	},
+	{
+		"model":"crises.CrisesCitations",
+		"pk":13,
+		"fields":{
+			"citations":"http://en.wikipedia.org/wiki/PRISM_%28surveillance_program%29",
+			"crisis":8
+		}
+	},
+	{
+		"model":"crises.CrisesCitations",
+		"pk":14,
+		"fields":{
+			"citations":"http://en.wikipedia.org/wiki/Mexican_Drug_War",
+			"crisis":9
+		}
+	},
+	{
+		"model":"crises.CrisesCitations",
+		"pk":15,
+		"fields":{
+			"citations":"http://en.wikipedia.org/wiki/West_Fertilizer_Company_explosion",
+			"crisis":10
+		}
 	}
 ]

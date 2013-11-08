@@ -38,5 +38,45 @@
 			"maps":"https://maps.google.com/maps?q=seattle,+wa&hl=en&sll=30.307761,-97.753401&sspn=1.202184,1.584778&hnear=Seattle,+King+County,+Washington&t=m&ie=UTF8&hq=&z=11&ll=47.60621,-122.332071&output=embed",
 			"people":5
 		}
+	},
+	{
+		"model":"crises.PeopleMaps",
+		"pk":6,
+		"fields":{
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Pyongyang,+North+Korea&aq=0&oq=pyong&sll=30.307761,-97.753401&sspn=1.202184,2.024231&t=h&ie=UTF8&hq=&hnear=Pyongyang,+North+Korea&ll=39.031859,125.753765&spn=0.067608,0.126514&z=14&output=embed",
+			"people":6
+		}
+	},
+	{
+		"model":"crises.PeopleMaps",
+		"pk":7,
+		"fields":{
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Washington,+D.C.,+DC&aq=0&oq=Washing&sll=39.030186,125.734234&sspn=0.067608,0.126514&t=h&ie=UTF8&hq=&hnear=Washington,+District+of+Columbia&z=12&ll=38.907231,-77.036464&output=embed",
+			"people":7
+		}
+	},
+	{
+		"model":"crises.PeopleMaps",
+		"pk":8,
+		"fields":{
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=tibet&aq=&sll=38.907231,-77.036464&sspn=0.270901,0.506058&t=h&ie=UTF8&hq=&hnear=Xizang+(Tibet),+China&z=6&ll=29.646923,91.117212&output=embed",
+			"people":8
+		}
+	},
+	{
+		"model":"crises.PeopleMaps",
+		"pk":9,
+		"fields":{
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Washington,+D.C.,+DC&aq=0&oq=Washing&sll=39.030186,125.734234&sspn=0.067608,0.126514&t=h&ie=UTF8&hq=&hnear=Washington,+District+of+Columbia&z=12&ll=38.907231,-77.036464&output=embed",
+			"people":9
+		}
+	},
+	{
+		"model":"crises.PeopleMaps",
+		"pk":10,
+		"fields":{
+			"maps":"https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=baghdad+iraq&aq=&sll=29.646923,91.117212&sspn=19.300623,32.387695&t=h&ie=UTF8&hq=&hnear=Bagdad,+Baghd%C4%81d,+Iraq&z=11&ll=33.325,44.422&output=embed",
+			"people":10
+		}
 	}
 ]

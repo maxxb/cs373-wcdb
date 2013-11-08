@@ -46,5 +46,45 @@
 			"image": "http://www.realclearsports.com/blognetwork/rcs_sidelines/worldseries1989earthquake.jpg",
 			"crisis":5
 		}
+	},
+	{
+		"model":"crises.CrisesImages",
+		"pk":7,
+		"fields":{
+			"image": "http://global.fncstatic.com/static/managed/img/U.S./sandy_hook_first_responders.jpg",
+			"crisis":6
+		}
+	},
+	{
+		"model":"crises.CrisesImages",
+		"pk":8,
+		"fields":{
+			"image": "http://www.headcount.org/wp-content/uploads/2011/12/Gulf-blme-game.jpg",
+			"crisis":7
+		}
+	},
+	{
+		"model":"crises.CrisesImages",
+		"pk":9,
+		"fields":{
+			"image": "http://upload.wikimedia.org/wikipedia/commons/d/d2/PRISM_logo_%28PNG%29.png",
+			"crisis":8
+		}
+	},
+	{
+		"model":"crises.CrisesImages",
+		"pk":10,
+		"fields":{
+			"image": "http://upload.wikimedia.org/wikipedia/commons/6/6e/Fuerza_del_Estado_Michoac%C3%A1n.jpg",
+			"crisis":9
+		}
+	},
+	{
+		"model":"crises.CrisesImages",
+		"pk":11,
+		"fields":{
+			"image": "http://upload.wikimedia.org/wikipedia/commons/7/74/West_Explosion_Aerial.jpg",
+			"crisis":10
+		}
 	}
 ]

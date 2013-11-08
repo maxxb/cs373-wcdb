@@ -58,5 +58,65 @@
 			"crises":[1],
 			"orgs":[]				
 		}
+	},
+	{
+		"model":"crises.PeopleData",
+		"pk":6,
+		"fields":{
+			"person":6,
+			"description": "Kim Jong-un, born 8 January 1983—also romanised as Kim Jong-eun, Kim Jong Un or Kim Jung-eun is the supreme leader of North Korea, the son of Kim Jong-il (1941–2011) and the grandson of Kim Il-sung (1912–1994). He has held the titles of the First Secretary of the Workers' Party of Korea, the Chairman of the Central Military Commission, First Chairman of the National Defence Commission of North Korea, the Supreme Commander of the Korean People's Army, and also a presidium member of the Politburo of the Workers' Party of Korea. He was officially declared the supreme leader following the state funeral for his father on 28 December 2011. He is the third and youngest son of Kim Jong-il and his consort Ko Young-hee. From late 2010, Kim Jong-un was viewed as heir apparent to the leadership of the nation, and following his father's death, he was announced as the 'Great Successor' by North Korean state television. At Kim Jong-il's memorial service, North Korean Chairman of the Supreme People's Assembly Kim Yong-nam declared that 'Respected Comrade Kim Jong-un is our party, military and country's supreme leader who inherits great comrade Kim Jong-il's ideology, leadership, character, virtues, grit and courage'. On 30 December 2011, the Politburo of the Workers' Party of Korea formally appointed Kim as the Supreme Commander of the Korean People's Army. On 11 April 2012, the 4th Party Conference elected him to the newly created post of First Secretary of the Workers' Party of Korea.",
+			"dob":"1983-01-08",
+			"location":"Pyongyang, North Korea",
+			"crises":[],
+			"orgs":[]				
+		}
+	},
+	{
+		"model":"crises.PeopleData",
+		"pk":7,
+		"fields":{
+			"person":7,
+			"description": "Albert Arnold 'Al' Gore, Jr. (born March 31, 1948) is an American politician, advocate and philanthropist, who served as the 45th Vice President of the United States (1993–2001), under President Bill Clinton. He was the Democratic Party's nominee for President and lost the 2000 U.S. presidential election despite winning the popular vote. Gore is currently an author and environmental activist. He has founded a number of non-profit organizations, including the Alliance for Climate Protection, and has received a Nobel Peace Prize for his work in climate change activism.",
+			"dob":"1948-03-31",
+			"location":"Washington D.C.",
+			"crises":[],
+			"orgs":[]				
+		}
+	},
+	{
+		"model":"crises.PeopleData",
+		"pk":8,
+		"fields":{
+			"person":8,
+			"description": "The 14th Dalai Lama (religious name: Tenzin Gyatso, shortened from Jetsun Jamphel Ngawang Lobsang Yeshe Tenzin Gyatso, born Lhamo Dondrub, 6 July 1935) is the 14th and current Dalai Lama, as well as the longest lived incumbent. Dalai Lamas are the head monks of the Gelugpa lineage of Tibetan Buddhism. He won the Nobel Peace Prize in 1989, and is also well known for his lifelong advocacy for Tibetans inside and outside Tibet.",
+			"dob":"1935-07-06",
+			"location":"Takster, Tibet",
+			"crises":[],
+			"orgs":[]				
+		}
+	},
+	{
+		"model":"crises.PeopleData",
+		"pk":9,
+		"fields":{
+			"person":9,
+			"description": "Barack Hussein Obama II (born August 4, 1961) is the 44th and current President of the United States, the first African American to hold the office. Born in Honolulu, Hawaii, Obama is a graduate of Columbia University and Harvard Law School, where he was president of the Harvard Law Review. He was a community organizer in Chicago before earning his law degree. He worked as a civil rights attorney in Chicago and taught constitutional law at the University of Chicago Law School from 1992 to 2004. He served three terms representing the 13th District in the Illinois Senate from 1997 to 2004, running unsuccessfully for the United States House of Representatives in 2000.",
+			"dob":"1961-08-04",
+			"location":"Washington D.C.",
+			"crises":[8],
+			"orgs":[6,7]				
+		}
+	},
+	{
+		"model":"crises.PeopleData",
+		"pk":10,
+		"fields":{
+			"person":10,
+			"description": "Saddam Hussein Abd al-Majid al-Tikriti (28 April 1937 – 30 December 2006) was the fifth President of Iraq, serving in this capacity from 16 July 1979 until 9 April 2003. A leading member of the revolutionary Arab Socialist Ba'ath Party, and later, the Baghdad-based Ba'ath Party and its regional organisation Ba'ath Party – Iraq Region—which espoused ba'athism, a mix of Arab nationalism and Arab socialism—Saddam played a key role in the 1968 coup (later referred to as the 17 July Revolution) that brought the party to power in Iraq.",
+			"dob":"1937-04-28",
+			"location":"Baghdad, Iraq",
+			"crises":[],
+			"orgs":[7]				
+		}
 	}
 ]

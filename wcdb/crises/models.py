@@ -35,7 +35,7 @@ class CrisesVideos(models.Model):
 
 class CrisesTwitter(models.Model):
 	twitter = models.URLField(max_length=500)
-	widget_id = models.DecimalField(max_digits=20, decimal_places=2)
+	widget_id = models.CharField(max_length=20)
 	crisis = models.ForeignKey(Crises)
 
 class CrisesHelp(models.Model):
@@ -47,17 +47,17 @@ class CrisesResourses(models.Model):
 	crisis = models.ForeignKey(Crises)
 
 class CrisesLinks(models.Model):
-	external_links = models.URLField(max_length=100)
+	external_links = models.URLField(max_length=500)
 	crisis = models.ForeignKey(Crises)
 
 class CrisesCitations(models.Model):
-	citations = models.URLField(max_length=100)
+	citations = models.URLField(max_length=500)
 	crisis = models.ForeignKey(Crises)	
 
 class CrisesData(models.Model):
 	crisis = models.OneToOneField(Crises, primary_key=True)
-	description = models.CharField(max_length=1000)
-	location = models.CharField(max_length=100)		
+	description = models.CharField(max_length=2000)
+	location = models.CharField(max_length=500)		
 	start_date = models.DateField()
 	end_date = models.DateField()
 	human_impact = models.CharField(max_length=500)
@@ -87,18 +87,18 @@ class PeopleTwitter(models.Model):
 	people = models.ForeignKey(People)
 
 class PeopleLinks(models.Model):
-	external_links = models.URLField(max_length=100)
+	external_links = models.URLField(max_length=500)
 	people = models.ForeignKey(People)
 
 class PeopleCitations(models.Model):
-	citations = models.URLField(max_length=100)
+	citations = models.URLField(max_length=500)
 	people = models.ForeignKey(People)	
 
 class PeopleData(models.Model):
 	person = models.OneToOneField(People, primary_key=True)
-	description = models.CharField(max_length=1000)
+	description = models.CharField(max_length=2000)
 	dob = models.DateField()
-	location = models.CharField(max_length=100)		
+	location = models.CharField(max_length=500)		
 
 	crises = models.ManyToManyField(Crises)
 	orgs = models.ManyToManyField(Organizations)
@@ -130,18 +130,18 @@ class OrgTwitter(models.Model):
 	org = models.ForeignKey(Organizations)
 
 class OrgLinks(models.Model):
-	external_links = models.URLField(max_length=100)
+	external_links = models.URLField(max_length=500)
 	org = models.ForeignKey(Organizations)
 
 class OrgCitations(models.Model):
-	citations = models.URLField(max_length=100)
+	citations = models.URLField(max_length=500)
 	org = models.ForeignKey(Organizations)	
 
 class OrganizationsData(models.Model):
 	org = models.OneToOneField(Organizations, primary_key=True)
 	date_established = models.DateField()
-	description = models.CharField(max_length=1000)
-	location = models.CharField(max_length=100)	
+	description = models.CharField(max_length=2000)
+	location = models.CharField(max_length=500)	
 
 	contact_info = models.OneToOneField(ContactInfo)
 	crises = models.ManyToManyField(Crises)
