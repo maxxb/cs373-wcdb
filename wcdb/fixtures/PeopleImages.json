@@ -62,5 +62,45 @@
 			"image":"http://upload.wikimedia.org/wikipedia/commons/1/1e/Benjamin_Netanyahu_portrait.jpg",
 			"people":5
 		}
+	},
+	{
+		"model":"crises.PeopleImages",
+		"pk":9,
+		"fields":{
+			"image":"http://img.timeinc.net/time/2012/poypoll/un.jpg",
+			"people":6
+		}
+	},
+	{
+		"model":"crises.PeopleImages",
+		"pk":10,
+		"fields":{
+			"image":"http://i.telegraph.co.uk/multimedia/archive/01515/alGore_1515233c.jpg",
+			"people":7
+		}
+	},
+	{
+		"model":"crises.PeopleImages",
+		"pk":11,
+		"fields":{
+			"image":"http://images.nationalgeographic.com/wpf/media-live/photos/000/145/cache/dalailama-ngk0509_14515_600x450.jpg",
+			"people":8
+		}
+	},
+	{
+		"model":"crises.PeopleImages",
+		"pk":12,
+		"fields":{
+			"image":"http://media.tibetsun.com/images/news/2012/11/barack-obama-re-elected-as-us-president-pg.jpg",
+			"people":9
+		}
+	},
+	{
+		"model":"crises.PeopleImages",
+		"pk":13,
+		"fields":{
+			"image":"http://www.biography.com/imported/images/Biography/Images/Profiles/H/Saddam-Hussein-9347918-1-402.jpg",
+			"people":10
+		}
 	}
 ]

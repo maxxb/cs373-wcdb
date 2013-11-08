@@ -43,5 +43,50 @@
 			"widget_id": "397560417926385664",
 			"people":5
 		}
+	},
+	{
+		"model":"crises.PeopleTwitter",
+		"pk":6,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Kim+Jong+Un",
+			"widget_id": "398617811120971776",
+			"people":6
+		}
+	},
+	{
+		"model":"crises.PeopleTwitter",
+		"pk":7,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Al+Gore",
+			"widget_id": "398618109881225217",
+			"people":7
+		}
+	},
+	{
+		"model":"crises.PeopleTwitter",
+		"pk":8,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Dalai+Lama",
+			"widget_id": "398618360616738817",
+			"people":8
+		}
+	},
+	{
+		"model":"crises.PeopleTwitter",
+		"pk":9,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Barack+Obama",
+			"widget_id": "398618636870352896",
+			"people":9
+		}
+	},
+	{
+		"model":"crises.PeopleTwitter",
+		"pk":10,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Saddam+Hussein",
+			"widget_id": "398618843305615360",
+			"people":10
+		}
 	}
 ]

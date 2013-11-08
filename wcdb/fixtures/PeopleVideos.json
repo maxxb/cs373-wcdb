@@ -38,5 +38,45 @@
 			"video":"//www.youtube.com/embed/CCDcdnEjJHA",
 			"people":5
 		}
+	},
+	{
+		"model":"crises.PeopleVideos",
+		"pk":6,
+		"fields":{
+			"video":"//www.youtube.com/embed/b3PqGnPH2QQ",
+			"people":6
+		}
+	},
+	{
+		"model":"crises.PeopleVideos",
+		"pk":7,
+		"fields":{
+			"video":"//www.youtube.com/embed/rQyAG4ZxcLo",
+			"people":7
+		}
+	},
+	{
+		"model":"crises.PeopleVideos",
+		"pk":8,
+		"fields":{
+			"video":"//www.youtube.com/embed/PxA4RTOGphk",
+			"people":8
+		}
+	},
+	{
+		"model":"crises.PeopleVideos",
+		"pk":9,
+		"fields":{
+			"video":"//www.youtube.com/embed/wCrE8e-9wto",
+			"people":9
+		}
+	},
+	{
+		"model":"crises.PeopleVideos",
+		"pk":10,
+		"fields":{
+			"video":"//www.youtube.com/embed/SUothgIi8cg",
+			"people":10
+		}
 	}
 ]

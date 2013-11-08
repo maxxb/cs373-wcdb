@@ -62,5 +62,45 @@
 			"citations":"http://www.pmo.gov.il/ENGLISH/PRIMEMINISTER/Pages/PrimeMinister-CurriculumVitae.aspx",
 			"people":5
 		}
+	},
+	{
+		"model":"crises.PeopleCitations",
+		"pk":9,
+		"fields":{
+			"citations":"http://www.biography.com/people/kim-jong-un-21125351",
+			"people":6
+		}
+	},
+	{
+		"model":"crises.PeopleCitations",
+		"pk":10,
+		"fields":{
+			"citations":"http://www.algore.com/",
+			"people":7
+		}
+	},
+	{
+		"model":"crises.PeopleCitations",
+		"pk":11,
+		"fields":{
+			"citations":"http://www.dalailama.com/",
+			"people":8
+		}
+	},
+	{
+		"model":"crises.PeopleCitations",
+		"pk":12,
+		"fields":{
+			"citations":"http://www.barackobama.com/",
+			"people":9
+		}
+	},
+	{
+		"model":"crises.PeopleCitations",
+		"pk":13,
+		"fields":{
+			"citations":"http://history1900s.about.com/od/saddamhussein/p/saddamhussein.htm",
+			"people":10
+		}
 	}
 ]
