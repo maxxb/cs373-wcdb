@@ -148,6 +148,9 @@ def create_associated_crisis_data(data, crisis):
         CrisesCitations(citations=x, crisis=crisis).save()
 
 def delete_associated_crisis_data(crisis):
+    for x in CrisesData.objects.filter(crisis__pk=crisis.pk):
+        x.orgs.clear() #remove associations but preserve object
+        x.people.clear()
     map(lambda x: x.delete(), CrisesMaps.objects.filter(crisis__pk=crisis.pk))
     map(lambda x: x.delete(), CrisesImages.objects.filter(crisis__pk=crisis.pk))
     map(lambda x: x.delete(), CrisesVideos.objects.filter(crisis__pk=crisis.pk))
@@ -321,8 +324,6 @@ def post_new_person(request):
 
 # PUT implementations #
 def put_crisis(request, cid):
-    #TODO: check for existing crisis, if exists, do an update on it
-    #if doesn't exist, create it? or just do nothing?
     cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
     if not cDataMatches:
         return resource_not_found() 
@@ -346,11 +347,51 @@ def put_crisis(request, cid):
     
     return success_no_content() 
 
-def put_person(person):
-    pass
+def put_person(person, pid):
+    pDataMatches = PeopleData.objects.filter(people__pk=pid)
+    if not pDataMatches:
+        return resource_not_found() 
+    pData = pDataMatches[0]
+    
+    putData = jsonFromRequest(request)
 
-def put_org(org):
-    pass
+    delete_associated_people_data(pData.person) #TODO: 
+    create_associated_people_data(putData, pData.person) #TODO:
+
+    pData.person.name       = putData["name"]
+    pData.person.kind       = putData["kind"]
+    pData.description       = putData["description"]
+    pData.location          = putData["location"]
+    pData.dob        = dateFromString(putData["dob"])
+    pData.save()
+    pData.person.save()
+    
+    return success_no_content() 
+
+def put_org(org, oid):
+    oDataMatches = OrganizationsData.objects.filter(org__pk=oid)
+    if not oDataMatches:
+        return resource_not_found() 
+    oData = oDataMatches[0]
+    
+    putData = jsonFromRequest(request)
+
+    delete_associated_org_data(oData.org) #TODO:
+    create_associated_org_data(putData, oData.org) #TODO:
+
+    oData.org.name       = putData["name"]
+    oData.org.kind       = putData["kind"]
+    oData.date_established  = dateFromString(putData["date_established"])
+    oData.description       = putData["description"]
+    oData.location          = putData["location"]
+    oData.contact_info.name = putData["contact_info"]["name"]
+    oData.contact_info.address = putData["contact_info"]["address"]
+    oData.contact_info.email = putData["contact_info"]["email"] 
+    oData.contact_info.phone = putData["contact_info"]["phone"]
+    oData.save()
+    oData.org.save()
+    
+    return success_no_content() 
 
 # DELETE Implementations #
 def delete_crisis(request, cid):
@@ -385,7 +426,7 @@ def get_person(request, cid):
     if not matches:
         return resource_not_found()
     personData = matches[0]
-    data = get_people_dict(personData)
+    data = get_person_dict(personData)
     return jsonResponse(simplejson.dumps(data), 200)
 
 def get_org(request, cid):
