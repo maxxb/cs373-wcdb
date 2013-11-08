@@ -3,7 +3,7 @@
 		"model":"crises.PeopleMaps",
 		"pk":1,
 		"fields":{
-			"maps":"http://goo.gl/maps/oOQCX",
+			"maps":"https://maps.google.com/maps?q=cairo,+egypt&hl=en&sll=40.65,-73.95&sspn=0.264127,0.396194&hnear=Cairo,+Cairo+Governorate,+Egypt&t=m&ie=UTF8&hq=&z=13&ll=30.04442,31.235712&output=embed",
 			"people":1
 		}
 	},
@@ -11,7 +11,7 @@
 		"model":"crises.PeopleMaps",
 		"pk":2,
 		"fields":{
-			"maps":"http://goo.gl/maps/3tPTc",
+			"maps":"https://maps.google.com/maps?q=brooklyn,+ny&hl=en&sll=55.755826,37.6173&sspn=0.783608,1.584778&hnear=Brooklyn,+Kings,+New+York&t=m&ie=UTF8&hq=&z=12&ll=40.65,-73.95&output=embed",
 			"people":2
 		}
 	},	
@@ -19,7 +19,7 @@
 		"model":"crises.PeopleMaps",
 		"pk":3,
 		"fields":{
-			"maps":"http://goo.gl/maps/aNjWg",
+			"maps":"https://maps.google.com/maps?q=moscow,+russia&hl=en&sll=47.60621,-122.332071&sspn=0.469434,0.792389&hnear=Moscow,+gorod+Moskva,+Russia&t=m&ie=UTF8&hq=&z=10&ll=55.755826,37.6173&output=embed",
 			"people":3
 		}
 	},
@@ -27,7 +27,7 @@
 		"model":"crises.PeopleMaps",
 		"pk":4,
 		"fields":{
-			"maps":"http://goo.gl/maps/8UGlM",
+			"maps":"https://maps.google.com/maps?q=seattle,+wa&hl=en&sll=30.307761,-97.753401&sspn=1.202184,1.584778&hnear=Seattle,+King+County,+Washington&t=m&ie=UTF8&hq=&z=11&ll=47.60621,-122.332071&output=embed",
 			"people":4
 		}
 	},
@@ -35,7 +35,7 @@
 		"model":"crises.PeopleMaps",
 		"pk":5,
 		"fields":{
-			"maps":"http://goo.gl/maps/4pJPk",
+			"maps":"https://maps.google.com/maps?q=seattle,+wa&hl=en&sll=30.307761,-97.753401&sspn=1.202184,1.584778&hnear=Seattle,+King+County,+Washington&t=m&ie=UTF8&hq=&z=11&ll=47.60621,-122.332071&output=embed",
 			"people":5
 		}
 	}

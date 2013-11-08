@@ -3,7 +3,7 @@
 		"model":"crises.PeopleVideos",
 		"pk":1,
 		"fields":{
-			"video":"http://www.youtube.com/watch?v=a0tbZ3iYgCs",
+			"video":"//www.youtube.com/embed/dEELNaQIWMU",
 			"people":1
 		}                                                  
 	},
@@ -11,7 +11,7 @@
 		"model":"crises.PeopleVideos",
 		"pk":2,
 		"fields":{
-			"video":"http://www.youtube.com/watch?v=yhmVRckHHxM",
+			"video":"//www.youtube.com/embed/lnpU1sCv96s",
 			"people":2
 		}
 	},
@@ -19,7 +19,7 @@
 		"model":"crises.PeopleVideos",
 		"pk":3,
 		"fields":{
-			"video":"http://www.youtube.com/watch?v=4lPjMh1zpEo",
+			"video":"//www.youtube.com/embed/3jG0o9RJEbY",
 			"people":3
 		}
 	},
@@ -27,7 +27,7 @@
 		"model":"crises.PeopleVideos",
 		"pk":4,
 		"fields":{
-			"video":"http://www.youtube.com/watch?v=cBHJ-8Bch4E",
+			"video":"//www.youtube.com/embed/YqCY9cYfJ7A",
 			"people":4
 		}
 	},
@@ -35,7 +35,7 @@
 		"model":"crises.PeopleVideos",
 		"pk":5,
 		"fields":{
-			"video":"http://www.youtube.com/watch?v=CCDcdnEjJHA",
+			"video":"//www.youtube.com/embed/CCDcdnEjJHA",
 			"people":5
 		}
 	}

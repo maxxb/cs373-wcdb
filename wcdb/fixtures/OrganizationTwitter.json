@@ -25,5 +25,23 @@
 			"widget_id":"398316573301026816",
 			"org":3
 		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":4,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=FOCUS",
+			"widget_id": "398314452090503168",
+			"org":4
+		}
+	},
+	{
+		"model":"crises.OrgTwitter",
+		"pk":5,
+		"fields":{
+			"twitter":"https://twitter.com/search?q=Bill+%26+Melinda+Gates+Foundation",
+			"widget_id": "398314708932911104",
+			"org":5
+		}
 	}
 ]

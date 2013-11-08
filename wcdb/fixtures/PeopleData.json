@@ -4,6 +4,7 @@
 		"pk":1,
 		"fields":{
 			"person":1,
+			"description": "He was Chairman of the Palestine Liberation Organization (PLO), President of the Palestinian National Authority (PNA), and leader of the Fatah political party and former paramilitary group, which he founded in 1959. Arafat spent much of his life fighting against Israel in the name of Palestinian self-determination. Originally opposed to Israel's existence, he modified his position in 1988 when he accepted UN Security Council Resolution 242. Arafat and his movement operated from several Arab countries.",
 			"dob":"1929-08-24",
 			"location":"Cairo, Egypt",
 			"crises":[1],
@@ -15,6 +16,7 @@
 		"pk":2,
 		"fields":{
 			"person":2,
+			"description": "The Bhopal disaster took place in a plant belonging to a Union Carbide's (UCC) Indian subsidiary, Union Carbide India Limited, in the city of Bhopal, Madhya Pradesh, India during 1984. Thousands of people died and thousands more were injured in the disaster. As the UCC CEO, Anderson was charged[citation needed] with manslaughter by Indian authorities. He flew to India with a promise that he would not be arrested; however, Indian authorities placed him in custody. Anderson posted bail, returned to the US, and refused to return to India. He was declared a fugitive from justice by the Chief Judicial Magistrate of Bhopal on February 1, 1992, for failing to appear at the court hearings in a culpable homicide case in which he was named the chief defendant. The chief judicial magistrate of Bhopal, Prakash Mohan Tiwari, issued an arrest warrant for Anderson on July 31, 2009. The United States has declined to extradite him citing a lack of evidence.",
 			"dob":"1921-01-01",
 			"location":"Brooklyn, NY",
 			"crises":[4],
@@ -26,6 +28,7 @@
 		"pk":3,
 		"fields":{
 			"person":3,
+			"description": "Mikhail Gorbachev, former President of the Soviet Union, wrote about the catastrophic accident in 1986 at Ukraine’s Chernobyl nuclear power station in an issue of the Bulletin of the Atomic Scientists. In his essay, titled “Chernobyl 25 Years Later: Many Lessons,” Gorbachev reflects on the Chernobyl disaster and writes how, two and a half decades later, the nuclear accident offers many lessons for preventing, managing and recovering from such a horrible event — he also writes about key issues that must be addressed for the further development of nuclear power.",
 			"dob":"1931-03-02",
 			"location":"Privolnoye, Stavropol Krai, Russian SFSR, Soviet Union",
 			"crises":[2],
@@ -37,6 +40,7 @@
 		"pk":4,
 		"fields":{
 			"person":4,
+			"description": "Born on October 28, 1955, in Seattle, Washington, famed entrepreneur Bill Gates began to show an interest in computer programming at age 13. Through technological innovation, keen business strategy and aggressive business tactics, he and partner Paul Allen built the world's largest software business, Microsoft. In the process, Gates became one of the richest men in the world.",
 			"dob":"1955-10-28",
 			"location":"Seattle, WA",
 			"crises":[],
@@ -48,6 +52,7 @@
 		"pk":5,
 		"fields":{
 			"person":5,
+			"description": "Benjamin Netanyahu was born on October 21, 1949, in Tel Aviv, Israel. He joined the Israeli military in 1967, moving into the special operations force that rescued a hijacked airplane at the Tel Aviv airport in 1972. Netanyahu became leader of the Likud party in 1993 and continued working with Likud since, twice serving as prime minister.",
 			"dob":"1949-10-21",
 			"location":"Tel Aviv, Israel",
 			"crises":[1],

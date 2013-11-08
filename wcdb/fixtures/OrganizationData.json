@@ -40,5 +40,33 @@
 			"people":[2],
 			"crises":[4]
 		}
+	},
+	{
+		"model":"crises.OrganizationsData",
+		"pk":4,
+		"fields":{
+			
+			"org":4,
+			"description":"It helps people in need reduce their dependence of humanitarian aid and facilitates their transition to sustainable self-reliant,long-term development. FOCUS is an affiliate of the aga Khan Development Network (AKDN). Founded in 1994 by the Ismaili Muslim community under the guidance of His Highness the Aga Khan. FOCUS' expertise ranges from providing relief and assistance following landslides, earthquakes, cyclones, floods and disease epidemics. It has also helped in resettlement programmes for displaced families. In addition, FOCUS has over a decade’s expertise in fostering disaster-resilient communities and developing methods and training for disaster risk management, from natural hazard risk assessment to mitigation and preparedness in some of the world’s most challenging terrain, including the mountains of Afghanistan, Pakistan and Tajikistan and the coastal plains of the Indian subcontinent.",
+			"location": "Afghanistan, Canada, Europe, India, Pakistan, USA",
+			"date_established":"1997-01-01",
+			"contact_info": 4,
+			"people":[5],
+			"crises":[3]
+		}
+	},
+	{
+		"model":"crises.OrganizationsData",
+		"pk":5,
+		"fields":{
+			
+			"org":5,
+			"description":"The Bill & Melinda Gates Foundation is one of the largest private foundations in the world, founded by Bill and Melinda Gates. Works with partner organizations worldwide to tackle critical problems in four program areas. There Global Development division works to help the world's poorest people lift themselves out of hunger and poverty. Their Global Health Division aims to harness advances in science and technology to save lives in developing countries. Their United States division works to improve U.S. high school and postsecondary education and support vulnerable children and families in Washington State. And their Global Policy & Advocacy Division seeks to build strategic relationships and promote policies that will help advance their work.",
+			"location": "440 5th Ave N., Seattle, WA 98109 (206) 709-3100 ext.7100",
+			"date_established":"1997-01-01",
+			"contact_info": 5,
+			"people":[4],
+			"crises":[3]
+		}
 	}
 ]

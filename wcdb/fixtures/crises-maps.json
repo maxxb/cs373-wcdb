@@ -19,7 +19,7 @@
 		"model":"crises.CrisesMaps",
 		"pk":3,
 		"fields":{
-			"maps":"https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Union+Carbide+Factory,+Bhanpur,+Bhopal,+Madhya+Pradesh,+India&amp;aq=0&amp;oq=Bhopal+union&amp;sll=37.236889,-121.764221&amp;sspn=2.175645,4.22699&amp;t=h&amp;ie=UTF8&amp;hq=Union+Carbide+Factory,&amp;hnear=Bhanpur,+Bhopal,+Madhya+Pradesh,+India&amp;ll=23.280897,77.408515&amp;spn=0.030757,0.022095&amp;output=embed",
+			"maps":"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Union+Carbide+Factory,+Bhanpur,+Bhopal,+Madhya+Pradesh,+India&aq=0&oq=Bhopal+union&sll=37.236889,-121.764221&sspn=2.175645,4.22699&t=h&ie=UTF8&hq=Union+Carbide+Factory,&hnear=Bhanpur,+Bhopal,+Madhya+Pradesh,+India&ll=23.280897,77.408515&spn=0.030757,0.022095&output=embed",
 			"crisis":3
 		}
 	},	
@@ -27,7 +27,7 @@
 		"model":"crises.CrisesMaps",
 		"pk":4,
 		"fields":{
-			"maps":"https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;q=2004+Indian+Ocean+earthquake+and+tsunami,+Indonesia&amp;aq=&amp;sll=-14.887111,113.777927&amp;sspn=78.119097,135.263672&amp;t=h&amp;ie=UTF8&amp;geocode=FSCZMgAdsJ22BQ&amp;split=0&amp;hq=&amp;hnear=2004+Indian+Ocean+earthquake+and+tsunami&amp;ll=3.316,95.854&amp;spn=21.695595,33.815918&amp;z=6&amp;output=embed",
+			"maps":"http://maps.google.com/maps?f=q&source=s_q&hl=en&q=2004+Indian+Ocean+earthquake+and+tsunami,+Indonesia&aq=&sll=-14.887111,113.777927&sspn=78.119097,135.263672&t=h&ie=UTF8&geocode=FSCZMgAdsJ22BQ&split=0&hq=&hnear=2004+Indian+Ocean+earthquake+and+tsunami&ll=3.316,95.854&spn=21.695595,33.815918&z=6&output=embed",
 			"crisis":4
 		}
 	},
@@ -35,7 +35,7 @@
 		"model":"crises.CrisesMaps",
 		"pk":5,
 		"fields":{
-		"maps":"https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=+Quake+of+'89&amp;aq=&amp;sll=37.294176,-120.943376&amp;sspn=2.174004,4.22699&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=1989+Loma+Prieta+earthquake&amp;ll=37.04,-121.877&amp;spn=2.175645,4.22699&amp;z=9&amp;output=embed",			
+		"maps":"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=+Quake+of+'89&aq=&sll=37.294176,-120.943376&sspn=2.174004,4.22699&t=h&ie=UTF8&hq=&hnear=1989+Loma+Prieta+earthquake&ll=37.04,-121.877&spn=2.175645,4.22699&z=9&output=embed",			
 		"crisis":5
 		}
 	}	

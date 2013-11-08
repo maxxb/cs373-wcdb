@@ -22,5 +22,21 @@
 			"citations":"http://www.britannica.com/EBchecked/topic/439725/Palestine-Liberation-Organization-PLO",
 			"org":3
 		}
+	},
+	{
+		"model":"crises.OrgCitations",
+		"pk":4,
+		"fields":{
+			"citations":"http://www.akdn.org/focus.asp",
+			"org":4
+		}
+	},
+	{
+		"model":"crises.OrgCitations",
+		"pk":5,
+		"fields":{
+			"citations":"http://www.gatesfoundation.org/",
+			"org":5
+		}
 	}
 ]
