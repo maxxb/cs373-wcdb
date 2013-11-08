@@ -1,0 +1,409 @@
+[
+{
+    "model":"crises.Crises",
+    "pk":1,
+    "fields":{
+        "name":"Israeli-Palestinian conflict",
+        "kind":"political"
+    }
+},
+{
+    "model":"crises.Crises",
+    "pk":2,
+    "fields":{
+        "name":"Chernobyl disaster",
+        "kind":"accident"
+    }
+},
+{
+    "model":"crises.People",
+    "pk":1,
+    "fields":{
+        "name":"Yasser Arafat",
+        "kind":"political leader"
+    }
+},
+{
+    "model":"crises.People",
+    "pk":2,
+    "fields":{
+        "name":"Warren Anderson",
+        "kind":"Former CEO"
+    }
+},  
+{
+    "model":"crises.People",
+    "pk":3,
+    "fields":{
+        "name":"Mikhail Gorbachev",
+        "kind":"political leader"
+    }
+},
+{
+    "model":"crises.Organizations",
+    "pk":1,
+    "fields":{
+        "name":"UNSCEAR",
+        "kind":"Committee"
+    }
+},
+{
+    "model":"crises.Organizations",
+    "pk":2,
+    "fields":{
+        "name":"PLO",
+        "kind":"political party"
+    }
+},
+{
+    "model":"crises.ContactInfo",
+    "pk":1,
+    "fields":{
+        "name": "UNSCEAR secretariat",
+        "address": "UNITED NATIONS Vienna International Centre P.O. Box 500 A-1400 Vienna, AUSTRIA",
+        "email": "notfound@notfound.com",
+        "phone": 1260604330
+    }
+},
+{
+    "model":"crises.ContactInfo",
+    "pk":2,
+    "fields":{
+        "name": "N/A",
+        "address": "N/A",
+        "email": "notfound@notfound.com",
+        "phone": "N/A"
+    }
+},
+{
+    "model":"crises.CrisesMaps",
+    "pk":1,
+    "fields":{
+        "maps":"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed",
+        "crisis":1
+    }
+},
+{
+    "model":"crises.CrisesImages",
+    "pk":1,
+    "fields":{
+        "image": "http://www.globalresearch.ca/wp-content/uploads/2012/11/Israel_Palestine_Flag.png",
+        "crisis":1
+    }
+},  
+{
+    "model":"crises.CrisesVideos",
+    "pk":1,
+    "fields":{
+        "video":"http://www.youtube.com/embed/GdtGOY8T5XE?",
+        "crisis":1
+    }
+},  
+{
+    "model":"crises.CrisesTwitter",
+    "pk":1,
+    "fields":{
+        "twitter":"https://twitter.com/search?q=isreal+palestine",
+        "widget_id":"397556788456738816",
+        "crisis":1
+    }
+},      
+{
+    "model":"crises.CrisesHelp",
+    "pk":1,
+    "fields":{
+        "help":"peaceful negotiations",         
+        "crisis":1
+    }
+},  
+{
+    "model":"crises.CrisesResourses",
+    "pk":1,
+    "fields":{
+        "resourses":"none",
+        "crisis":1
+    }
+},  
+{
+    "model":"crises.CrisesLinks",
+    "pk":1,
+    "fields":{
+        "external_links":"http://www.trust.org/spotlight/Israeli-Palestinian-conflict",
+        "crisis":1
+    }
+},      
+{
+    "model":"crises.CrisesCitations",
+    "pk":1,
+    "fields":{
+        "citations":"http://en.wikipedia.org/wiki/Israeli%E2%80%93Palestinian_conflict",
+        "crisis":1
+    }
+},                          
+{
+    "model":"crises.CrisesData",
+    "pk":1,
+    "fields":{
+
+        "crisis":1,
+        "description":"The Israeli–Palestinian conflict is the ongoing struggle between Israelis and Palestinians that began in the mid 20th century. The conflict is wide-ranging, and the term is sometimes also used in reference to the earlier sectarian conflict in Mandatory Palestine, between the Zionist yishuv and the Arab population under British rule. The Israeli–Palestinian conflict has formed the core part of the wider Arab–Israeli conflict.",
+        "location": "West Bank and Gaza Strip",         
+        "start_date":"1960-01-01",
+        "end_date":"2013-11-01",
+        "human_impact":"One of the world's longest refugee crisis. Nearly 50 percent of Palestinians in the West Bank and Gaza. 2.1 million people are refugees, many of whom live in crowded camps.",
+
+        "economic_impact":"Economic life has suffered and relief organisations have found it difficult to get aid to the Palestinian population.",
+
+        "people":[1,2],
+        "orgs":[1]          
+    }
+},
+{
+    "model":"crises.PeopleData",
+    "pk":1,
+    "fields":{
+        "person":1,
+        "description": "He was Chairman of the Palestine Liberation Organization (PLO), President of the Palestinian National Authority (PNA), and leader of the Fatah political party and former paramilitary group, which he founded in 1959. Arafat spent much of his life fighting against Israel in the name of Palestinian self-determination. Originally opposed to Israel's existence, he modified his position in 1988 when he accepted UN Security Council Resolution 242. Arafat and his movement operated from several Arab countries.",
+        "dob":"1929-08-24",
+        "location":"Cairo, Egypt",
+        "crises":[1],
+        "orgs":[2]			
+    }
+},
+{
+    "model":"crises.PeopleData",
+    "pk":2,
+    "fields":{
+        "person":2,
+        "dob":"1921-01-01",
+        "description": "The Bhopal disaster took place in a plant belonging to a Union Carbide's (UCC) Indian subsidiary, Union Carbide India Limited, in the city of Bhopal, Madhya Pradesh, India during 1984. Thousands of people died and thousands more were injured in the disaster. As the UCC CEO, Anderson was charged[citation needed] with manslaughter by Indian authorities. He flew to India with a promise that he would not be arrested; however, Indian authorities placed him in custody. Anderson posted bail, returned to the US, and refused to return to India. He was declared a fugitive from justice by the Chief Judicial Magistrate of Bhopal on February 1, 1992, for failing to appear at the court hearings in a culpable homicide case in which he was named the chief defendant. The chief judicial magistrate of Bhopal, Prakash Mohan Tiwari, issued an arrest warrant for Anderson on July 31, 2009. The United States has declined to extradite him citing a lack of evidence.",
+        "location":"Brooklyn, NY",
+        "crises":[4],
+        "orgs":[3]			
+    }
+},
+{
+    "model":"crises.PeopleMaps",
+    "pk":1,
+    "fields":{
+        "maps":"http://goo.gl/maps/oOQCX",
+        "people":1
+    }
+},
+{
+    "model":"crises.PeopleMaps",
+    "pk":2,
+    "fields":{
+        "maps":"http://goo.gl/maps/3tPTc",
+        "people":2
+    }
+},
+{
+    "model":"crises.PeopleImages",
+    "pk":1,
+    "fields":{
+        "image": "http://upload.wikimedia.org/wikipedia/commons/thumb/3/37/ArafatEconomicForum.jpg/415px-ArafatEconomicForum.jpg",
+        "people":1
+    }
+},
+{
+    "model":"crises.PeopleImages",
+    "pk":2,
+    "fields":{
+        "image": "http://upload.wikimedia.org/wikipedia/commons/9/9a/Flickr_-_Government_Press_Office_%28GPO%29_-_THE_NOBEL_PEACE_PRIZE_LAUREATES_FOR_1994_IN_OSLO..jpg",
+        "people":1
+    }
+},
+{
+    "model":"crises.PeopleVideos",
+    "pk":1,
+    "fields":{
+        "video":"http://www.youtube.com/watch?v=a0tbZ3iYgCs",
+        "people":1
+    }                                                  
+},
+{
+    "model":"crises.PeopleVideos",
+    "pk":2,
+    "fields":{
+        "video":"http://www.youtube.com/watch?v=yhmVRckHHxM",
+        "people":2
+    }
+},
+{
+    "model":"crises.PeopleLinks",
+    "pk":1,
+    "fields":{
+        "external_links":"http://www.nndb.com/people/403/000022337/",
+        "people":1
+    }
+},	
+{
+    "model":"crises.PeopleLinks",
+    "pk":2,
+    "fields":{
+        "external_links":"http://www.cbsnews.com/stories/2009/08/01/national/main5204098.shtml",
+        "people":2
+    }
+},
+{
+    "model":"crises.PeopleCitations",
+    "pk":1,
+    "fields":{
+        "citations":"http://en.wikipedia.org/wiki/Yasser_Arafat",
+        "people":1
+    }
+},
+{
+    "model":"crises.PeopleCitations",
+    "pk":2,
+    "fields":{
+        "citations":"http://en.wikipedia.org/wiki/Warren_Anderson_%28American_businessman%29",
+        "people":2
+    }
+},
+{
+    "model":"crises.PeopleTwitter",
+    "pk":1,
+    "fields":{
+        "twitter":"http://twitter.com/search?q=yasser+arafat",
+        "widget_id": 397557839859687424,
+        "people":1
+    }
+},	
+{
+    "model":"crises.PeopleTwitter",
+    "pk":2,
+    "fields":{
+        "twitter":"http://twitter.com/search?q=warren+anderson+bhopal" ,
+        "widget_id": 397559394017095680,
+        "people":2
+    }
+},
+{
+    "model":"crises.OrgMaps",
+    "pk":1,
+    "fields":{
+        "maps":"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgMaps",
+    "pk":2,
+    "fields":{
+        "maps":"https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=palestine&amp;sll=33.238688,34.024658&amp;sspn=9.36671,5.866699&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Palestine&amp;ll=31.952162,35.233154&amp;spn=1.041069,1.466675&amp;z=9&amp;output=embed",
+        "org":2
+    }
+},
+{
+    "model":"crises.OrgImages",
+    "pk":1,
+    "fields":{
+        "image": "http://www.irpa.net/images/stories/logo/unscear.gif",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgImages",
+    "pk":2,
+    "fields":{
+        "image": "http://www.forbiddensymbols.com/wp-content/uploads/plo_palestinian_liberation_organisation_flag.jpg",
+        "org":2
+    }
+},
+{
+    "model":"crises.OrgVideos",
+    "pk":1,
+    "fields":{
+        "video":"http://www.youtube.com/embed/gyLDNq3VBMU",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgVideos",
+    "pk":2,
+    "fields":{
+        "video":"Http://www.youtube.com/embed/m8rd33qPJ78",
+        "org":2
+    }
+},
+{
+    "model":"crises.OrgTwitter",
+    "pk":1,
+    "fields":{
+        "twitter":"https://twitter.com/search?q=UNSCEAR",
+        "widget_id":"398316028322541568",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgTwitter",
+    "pk":2,
+    "fields":{
+        "twitter":"https://twitter.com/search?q=Palestine+Liberation+Organization",
+        "widget_id":"398316309189898240",
+        "org":2
+    }
+},  
+{
+    "model":"crises.OrgLinks",
+    "pk":1,
+    "fields":{
+        "external_links":"http://www.bmeia.gv.at/en/austrian-mission/austrian-mission-vienna/organizations-in-vienna/with-offices-at-the-vic/unscear.html",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgLinks",
+    "pk":2,
+    "fields":{
+        "external_links":"http://www.infoplease.com/encyclopedia/history/palestine-liberation-organization.html",
+        "org":2
+    }
+},
+{
+    "model":"crises.OrgCitations",
+    "pk":1,
+    "fields":{
+        "citations":"http://www.unscear.org/",
+        "org":1
+    }
+},
+{
+    "model":"crises.OrgCitations",
+    "pk":2,
+    "fields":{
+        "citations":"http://www.unioncarbide.com/",
+        "org":2
+    }
+},
+{
+    "model":"crises.OrganizationsData",
+    "pk":1,
+    "fields":{
+
+        "org":1,
+        "description":"UNSCEAR was established in 1955 by the General Assembly of the United Nations. The organizations purpose in the United Nations system is to assess and report levels and effects of exposure to ionizing radiation. Governments and organizations throughout the world rely on the Committee's estimates as the scientific basis for evaluating radiation risk and for establishing protective measures. UNSCEAR was involved in the assessment of radiation exposures and health effects early on during the Chernobyl accident in 1986.",
+        "location": "Sessions are held in Vienna International Centre, Vienna, Austria.",
+        "date_established":"1955-01-01",
+        "contact_info": 1,
+        "people":[3],
+        "crises":[2]
+    }
+},  
+{
+    "model":"crises.OrganizationsData",
+    "pk":2,
+    "fields":{
+
+        "org":2,
+        "description":"Umbrella political organization claiming to represent the world's Palestinians - those Arabs, and their descendants, who lived in  mandated Palestine before the creation of the State of Israel in 1948. It was formed in 1964 to centralize the leadership of various Palestine groups that previously had operated as clandestine resistance movements. It came into prominence only after the Six-Day War of June 1967, however, and engaged in a protracted guerrilla war against Israel during the 1960s, ’70s, and ’80s before entering into peace negotiations with that country in the 1990s.",
+        "location": "Sessions are held in Vienna International Centre, Vienna, Austria.",
+        "date_established":"1964-06-02",
+        "contact_info": 2,
+        "people":[1],
+        "crises":[1]
+    }
+}   
+]
