@@ -86,7 +86,7 @@ def crisis_people(request, cid):
         cData = matches[0]
         result = []
         for person in cData.people.all():
-            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
+            pDataMatches = PeopleData.objects.filter(people__pk=person.pk)
             if pDataMatches:
                 result.append(get_person_dict(pDataMatches[0]))
         return jsonResponse(simplejson.dumps(result), 200)
@@ -332,20 +332,8 @@ def post_new_organization(request):
     orgData.save()
 
     # create the org's maps, images, etc
-    for x in b[u"maps"]:
-        OrgMaps(maps=x, org=org).save()
-    for x in b[u"images"]:
-        OrgImages(image=x, org=org).save()
-    for x in b[u"videos"]:
-        OrgVideos(video=x, org=org).save()
-    for x in b[u"social_media"]:
-        # TODO: get widget_id from table
-        OrgTwitter(twitter=x, widget_id=123456789, org=org).save()
-    for x in b[u"external_links"]:
-        OrgLinks(external_links=x, org=org).save()
-    for x in b[u"citations"]:
-        OrgCitations(citations=x, org=org).save()
-        
+    create_associated_org_data(b, crisis) 
+
     return {"id" : cid}
     # return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
@@ -378,19 +366,7 @@ def post_new_person(request):
     personData.save()
 
     # create the person's maps, images, etc
-    for x in b[u"maps"]:
-        PeopleMaps(maps=x, people=people).save()
-    for x in b[u"images"]:
-        PeopleImages(image=x, people=people).save()
-    for x in b[u"videos"]:
-        PeopleVideos(video=x, people=people).save()
-    for x in b[u"social_media"]:
-        # TODO: get widget_id from table
-        PeopleTwitter(twitter=x, widget_id=123456789, people=people).save()
-    for x in b[u"external_links"]:
-        PeopleLinks(external_links=x, people=people).save()
-    for x in b[u"citations"]:
-        PeopleCitations(citations=x, people=people).save()
+    create_associated_people_data(b, person) 
 
     return {"id" : cid}
     # return jsonResponse(simplejson.dumps({"id": cid}), 201)
@@ -420,7 +396,7 @@ def put_crisis(request, cid):
     
     return success_no_content() 
 
-def put_person(person, pid):
+def put_person(request, pid): #TODO: verify pid, oid, cid?
     pDataMatches = PeopleData.objects.filter(people__pk=pid)
     if not pDataMatches:
         return resource_not_found() 
@@ -441,7 +417,7 @@ def put_person(person, pid):
     
     return success_no_content() 
 
-def put_org(org, oid):
+def put_org(request, oid):
     oDataMatches = OrganizationsData.objects.filter(org__pk=oid)
     if not oDataMatches:
         return resource_not_found() 
@@ -467,7 +443,7 @@ def put_org(org, oid):
     return success_no_content() 
 
 # DELETE Implementations #
-def delete_crisis(request, cid):
+def delete_crisis(request, cid): #prequest unused? 
     cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
     if cDataMatches:
         cData = cDataMatches[0]
@@ -479,7 +455,7 @@ def delete_crisis(request, cid):
 
     return success_no_content()
 
-def delete_person(person):
+def delete_person(request, pid):
     pDataMatches = PeopleData.objects.filter(people__pk=pid)
     if pDataMatches:
         pData = pDataMatches[0]
@@ -491,7 +467,7 @@ def delete_person(person):
 
     return success_no_content()
     
-def delete_org(org):
+def delete_org(request, oid):
     oDataMatches = OrganizationsData.objects.filter(org__pk=oid)
     if oDataMatches:
         oData = oDataMatches[0]
@@ -710,7 +686,7 @@ def organization_people(request, oid):
         data = matches[0]
         result = []
         for person in data.people.all():
-            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
+            pDataMatches = PeopleData.objects.filter(people__pk=person.pk)
             if pDataMatches:
                 result.append(get_person_dict(pDataMatches[0]))
         return jsonResponse(simplejson.dumps(result), 200)
