@@ -27,8 +27,8 @@
     "model":"crises.People",
     "pk":2,
     "fields":{
-        "name":"Barack Obama",
-        "kind":"POTUS"
+        "name":"Warren Anderson",
+        "kind":"Former CEO"
     }
 },  
 {
@@ -163,6 +163,7 @@
     "pk":1,
     "fields":{
         "person":1,
+        "description": "He was Chairman of the Palestine Liberation Organization (PLO), President of the Palestinian National Authority (PNA), and leader of the Fatah political party and former paramilitary group, which he founded in 1959. Arafat spent much of his life fighting against Israel in the name of Palestinian self-determination. Originally opposed to Israel's existence, he modified his position in 1988 when he accepted UN Security Council Resolution 242. Arafat and his movement operated from several Arab countries.",
         "dob":"1929-08-24",
         "location":"Cairo, Egypt",
         "crises":[1],
@@ -175,6 +176,7 @@
     "fields":{
         "person":2,
         "dob":"1921-01-01",
+        "description": "The Bhopal disaster took place in a plant belonging to a Union Carbide's (UCC) Indian subsidiary, Union Carbide India Limited, in the city of Bhopal, Madhya Pradesh, India during 1984. Thousands of people died and thousands more were injured in the disaster. As the UCC CEO, Anderson was charged[citation needed] with manslaughter by Indian authorities. He flew to India with a promise that he would not be arrested; however, Indian authorities placed him in custody. Anderson posted bail, returned to the US, and refused to return to India. He was declared a fugitive from justice by the Chief Judicial Magistrate of Bhopal on February 1, 1992, for failing to appear at the court hearings in a culpable homicide case in which he was named the chief defendant. The chief judicial magistrate of Bhopal, Prakash Mohan Tiwari, issued an arrest warrant for Anderson on July 31, 2009. The United States has declined to extradite him citing a lack of evidence.",
         "location":"Brooklyn, NY",
         "crises":[4],
         "orgs":[3]			

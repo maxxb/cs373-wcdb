@@ -538,11 +538,11 @@ def person(request, pid):
     """
     # filter will return empty lists when there are no matches
     if request.method == 'GET':
-        return get_person(request, cid)
+        return get_person(request, pid)
     elif request.method == 'PUT':
-        return put_person(request, cid)
+        return put_person(request, pid)
     elif request.method == 'DELETE':
-        return delete_person(request, cid)
+        return delete_person(request, pid)
     else:
         return method_not_supported()
 
@@ -577,11 +577,11 @@ def organization(request, oid):
     """
     # filter will return empty lists when there are no matches
     if request.method == 'GET':
-        return get_org(request, cid)
+        return get_org(request, oid)
     elif request.method == 'PUT':
-        return put_org(request, cid)
+        return put_org(request, oid)
     elif request.method == 'DELETE':
-        return delete_org(request, cid)
+        return delete_org(request, oid)
     else:
         return method_not_supported()
 
