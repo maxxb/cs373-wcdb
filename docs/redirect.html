@@ -1,0 +1,38 @@
+<html><head><title>Epydoc Redirect Page</title>
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="pragma" content="no-cache" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+<!--
+var pages = ["wcdb.crises.templatetags.model_extras-m", "wcdb.crises.models.OrganizationsData-c", "wcdb.crises.tests.OrganizationTests-c", "wcdb.crises.models.CrisesCitations-c", "wcdb.crises.models.CrisesResourses-c", "wcdb.crises.models.PeopleCitations-c", "wcdb.crises.models.CrisesTwitter-c", "wcdb.crises.models.Organizations-c", "wcdb.crises.models.PeopleTwitter-c", "wcdb.crises.models.CrisesImages-c", "wcdb.crises.models.CrisesVideos-c", "wcdb.crises.models.OrgCitations-c", "wcdb.crises.models.PeopleImages-c", "wcdb.crises.models.PeopleVideos-c", "wcdb.crises.models.ContactInfo-c", "wcdb.crises.models.CrisesLinks-c", "wcdb.crises.models.PeopleLinks-c", "wcdb.crises.models.CrisesData-c", "wcdb.crises.models.CrisesHelp-c", "wcdb.crises.models.CrisesMaps-c", "wcdb.crises.models.OrgTwitter-c", "wcdb.crises.models.PeopleData-c", "wcdb.crises.models.PeopleMaps-c", "wcdb.crises.tests.CrisesTests-c", "wcdb.crises.tests.PeopleTests-c", "wcdb.crises.models.OrgImages-c", "wcdb.crises.models.OrgVideos-c", "wcdb.crises.models.OrgLinks-c", "wcdb.crises.tests.RestTests-c", "wcdb.crises.models.OrgMaps-c", "wcdb.crises.models.Crises-c", "wcdb.crises.models.People-c", "wcdb.crises.templatetags-m", "wcdb.crises.rest_views-m", "wcdb.crises.rest_urls-m", "wcdb.settings.localpg-m", "wcdb.settings.heroku-m", "wcdb.settings.local-m", "wcdb.crises.models-m", "wcdb.crises.tests-m", "wcdb.crises.views-m", "wcdb.crises.urls-m", "wcdb.settings-m", "wcdb.crises-m", "wcdb.manage-m", "wcdb.views-m", "wcdb.urls-m", "wcdb.wsgi-m", "wcdb-m"];
+var dottedName = get_anchor();
+if (dottedName) {
+    var target = redirect_url(dottedName);
+    if (target) window.location.replace(target);
+}
+// -->
+</script>
+
+<h3>Epydoc Auto-redirect page</h3>
+
+<p>When javascript is enabled, this page will redirect URLs of
+the form <tt>redirect.html#<i>dotted.name</i></tt> to the
+documentation for the object with the given fully-qualified
+dotted name.</p>
+<p><a id="message"> &nbsp; </a></p>
+
+<script type="text/javascript">
+<!--
+if (dottedName) {
+    var msg = document.getElementById("message");
+    msg.innerHTML = "No documentation found for <tt>"+
+                    dottedName+"</tt>";
+}
+// -->
+</script>
+
+</body>
+</html>
