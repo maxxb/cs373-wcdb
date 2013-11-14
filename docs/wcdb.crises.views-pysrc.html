@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>wcdb.crises.views</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="wcdb-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="wcdb-module.html">Package&nbsp;wcdb</a> ::
+        <a href="wcdb.crises-module.html">Package&nbsp;crises</a> ::
+        Module&nbsp;views
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="wcdb.crises.views-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="wcdb.crises.views-module.html">Module wcdb.crises.views</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">shortcuts</tt> <tt class="py-keyword">import</tt> <tt class="py-name">render</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package wcdb.crises=wcdb.crises-module.html,Variable wcdb.crises.models.OrganizationsData.crises=wcdb.crises.models.OrganizationsData-class.html#crises,Variable wcdb.crises.models.PeopleData.crises=wcdb.crises.models.PeopleData-class.html#crises,Function wcdb.crises.rest_views.crises()=wcdb.crises.rest_views-module.html#crises"><a title="wcdb.crises
+wcdb.crises.models.OrganizationsData.crises
+wcdb.crises.models.PeopleData.crises
+wcdb.crises.rest_views.crises" class="py-name" href="#" onclick="return doclink('link-0', 'crises', 'link-0');">crises</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module wcdb.crises.models=wcdb.crises.models-module.html"><a title="wcdb.crises.models" class="py-name" href="#" onclick="return doclink('link-1', 'models', 'link-1');">models</a></tt> <tt class="py-keyword">import</tt> <tt class="py-op">*</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">template</tt> <tt class="py-keyword">import</tt> <tt class="py-op">*</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
+<a name="links"></a><div id="links-def"><a name="L5"></a><tt class="py-lineno"> 5</tt> <a class="py-toggle" href="#" id="links-toggle" onclick="return toggle('links');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="wcdb.crises.views-module.html#links">links</a><tt class="py-op">(</tt><tt class="py-param">request</tt><tt class="py-op">,</tt><tt class="py-param">entity</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="links-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="links-expanded"><a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">entity</tt> <tt class="py-op">==</tt> <tt class="py-string">'crises'</tt><tt class="py-op">:</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line">                <tt class="py-name">crises_list</tt> <tt class="py-op">=</tt> <tt id="link-2" class="py-name" targets="Class wcdb.crises.models.Crises=wcdb.crises.models.Crises-class.html"><a title="wcdb.crises.models.Crises" class="py-name" href="#" onclick="return doclink('link-2', 'Crises', 'link-2');">Crises</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">render</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">,</tt><tt class="py-string">'links_page.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'links'</tt><tt class="py-op">:</tt><tt class="py-name">crises_list</tt><tt class="py-op">}</tt><tt class="py-op">)</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">entity</tt> <tt class="py-op">==</tt> <tt class="py-string">'organizations'</tt><tt class="py-op">:</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">                <tt class="py-name">org_list</tt> <tt class="py-op">=</tt> <tt id="link-3" class="py-name" targets="Class wcdb.crises.models.Organizations=wcdb.crises.models.Organizations-class.html"><a title="wcdb.crises.models.Organizations" class="py-name" href="#" onclick="return doclink('link-3', 'Organizations', 'link-3');">Organizations</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">render</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">,</tt><tt class="py-string">'links_page.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'links'</tt><tt class="py-op">:</tt><tt class="py-name">org_list</tt><tt class="py-op">}</tt><tt class="py-op">)</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">entity</tt> <tt class="py-op">==</tt> <tt class="py-string">'people'</tt><tt class="py-op">:</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">                <tt class="py-name">people_list</tt> <tt class="py-op">=</tt> <tt id="link-4" class="py-name" targets="Class wcdb.crises.models.People=wcdb.crises.models.People-class.html"><a title="wcdb.crises.models.People" class="py-name" href="#" onclick="return doclink('link-4', 'People', 'link-4');">People</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">render</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">,</tt><tt class="py-string">'links_page.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'links'</tt><tt class="py-op">:</tt><tt class="py-name">people_list</tt><tt class="py-op">}</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
+<a name="crisis_index"></a><div id="crisis_index-def"><a name="L16"></a><tt class="py-lineno">16</tt> <a class="py-toggle" href="#" id="crisis_index-toggle" onclick="return toggle('crisis_index');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="wcdb.crises.views-module.html#crisis_index">crisis_index</a><tt class="py-op">(</tt><tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">cid</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="crisis_index-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="crisis_index-expanded"><a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-name">crisis_data</tt> <tt class="py-op">=</tt> <tt id="link-5" class="py-name" targets="Class wcdb.crises.models.CrisesData=wcdb.crises.models.CrisesData-class.html"><a title="wcdb.crises.models.CrisesData" class="py-name" href="#" onclick="return doclink('link-5', 'CrisesData', 'link-5');">CrisesData</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">pk</tt><tt class="py-op">=</tt><tt class="py-name">cid</tt><tt class="py-op">)</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">render</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">,</tt> <tt class="py-string">'crises_index.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'crisis_data'</tt><tt class="py-op">:</tt><tt class="py-name">crisis_data</tt><tt class="py-op">}</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="org_index"></a><div id="org_index-def"><a name="L20"></a><tt class="py-lineno">20</tt> <a class="py-toggle" href="#" id="org_index-toggle" onclick="return toggle('org_index');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="wcdb.crises.views-module.html#org_index">org_index</a><tt class="py-op">(</tt><tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">oid</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="org_index-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="org_index-expanded"><a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt class="py-name">org_data</tt> <tt class="py-op">=</tt> <tt id="link-6" class="py-name" targets="Class wcdb.crises.models.OrganizationsData=wcdb.crises.models.OrganizationsData-class.html"><a title="wcdb.crises.models.OrganizationsData" class="py-name" href="#" onclick="return doclink('link-6', 'OrganizationsData', 'link-6');">OrganizationsData</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">pk</tt><tt class="py-op">=</tt><tt class="py-name">oid</tt><tt class="py-op">)</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">render</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">,</tt> <tt class="py-string">'org_index.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'org_data'</tt><tt class="py-op">:</tt><tt class="py-name">org_data</tt><tt class="py-op">}</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"> </tt>
+<a name="person_index"></a><div id="person_index-def"><a name="L24"></a><tt class="py-lineno">24</tt> <a class="py-toggle" href="#" id="person_index-toggle" onclick="return toggle('person_index');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="wcdb.crises.views-module.html#person_index">person_index</a><tt class="py-op">(</tt><tt class="py-param">request</tt><tt class="py-op">,</tt> <tt class="py-param">pid</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="person_index-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="person_index-expanded"><a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-name">people_data</tt> <tt class="py-op">=</tt> <tt id="link-7" class="py-name" targets="Class wcdb.crises.models.PeopleData=wcdb.crises.models.PeopleData-class.html"><a title="wcdb.crises.models.PeopleData" class="py-name" href="#" onclick="return doclink('link-7', 'PeopleData', 'link-7');">PeopleData</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">pk</tt><tt class="py-op">=</tt><tt class="py-name">pid</tt><tt class="py-op">)</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">render</tt><tt class="py-op">(</tt><tt class="py-name">request</tt><tt class="py-op">,</tt> <tt class="py-string">'people_index.html'</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'people_data'</tt><tt class="py-op">:</tt> <tt class="py-name">people_data</tt><tt class="py-op">}</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="wcdb-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Mon Nov 11 13:21:56 2013
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
