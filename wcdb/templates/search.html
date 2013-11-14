@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load model_extras %}
+
+{% block title %}World Crisies Database | Search Results{% endblock %}
+
+{% block results %} 
+<div class="col-md-12">
+  <center>
+  <h1>Search results for {{search_terms}}</h1>
+  <br><br>
+  <table border="0">
+  	{% for result in query_results %}
+  		<tr>
+  		<td><a href="{{result}}">{{result}}</a></td>
+  		</tr>
+  	{% endfor %}
+  </table>
+  </center>
+</div>  
+
+{% endblock results %}
