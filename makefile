@@ -1,25 +1,37 @@
 all:
-	make WCDB1.zip
+	make WCDB2.zip
 
 clean:
-	rm -f WCDB1.log
-	rm -f WCDB1.zip
-	rm -f Models.py
+	rm -f WCDB2.log
+	rm -f WCDB2.zip
+	rm -f *.html
+	rm -f *.pyc
 
 turnin-list:
-	turnin --list acoomans cs373pj3
+	turnin --list acoomans cs373pj4
 
-turnin-submit: WCDB1.zip
-	turnin --submit acoomans cs373pj3 WCDB1.zip
+turnin-submit: WCDB2.zip
+	turnin --submit acoomans cs373pj4 WCDB2.zip
 
 turnin-verify:
-	turnin --verify acoomans cs373pj3
+	turnin --verify acoomans cs373pj4
 
-Models.py:
-	cp wcdb/crises/models.py Models.py
+Models.html: Models.py
+	pydoc -w Models
 
-WCDB1.log:
-	git log > WCDB1.log
+# add other .py files
 
-WCDB1.zip: makefile apiary.apib Models.py WCDB1.log WCDB1.pdf
-	zip -r WCDB1.zip makefile apiary.apib Models.py WCDB1.log WCDB1.pdf
+WCDB2.log:
+	git log > WCDB2.log
+
+# add other .html and .py files
+
+WCDB2.zip: makefile apiary.apib                     \
+           Models.html Models.py                    \
+           TestWCDB2.out TestWCDB2.py               \
+           WCDB2.log WCDB2-Report.pdf WCDB2-UML.pdf
+	zip -r WCDB2.zip \
+	       makefile apiary.apib                     \
+	       Models.html Models.py                    \
+	       TestWCDB2.out TestWCDB2.py               \
+	       WCDB2.log WCDB2-Report.pdf WCDB2-UML.pdf
