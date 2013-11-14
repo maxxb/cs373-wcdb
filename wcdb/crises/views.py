@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from crises.models import *
 from django.template import *
+################################################
+from search import query
+################################################
 
 def links(request,entity):
 	if entity == 'crises':
@@ -25,3 +28,8 @@ def person_index(request, pid):
 	people_data = PeopleData.objects.get(pk=pid)
 	return render(request, 'people_index.html', {'people_data': people_data})
 
+###########################################################################################################
+def search (request, search_terms):
+	query_results = query(search_terms)
+	return render(request, 'search.html', {'search_terms': search_terms, 'query_results': query_results})
+############################################################################################################
