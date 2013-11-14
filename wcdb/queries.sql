@@ -15,4 +15,4 @@ SELECT
 SELECT
 
 #Count the number of crises before the 21st century (earlier than 2000).
-SELECT
+SELECT name, start_date FROM crises_crisesdata INNER JOIN crises_crises WHERE start_date < '2000-01-01' and crisis_id = id
