@@ -1,0 +1,32 @@
+[
+	{
+		"model":"crises.ContactInfo",
+		"pk":1,
+		"fields":{
+			"name": "UNSCEAR secretariat",
+			"address": "UNITED NATIONS Vienna International Centre P.O. Box 500 A-1400 Vienna, AUSTRIA",
+			"email": "notfound@notfound.com",
+			"phone": 1260604330
+		}
+	},
+	{
+		"model":"crises.ContactInfo",
+		"pk":2,
+		"fields":{
+			"name": "N/A",
+			"address": "N/A",
+			"email": "notfound@notfound.com",
+			"phone": "N/A"
+		}
+	},
+	{
+		"model":"crises.ContactInfo",
+		"pk":3,
+		"fields":{
+			"name": "For Media Relations",
+			"address": "N/A",
+			"email": "mediarelations@unioncarbide.com",
+			"phone": 6464351553
+		}
+	}
+]
