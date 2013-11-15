@@ -3,7 +3,11 @@ from collections import OrderedDict
 
 def query(search_terms):
 
-    tokens = search_terms.split(' ')
+    s = search_terms.strip()
+    if not s:
+        return []
+
+    tokens = s.split('+')
     #URL -> number of search term matches
     URL_match_count = {}
     for token in tokens:
