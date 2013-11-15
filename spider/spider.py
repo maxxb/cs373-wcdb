@@ -89,13 +89,14 @@ class MyParser(HTMLParser):
 
 class Spider(object):
     DEBUG = True
-    def __init__(self, rooturl):
+    def __init__(self, rooturl, depth = 5):
         self.seen_urls = set()
         if rooturl[-1] == '/':
             self.rooturl = rooturl[:-1]
         else:
             self.rooturl = rooturl
         self.index = {}
+        self.depth = depth
 
     def crawl(self):
         """ crawl from the root url """
@@ -113,7 +114,7 @@ class Spider(object):
     def filterUrl(self, url):
         """ This returns True if we want to explore the given url """
         inDomain = url.startswith(self.rooturl) or url.startswith("tcp-connections.herokuapp.com")
-        return inDomain and url.count("/") <= 5
+        return inDomain and url.count("/") <= self.depth 
 
     def filterUrls(self, urls):
         """ 
@@ -156,10 +157,26 @@ class Spider(object):
             else:
                 self.index[word] = set([url])
         
+class CompositeSpider(object):
+    def __init__(self, *baseurls):
+        self.baseurls = baseurls
+        self.index = {}
+
+    def crawl(self):
+        for url in self.baseurls:
+            spider = Spider(url, depth=5)
+            spider.crawl()
+            index = spider.index
+            for k, v in index.iteritems():
+                if k in self.index:
+                    self.index[k].update(v)
+                else:
+                    self.index[k] = v
+        
 
 
 if __name__ == '__main__':
-    import sys
+    import sys, pprint
 
     #page = loadPage(sys.argv[1])
     #print page
@@ -167,8 +184,10 @@ if __name__ == '__main__':
     #print parser.getWordList()
     #print parser.getUrlList()
     
-    spider = Spider("http://tcp-connections.herokuapp.com")
+    spider = CompositeSpider("http://tcp-connections.herokuapp.com/crises", "http://tcp-connections.herokuapp.com/people", "http://tcp-connections.herokuapp.com/organizations")
     spider.crawl()
     print spider.index
     with open("index.py", "w") as f:
-        f.write(str(spider.index))
+        f.write(pprint.pformat(spider.index))
+    x = reduce(lambda x, y: x.union(y), spider.index.values()) 
+    print x

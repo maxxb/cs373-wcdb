@@ -11,7 +11,9 @@ def query(search_terms):
     #URL -> number of search term matches
     URL_match_count = {}
     for token in tokens:
-        found_URLs = index[token]
+        found_URLs = []
+        if token in index:
+            found_URLs = index[token]
         #for each URL that contains the curent search token
             #add 1 to the match count
         for URL in found_URLs:
