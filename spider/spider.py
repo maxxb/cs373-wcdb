@@ -14,6 +14,11 @@ def loadPage(url):
     page = urlopen(url)
     return page.read()
 
+def trimTrailingSlash(url):
+    if url[-1] != '/':
+        return url + '/'
+    return url
+
 class MyParser(HTMLParser):
     def __init__(self, baseurl):
         HTMLParser.__init__(self)
@@ -68,13 +73,9 @@ class MyParser(HTMLParser):
             return result
         # absolute_urls = [urljoin(self.rooturl, x) for x in urls]
         absolute_urls = [joinUrls(self.baseurl, x) for x in urls]
-        no_trailing_slash_urls = map(self.trimTrailingSlash, absolute_urls)
+        no_trailing_slash_urls = map(trimTrailingSlash, absolute_urls)
         return no_trailing_slash_urls
 
-    def trimTrailingSlash(self, url):
-        if url[-1] != '/':
-            return url + '/'
-        return url
 
     def searchAttrs(self, attrs, key):
         """ 
@@ -89,12 +90,13 @@ class MyParser(HTMLParser):
 
 class Spider(object):
     DEBUG = True
-    def __init__(self, rooturl, depth = 5):
+    def __init__(self, depth = 5, *rooturls):
         self.seen_urls = set()
-        if rooturl[-1] == '/':
-            self.rooturl = rooturl[:-1]
-        else:
-            self.rooturl = rooturl
+        self.rooturls = map(trimTrailingSlash, rooturls)
+#        if rooturl[-1] == '/':
+#            self.rooturl = rooturl[:-1]
+#        else:
+#            self.rooturl = rooturl
         self.index = {}
         self.depth = depth
 
@@ -104,7 +106,7 @@ class Spider(object):
         #print urls
         #print self.index
         #print self.seen_urls
-        frontier = [self.rooturl] 
+        frontier = [x for x in self.rooturls]
         while frontier:
             url = frontier.pop(0)
             if Spider.DEBUG: print "Parsing %s" % url
@@ -113,7 +115,7 @@ class Spider(object):
 
     def filterUrl(self, url):
         """ This returns True if we want to explore the given url """
-        inDomain = url.startswith(self.rooturl) or url.startswith("tcp-connections.herokuapp.com")
+        inDomain = url.startswith("http://tcp-connections.herokuapp.com")
         return inDomain and url.count("/") <= self.depth 
 
     def filterUrls(self, urls):
@@ -157,22 +159,23 @@ class Spider(object):
             else:
                 self.index[word] = set([url])
         
-class CompositeSpider(object):
-    def __init__(self, *baseurls):
-        self.baseurls = baseurls
-        self.index = {}
-
-    def crawl(self):
-        for url in self.baseurls:
-            spider = Spider(url, depth=5)
-            spider.crawl()
-            index = spider.index
-            for k, v in index.iteritems():
-                if k in self.index:
-                    self.index[k].update(v)
-                else:
-                    self.index[k] = v
-        
+#class CompositeSpider(object):
+#    def __init__(self, *baseurls):
+#        self.baseurls = baseurls
+#        self.index = {}
+#
+#    def crawl(self):
+#        
+#        for url in self.baseurls:
+#            spider = Spider(url, depth=5)
+#            spider.crawl()
+#            index = spider.index
+#            for k, v in index.iteritems():
+#                if k in self.index:
+#                    self.index[k].update(v)
+#                else:
+#                    self.index[k] = v
+#        
 
 
 if __name__ == '__main__':
@@ -184,7 +187,7 @@ if __name__ == '__main__':
     #print parser.getWordList()
     #print parser.getUrlList()
     
-    spider = CompositeSpider("http://tcp-connections.herokuapp.com/crises", "http://tcp-connections.herokuapp.com/people", "http://tcp-connections.herokuapp.com/organizations")
+    spider = Spider(5, "http://tcp-connections.herokuapp.com/crises/", "http://tcp-connections.herokuapp.com/people/", "http://tcp-connections.herokuapp.com/organizations/")
     spider.crawl()
     print spider.index
     with open("index.py", "w") as f:
