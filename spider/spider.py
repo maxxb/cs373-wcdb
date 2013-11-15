@@ -188,6 +188,6 @@ if __name__ == '__main__':
     spider.crawl()
     print spider.index
     with open("index.py", "w") as f:
-        f.write(pprint.pformat(spider.index))
+        f.write("index = " + pprint.pformat(spider.index))
     x = reduce(lambda x, y: x.union(y), spider.index.values()) 
     print x

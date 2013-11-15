@@ -1,4 +1,4 @@
-{'!function(d,s,id){var': set(['http://tcp-connections.herokuapp.com/crises/1/',
+index = {'!function(d,s,id){var': set(['http://tcp-connections.herokuapp.com/crises/1/',
                                'http://tcp-connections.herokuapp.com/crises/10/',
                                'http://tcp-connections.herokuapp.com/crises/2/',
                                'http://tcp-connections.herokuapp.com/crises/3/',
