@@ -1,30 +1,60 @@
 #!/usr/bin/python
 
-from string import whitespace
+import sys
+import pprint
+import argparse
+import logging
+import time
+import string
+import re
 from urllib2 import urlopen
 from urlparse import urljoin
 from HTMLParser import HTMLParser
-# concerns:
-#   Don't crawl pages outside of the rooturl 
-import re
-WHITESPACE_REGEX = re.compile("[" + whitespace + "]")
+
+# Define a regex to ignore characters we don't wnat in the index
+# \x80-\x9f scrubs out some utf-8 chars that appear in the index
+PUNCTUATION = '!"#$%&\'()*+,./:;<=>?@[\\]^_`{|}~\xe2-'
+IGNORE_CHARS_REGEX = re.compile("[%s]|[%s]" % (string.whitespace + PUNCTUATION, "\x80-\x9f"))
 
 def loadPage(url):
     """ Return the HTML from the given page as a string """
     page = urlopen(url)
     return page.read()
 
-def trimTrailingSlash(url):
-    if url[-1] != '/':
-        return url + '/'
-    return url
+def ensureTrailingSlash(url):
+    """ Ensure the given url has a trailing slash """
+    u = url.strip()
+    if u and u[-1] != '/':
+        return u + '/'
+    return u
 
-class MyParser(HTMLParser):
+def trimTrailingSlashes(url):
+    """ Remove all trailing slashes from the given url """
+    u = url.strip()
+    while u and u[-1] == '/':
+        u = u[:-1]
+    return u
+
+def joinUrls(x, y):
+    result = urljoin(ensureTrailingSlash(x), y)
+    logging.debug("Joined urls:\n    %s\n  + %s\n  = %s" % (x, y, result))
+    return result
+
+def wordsFromText(data):
+    words = map(lambda x: x.strip().lower(), IGNORE_CHARS_REGEX.split(data))
+    return filter(lambda word: word != '', words)
+
+class HTMLFetcherParser(HTMLParser):
+
     def __init__(self, baseurl):
+        """
+        Load and fetch the given url. This will extract text and links from the page.
+        It assumes all relative urls are with respect to baseurl
+        """
         HTMLParser.__init__(self)
         self.words = []
         self.urls = []
-        self.currentTag = None
+        self.__currentTag = None
         self.baseurl = baseurl
         self.feed(loadPage(baseurl))
     
@@ -33,11 +63,8 @@ class MyParser(HTMLParser):
         tag is a string containin the html tag type ('a', 'div', etc)
         attrs is a list of tuples (key, value)
         """
-        # print tag
-        # print attrs
-        # add all urls to a list
         if tag == "a":
-            href = self.searchAttrs(attrs, "href")
+            href = HTMLFetcherParser.searchAttrs(attrs, "href")
             if not href:
                 pass
             elif href.startswith("#"):  # ignore fragments
@@ -45,16 +72,16 @@ class MyParser(HTMLParser):
             else:
                 self.urls.append(href)
 
-        self.currentTag = tag
+        self.__currentTag = tag
 
     def handle_endtag(self, tag):
         # print tag
-        self.currentTag = None
+        self.__currentTag = None
 
     def handle_data(self, data):
-        # check current tag to limit what text gets added
-        words = filter(lambda x: x != '', map(lambda x: x.strip(), WHITESPACE_REGEX.split(data)))
-        self.words += words
+        if self.__currentTag not in ['script', 'a']:
+            words = wordsFromText(data)
+            self.words += words
 
     def getWordList(self):
         """ Return a list of all the words in the page """
@@ -65,19 +92,11 @@ class MyParser(HTMLParser):
         return self.normalizeUrls(self.urls)
 
     def normalizeUrls(self, urls):
-        """ This ensures there are no relative urls in the list """
-        def joinUrls(x, y):
-            #print "Joining %s with %s" % (x, y)
-            result = urljoin(x, y)
-            #print result
-            return result
-        # absolute_urls = [urljoin(self.rooturl, x) for x in urls]
-        absolute_urls = [joinUrls(self.baseurl, x) for x in urls]
-        no_trailing_slash_urls = map(trimTrailingSlash, absolute_urls)
-        return no_trailing_slash_urls
+        """ Return a list of absolute urls all with trailing slashes """        
+        return map(ensureTrailingSlash, [joinUrls(self.baseurl, x) for x in urls])
 
-
-    def searchAttrs(self, attrs, key):
+    @staticmethod
+    def searchAttrs(attrs, key):
         """ 
         Attrs is a list of tuples (key, value)
         This search the list for the key, and returns the associated value
@@ -89,34 +108,47 @@ class MyParser(HTMLParser):
 
 
 class Spider(object):
-    DEBUG = True
-    def __init__(self, depth = 5, *rooturls):
+    def __init__(self, rooturls=[], maxDepth=1, delay=0.5,):
+        """
+        Create a new spider. For each url in rooturls, the spider will crawl
+        the url but go no farther than maxDepth pages away. 
+
+        The spider will only crawl the "directories" under each url. 
+        That is, if rooturls is ["www.something.com/abcd/", "www.something.com/wxyz/"]
+            Allowed:    "www.something.com/abcd/"
+            Allowed:    "www.something.com/abcd/1234"
+            Allowed:    "www.something.com/wxyz/"
+            Allowed:    "www.something.com/wxyz/1234"
+            Disallowed: "www.something.com/lmnop"
+            Disallowed: "www.something.com"
+            Disallowed: "en.wikipedia.com/..."
+
+        delay is the number of seconds to wait between requests (to avoid overloading the server)
+        """
         self.seen_urls = set()
-        self.rooturls = map(trimTrailingSlash, rooturls)
-#        if rooturl[-1] == '/':
-#            self.rooturl = rooturl[:-1]
-#        else:
-#            self.rooturl = rooturl
+        self.rooturls = map(ensureTrailingSlash, rooturls)
         self.index = {}
-        self.depth = depth
+        self.maxDepth = maxDepth
+        logging.info("maxDepth = %s" % self.maxDepth)
+        self.delay = delay
 
     def crawl(self):
-        """ crawl from the root url """
-        #urls = self.handle_url(self.rooturl)
-        #print urls
-        #print self.index
-        #print self.seen_urls
-        frontier = [x for x in self.rooturls]
+        """ 
+        Call this once. This tells the spider to crawl starting from each rooturl.
+        The spider will crawl in a breadth-first fashion.
+        """
+        frontier = [(x, 0) for x in self.rooturls]
         while frontier:
-            url = frontier.pop(0)
-            if Spider.DEBUG: print "Parsing %s" % url
-            url_set = self.handle_url(url)
-            frontier += url_set
+            url, depth = frontier.pop(0)
+            url_set = self.handle_url(url, depth)
+            if url_set:
+                frontier += [(x, depth + 1) for x in url_set]
+                if self.delay and self.delay > 0:
+                    time.sleep(self.delay)
 
     def filterUrl(self, url):
         """ This returns True if we want to explore the given url """
-        inDomain = url.startswith("http://tcp-connections.herokuapp.com")
-        return inDomain and url.count("/") <= self.depth 
+        return any(url.startswith(rooturl) for rooturl in self.rooturls)
 
     def filterUrls(self, urls):
         """ 
@@ -126,17 +158,18 @@ class Spider(object):
         """
         return filter(self.filterUrl, urls)
 
-    def handle_url(self, url):
+    def handle_url(self, url, depth):
         """
-        index is a dictionary
         url is the url to crawl
+        depth is the current depth of the spider from a root url
         returns a set of urls found on the page
         """
         # don't reindex pages we've already seen
-        if url in self.seen_urls:
+        if url in self.seen_urls or depth > self.maxDepth:
             return set()
         self.seen_urls.add(url)
-        wordList, urlList = self.parse_page(url) 
+        logging.info("(%s) Crawling %s" % (depth, url))
+        wordList, urlList = self.parse_page(url)
         self.index_words(wordList, url)
         return set(self.filterUrls(urlList))
 
@@ -145,7 +178,7 @@ class Spider(object):
         Get the page at the url and parse it
         This returns a tuple (wordList, urlList) of all the terms and urls found in the page
         """
-        parser = MyParser(url)
+        parser = HTMLFetcherParser(url)
         wordList = parser.getWordList()
         urlList = parser.getUrlList()
         return wordList, urlList
@@ -157,40 +190,33 @@ class Spider(object):
             if word in self.index:
                 self.index[word].add(url)
             else:
-                self.index[word] = set([url])
-        
-#class CompositeSpider(object):
-#    def __init__(self, *baseurls):
-#        self.baseurls = baseurls
-#        self.index = {}
-#
-#    def crawl(self):
-#        
-#        for url in self.baseurls:
-#            spider = Spider(url, depth=5)
-#            spider.crawl()
-#            index = spider.index
-#            for k, v in index.iteritems():
-#                if k in self.index:
-#                    self.index[k].update(v)
-#                else:
-#                    self.index[k] = v
-#        
+                self.index[word] = set([url])       
 
+def parseArgs():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--loglevel", help="either INFO or DEBUG")
+    parser.add_argument("--logfile", help="either INFO or DEBUG")
+    return parser.parse_args()
+
+def setupLogging(args):
+    if args.loglevel != None:
+        args.loglevel = args.loglevel.upper()
+        print "Using logging level %r" % args.loglevel
+    if args.logfile != None:
+        print "Using logging file: %r" % args.logfile
+
+    logging.basicConfig(filename=args.logfile, filemode='w', level=args.loglevel)
 
 if __name__ == '__main__':
-    import sys, pprint
-
-    #page = loadPage(sys.argv[1])
-    #print page
-    #parser = MyParser("http://tcp-connections.herokuapp.com")
-    #print parser.getWordList()
-    #print parser.getUrlList()
-    
-    spider = Spider(5, "http://tcp-connections.herokuapp.com/crises/", "http://tcp-connections.herokuapp.com/people/", "http://tcp-connections.herokuapp.com/organizations/")
+    args = parseArgs()
+    setupLogging(args)
+        
+    rooturls = [
+        "http://tcp-connections.herokuapp.com/crises/",
+        "http://tcp-connections.herokuapp.com/people/",
+        "http://tcp-connections.herokuapp.com/organizations/"
+    ]
+    spider = Spider(maxDepth=1, delay=0, rooturls=rooturls)
     spider.crawl()
-    print spider.index
     with open("index.py", "w") as f:
         f.write("index = " + pprint.pformat(spider.index))
-    x = reduce(lambda x, y: x.union(y), spider.index.values()) 
-    print x
