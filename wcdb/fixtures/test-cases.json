@@ -62,7 +62,7 @@
         "name": "UNSCEAR secretariat",
         "address": "UNITED NATIONS Vienna International Centre P.O. Box 500 A-1400 Vienna, AUSTRIA",
         "email": "notfound@notfound.com",
-        "phone": 1260604330
+        "phone": "1260604330"
     }
 },
 {
@@ -178,8 +178,8 @@
         "dob":"1921-01-01",
         "description": "The Bhopal disaster took place in a plant belonging to a Union Carbide's (UCC) Indian subsidiary, Union Carbide India Limited, in the city of Bhopal, Madhya Pradesh, India during 1984. Thousands of people died and thousands more were injured in the disaster. As the UCC CEO, Anderson was charged[citation needed] with manslaughter by Indian authorities. He flew to India with a promise that he would not be arrested; however, Indian authorities placed him in custody. Anderson posted bail, returned to the US, and refused to return to India. He was declared a fugitive from justice by the Chief Judicial Magistrate of Bhopal on February 1, 1992, for failing to appear at the court hearings in a culpable homicide case in which he was named the chief defendant. The chief judicial magistrate of Bhopal, Prakash Mohan Tiwari, issued an arrest warrant for Anderson on July 31, 2009. The United States has declined to extradite him citing a lack of evidence.",
         "location":"Brooklyn, NY",
-        "crises":[4],
-        "orgs":[3]			
+        "crises":[1],
+        "orgs":[2]			
     }
 },
 {
@@ -267,7 +267,7 @@
     "pk":1,
     "fields":{
         "twitter":"http://twitter.com/search?q=yasser+arafat",
-        "widget_id": 397557839859687424,
+        "widget_id": "397557839859687424",
         "people":1
     }
 },	
@@ -276,7 +276,7 @@
     "pk":2,
     "fields":{
         "twitter":"http://twitter.com/search?q=warren+anderson+bhopal" ,
-        "widget_id": 397559394017095680,
+        "widget_id": "397559394017095680",
         "people":2
     }
 },
@@ -388,8 +388,8 @@
         "location": "Sessions are held in Vienna International Centre, Vienna, Austria.",
         "date_established":"1955-01-01",
         "contact_info": 1,
-        "people":[3],
-        "crises":[2]
+        "people":[2],
+        "crises":[1]
     }
 },  
 {
@@ -402,7 +402,7 @@
         "location": "Sessions are held in Vienna International Centre, Vienna, Austria.",
         "date_established":"1964-06-02",
         "contact_info": 2,
-        "people":[1],
+        "people":[1,2],
         "crises":[1]
     }
 }   

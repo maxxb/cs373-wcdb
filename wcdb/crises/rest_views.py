@@ -30,6 +30,306 @@ def jsonFromRequest(request):
     return simplejson.loads(jsonString)
 
 #############################################
+# Crisis database helpers
+#############################################
+def get_all_crises():
+    data = []
+    for row in Crises.objects.all():
+        data.append({
+            "name": row.name,
+            "id" : row.pk,
+            "kind" : row.kind
+        })
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def create_associated_crisis_data(data, crisis):
+    """
+    data is a dict containing API keys: "maps", "images", etc.
+    crisis is a Crisis model object.
+    """
+    # create the crisis's maps, images, etc
+    for x in data[u"maps"]:
+        CrisesMaps(maps=x, crisis=crisis).save()
+    for x in data[u"images"]:
+        CrisesImages(image=x, crisis=crisis).save()
+    for x in data[u"videos"]:
+        CrisesVideos(video=x, crisis=crisis).save()
+    for x in data[u"social_media"]:
+        # TODO: can we get the widget_id from the url?
+        CrisesTwitter(twitter=x, widget_id=123456789, crisis=crisis).save()
+    for x in data[u"ways_to_help"]:
+        CrisesHelp(help=x, crisis=crisis).save()
+    for x in data[u"resources_needed"]:
+        CrisesResourses(resourses=x, crisis=crisis).save()
+    for x in data[u"external_links"]:
+        CrisesLinks(external_links=x, crisis=crisis).save()
+    for x in data[u"citations"]:
+        CrisesCitations(citations=x, crisis=crisis).save()
+    #create associations
+    for x in CrisesData.objects.filter(crisis__pk=crisis.pk):
+        people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
+        for p in people:
+            x.people.add(p)
+        orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
+        for o in orgs:
+            x.orgs.add(o)
+
+def delete_associated_crisis_data(crisis):
+    pk = crisis.pk
+    for x in CrisesData.objects.filter(crisis__pk=pk):
+        x.orgs.clear() #remove associations but preserve object
+        x.people.clear()
+    map(lambda x: x.delete(), CrisesMaps.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesImages.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesVideos.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesTwitter.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesHelp.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesResourses.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesLinks.objects.filter(crisis__pk=pk))
+    map(lambda x: x.delete(), CrisesCitations.objects.filter(crisis__pk=pk))
+
+# PUT implementations #
+def put_crisis(request, cid):
+    cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
+    if not cDataMatches:
+        return resource_not_found() 
+    cData = cDataMatches[0]
+    
+    putData = jsonFromRequest(request)
+
+    delete_associated_crisis_data(cData.crisis)
+    create_associated_crisis_data(putData, cData.crisis)
+
+    cData.crisis.name       = putData["name"]
+    cData.crisis.kind       = putData["kind"]
+    cData.description       = putData["description"]
+    cData.location          = putData["location"]
+    cData.start_date        = dateFromString(putData["start_date"])
+    cData.end_date          = dateFromString(putData["end_date"])
+    cData.human_impact      = putData["human_impact"]
+    cData.economic_impact   = putData["economic_impact"]
+    cData.save()
+    cData.crisis.save()
+    
+    return success_no_content() 
+
+def post_new_crisis(request):
+    b = jsonFromRequest(request)
+
+    # create the crisis and get its auto-assigned primary key
+    crisis = Crises(name=b[u"name"], kind=b[u"kind"])
+    crisis.save()
+    cid = crisis.pk
+
+    # create the crisis data 
+    crisisData = CrisesData(
+        crisis = crisis,
+        description = b[u"description"],
+        location = b[u"location"],
+        start_date = dateFromString(b[u"start_date"]),
+        end_date = dateFromString(b[u"end_date"]),
+        human_impact = b[u"human_impact"],
+        economic_impact = b[u"economic_impact"],
+    )
+
+    # update the crisis's associations 
+    people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
+    orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), b[u"organizations"]))
+    crisisData.people.add(*people)
+    crisisData.orgs.add(*orgs)
+    crisisData.save()
+
+    # create the crisis's maps, images, etc
+    create_associated_crisis_data(b, crisis) 
+
+    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+
+#############################################
+# People database helpers
+#############################################
+def get_all_people():
+    data = []
+    for row in People.objects.all():
+        data.append({
+            "name": row.name,
+            "id" : row.pk,
+            "kind" : row.kind
+        })
+    return jsonResponse(simplejson.dumps(data), 200)
+
+
+def get_person(request, cid):
+    # filter will return an empty list when there are no matches
+    matches = PeopleData.objects.filter(person__pk=cid)
+    if not matches:
+        return resource_not_found()
+    personData = matches[0]
+    data = get_person_dict(personData)
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def create_associated_people_data(data, person):
+    """
+    data is a dict containing API keys: "maps", "images", etc.
+    person is a People model object.
+    """
+    # create the person's maps, images, etc
+    for x in data[u"maps"]:
+        PeopleMaps(maps=x, people=person).save()
+    for x in data[u"images"]:
+        PeopleImages(image=x, people=person).save()
+    for x in data[u"videos"]:
+        PeopleVideos(video=x, people=person).save()
+    for x in data[u"social_media"]:
+        # TODO: can we get the widget_id from the url?
+        PeopleTwitter(twitter=x, widget_id=123456789, people=person).save()
+    for x in data[u"external_links"]:
+        PeopleLinks(external_links=x, people=person).save()
+    for x in data[u"citations"]:
+        PeopleCitations(citations=x, people=person).save()
+    #create associations
+    for x in PeopleData.objects.filter(person__pk=person.pk):
+        crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
+        for c in crises:
+            x.crises.add(c)
+        orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
+        for o in orgs:
+            x.orgs.add(o)
+
+def delete_associated_people_data(person):
+    pk = person.pk
+    for x in PeopleData.objects.filter(person__pk=pk):
+        x.orgs.clear() #remove associations but preserve object
+        x.crises.clear()
+    map(lambda x: x.delete(), PeopleMaps.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleImages.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleVideos.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleTwitter.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleLinks.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleCitations.objects.filter(people__pk=pk))
+
+def post_new_person(request):
+    b = jsonFromRequest(request)
+
+    # create the person and get its auto-assigned primary key
+    person = People(name=b[u"name"], kind=b[u"kind"])
+    person.save()
+    cid = person.pk
+
+    # create the person data 
+    personData = PeopleData(
+        person = person,
+        dob = dateFromString(b[u"DOB"]),
+        location = b[u"location"],
+        description = b[u"description"]
+    )
+
+    # update the person's associations 
+    orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), b[u"organizations"]))
+    crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
+    personData.orgs.add(*orgs)
+    personData.crises.add(*crises)
+    personData.save()
+
+    # create the person's maps, images, etc
+    create_associated_people_data(b, person) 
+
+    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+
+#############################################
+# Organization database helpers
+#############################################
+def get_all_orgs():
+    data = []
+    for row in Organizations.objects.all():
+        data.append({
+            "name": row.name,
+            "id" : row.pk,
+            "kind" : row.kind
+        })
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def create_associated_org_data(data, org):
+    """
+    data is a dict containing API keys: "maps", "images", etc.
+    org is an Organization model object.
+    """
+    # create the org's maps, images, etc
+    for x in data[u"maps"]:
+        OrgMaps(maps=x, org=org).save()
+    for x in data[u"images"]:
+        OrgImages(image=x, org=org).save()
+    for x in data[u"videos"]:
+        OrgVideos(video=x, org=org).save()
+    for x in data[u"social_media"]:
+        # TODO: can we get the widget_id from the url?
+        OrgTwitter(twitter=x, widget_id=123456789, org=org).save()
+    for x in data[u"external_links"]:
+        OrgLinks(external_links=x, org=org).save()
+    for x in data[u"citations"]:
+        OrgCitations(citations=x, org=org).save()
+    #create associations
+    for x in OrganizationsData.objects.filter(org__pk=org.pk):
+        people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
+        for p in people:
+            x.people.add(p)
+        crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
+        for c in crises:
+            x.crises.add(c)
+
+def delete_associated_org_data(org):
+    pk = org.pk
+    for x in OrganizationsData.objects.filter(org__pk=pk):
+        x.people.clear() #remove associations but preserve object
+        x.crises.clear()
+    map(lambda x: x.delete(), OrgMaps.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgImages.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgVideos.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgTwitter.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgLinks.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgCitations.objects.filter(org__pk=pk))
+
+def post_new_organization(request):
+    b = jsonFromRequest(request)
+
+    # create the org and get its auto-assigned primary key
+    org = Organizations(name=b[u"name"], kind=b[u"kind"])
+    org.save()
+    cid = org.pk
+
+    # TODO: test
+    # create the contact info object from post request
+    contact_info = ContactInfo(
+        name = b[u"contact_info"][u"name"], # not sure if this is how nested json can be read in
+        address = b[u"contact_info"][u"address"],
+        email = b[u"contact_info"][u"email"], #how to set email fields?
+        phone = b[u"contact_info"][u"phone"],
+    )
+
+    contact_info.save()
+
+    # create the org data 
+    orgData = OrganizationsData(
+        org = org,
+        date_established = dateFromString(b[u"established"]),
+        description = b[u"description"],
+        location = b[u"location"],
+        contact_info = contact_info,
+    )
+
+    # update the org's associations 
+    people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
+    crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
+    orgData.people.add(*people)
+    orgData.crises.add(*crises)
+    orgData.save()
+
+    # create the org's maps, images, etc
+    create_associated_org_data(b, org) 
+
+    # return {"id" : cid}
+    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+
+#############################################
 # Crisis REST views
 #############################################
 def crises(request):
@@ -40,8 +340,7 @@ def crises(request):
     if request.method == 'GET':
         return get_all_crises()
     elif request.method == 'POST':
-        jsonId = post_new_crisis(request)
-        return jsonResponse(simplejson.dumps(jsonId), 201)
+        return post_new_crisis(request)
     else:
         return method_not_supported()
 
@@ -93,309 +392,6 @@ def crisis_people(request, cid):
     else:
         return method_not_supported()
 
-def get_all_crises():
-    data = []
-    for row in Crises.objects.all():
-        data.append({
-            "name": row.name,
-            "id" : row.pk,
-            "kind" : row.kind
-        })
-    return jsonResponse(simplejson.dumps(data), 200)
-
-def get_all_people():
-    data = []
-    for row in People.objects.all():
-        data.append({
-            "name": row.name,
-            "id" : row.pk,
-            "kind" : row.kind
-        })
-    return jsonResponse(simplejson.dumps(data), 200)
-
-def get_all_orgs():
-    data = []
-    for row in Organizations.objects.all():
-        data.append({
-            "name": row.name,
-            "id" : row.pk,
-            "kind" : row.kind
-        })
-    return jsonResponse(simplejson.dumps(data), 200)
-
-def create_associated_crisis_data(data, crisis):
-    """
-    data is a dict containing API keys: "maps", "images", etc.
-    crisis is a Crisis model object.
-    """
-    # create the crisis's maps, images, etc
-    for x in data[u"maps"]:
-        CrisesMaps(maps=x, crisis=crisis).save()
-    for x in data[u"images"]:
-        CrisesImages(image=x, crisis=crisis).save()
-    for x in data[u"videos"]:
-        CrisesVideos(video=x, crisis=crisis).save()
-    for x in data[u"social_media"]:
-        # TODO: can we get the widget_id from the url?
-        CrisesTwitter(twitter=x, widget_id=123456789, crisis=crisis).save()
-    for x in data[u"ways_to_help"]:
-        CrisesHelp(help=x, crisis=crisis).save()
-    for x in data[u"resources_needed"]:
-        CrisesResourses(resourses=x, crisis=crisis).save()
-    for x in data[u"external_links"]:
-        CrisesLinks(external_links=x, crisis=crisis).save()
-    for x in data[u"citations"]:
-        CrisesCitations(citations=x, crisis=crisis).save()
-    #create associations
-    for x in CrisesData.objects.filter(crisis__pk=pk):
-        people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
-        for p in people:
-            x.people.add(p)
-        orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
-        for o in orgs:
-            x.orgs.add(p)
-
-def delete_associated_crisis_data(crisis):
-    pk = crisis.pk
-    for x in CrisesData.objects.filter(crisis__pk=pk):
-        x.orgs.clear() #remove associations but preserve object
-        x.people.clear()
-    map(lambda x: x.delete(), CrisesMaps.objects.filter(crisis__pk=pk))
-    map(lambda x: x.delete(), CrisesImages.objects.filter(crisis__pk=pk))
-    map(lambda x: x.delete(), CrisesVideos.objects.filter(crisis__pk=pk))
-    map(lambda x: x.delete(), CrisesTwitter.objects.filter(crisis__pk=pk))
-    map(lambda x: x.delete(), CrisesHelp.objects.filter(crisis__pk=pk))
-    map(lambda x: x.delete(), CrisesResourses.objects.filter(crisis__pk=pk))
-    map(lambda x: x.delete(), CrisesLinks.objects.filter(crisis__pk=pk))
-    map(lambda x: x.delete(), CrisesCitations.objects.filter(crisis__pk=pk))
-
-
-def create_associated_people_data(data, person):
-    """
-    data is a dict containing API keys: "maps", "images", etc.
-    person is a People model object.
-    """
-    # create the person's maps, images, etc
-    for x in data[u"maps"]:
-        PeopleMaps(maps=x, people=people).save()
-    for x in data[u"images"]:
-        PeopleImages(image=x, people=people).save()
-    for x in data[u"videos"]:
-        PeopleVideos(video=x, people=people).save()
-    for x in data[u"social_media"]:
-        # TODO: can we get the widget_id from the url?
-        PeopleTwitter(twitter=x, widget_id=123456789, people=people).save()
-    for x in data[u"external_links"]:
-        PeopleLinks(external_links=x, people=people).save()
-    for x in data[u"citations"]:
-        PeopleCitations(citations=x, people=people).save()
-    #create associations
-    for x in PeopleData.objects.filter(person__pk=pk):
-        crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
-        for c in crises:
-            x.crises.add(c)
-        orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
-        for o in orgs:
-            x.orgs.add(p)
-
-def delete_associated_people_data(person):
-    pk = person.pk
-    for x in PeopleData.objects.filter(person__pk=pk):
-        x.orgs.clear() #remove associations but preserve object
-        x.crises.clear()
-    map(lambda x: x.delete(), PeopleMaps.objects.filter(people__pk=pk))
-    map(lambda x: x.delete(), PeopleImages.objects.filter(people__pk=pk))
-    map(lambda x: x.delete(), PeopleVideos.objects.filter(people__pk=pk))
-    map(lambda x: x.delete(), PeopleTwitter.objects.filter(people__pk=pk))
-    map(lambda x: x.delete(), PeopleLinks.objects.filter(people__pk=pk))
-    map(lambda x: x.delete(), PeopleCitations.objects.filter(people__pk=pk))
-
-def create_associated_org_data(data, org):
-    """
-    data is a dict containing API keys: "maps", "images", etc.
-    org is an Organization model object.
-    """
-    # create the org's maps, images, etc
-    for x in data[u"maps"]:
-        OrgMaps(maps=x, org=org).save()
-    for x in data[u"images"]:
-        OrgImages(image=x, org=org).save()
-    for x in data[u"videos"]:
-        OrgVideos(video=x, org=org).save()
-    for x in data[u"social_media"]:
-        # TODO: can we get the widget_id from the url?
-        OrgTwitter(twitter=x, widget_id=123456789, org=org).save()
-    for x in data[u"external_links"]:
-        OrgLinks(external_links=x, org=org).save()
-    for x in data[u"citations"]:
-        OrgCitations(citations=x, org=org).save()
-    #create associations
-    for x in OrgData.objects.filter(org__pk=pk):
-        people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
-        for p in people:
-            x.people.add(p)
-        crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
-        for c in crises:
-            x.crises.add(c)
-
-def delete_associated_org_data(org):
-    pk = org.pk
-    for x in OrganizationsData.objects.filter(org__pk=pk):
-        x.people.clear() #remove associations but preserve object
-        x.crises.clear()
-    map(lambda x: x.delete(), OrgMaps.objects.filter(org__pk=pk))
-    map(lambda x: x.delete(), OrgImages.objects.filter(org__pk=pk))
-    map(lambda x: x.delete(), OrgVideos.objects.filter(org__pk=pk))
-    map(lambda x: x.delete(), OrgTwitter.objects.filter(org__pk=pk))
-    map(lambda x: x.delete(), OrgLinks.objects.filter(org__pk=pk))
-    map(lambda x: x.delete(), OrgCitations.objects.filter(org__pk=pk))
-
-def post_new_crisis(request):
-    #TODO: Handle authentication here
-
-    # In Django 1.5, there's request.body or request.content.
-    # Django 1.3 (CS machines) has POST, which is a dictlike object
-    # that contains the entire json string as the key for some reason.
-    jsonString = "".join(request.readlines())
-    b = simplejson.loads(jsonString)
-
-    # create the crisis and get its auto-assigned primary key
-    crisis = Crises(name=b[u"name"], kind=b[u"kind"])
-    crisis.save()
-    cid = crisis.pk
-
-    # create the crisis data 
-    crisisData = CrisesData(
-        crisis = crisis,
-        description = b[u"description"],
-        location = b[u"location"],
-        start_date = dateFromString(b[u"start_date"]),
-        end_date = dateFromString(b[u"end_date"]),
-        human_impact = b[u"human_impact"],
-        economic_impact = b[u"economic_impact"],
-    )
-
-    # update the crisis's associations 
-    people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
-    orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), b[u"organizations"]))
-    crisisData.people.add(*people)
-    crisisData.orgs.add(*orgs)
-    crisisData.save()
-
-    # create the crisis's maps, images, etc
-    create_associated_crisis_data(b, crisis) 
-
-    return {"id": cid}
-    # return jsonResponse(simplejson.dumps({"id": cid}), 201)
-
-def post_new_organization(request):
-    #TODO: reduce redundancy with above
-    #TODO: Handle authentication here
-
-    # In Django 1.5, there's request.body or request.content.
-    # Django 1.3 (CS machines) has POST, which is a dictlike object
-    # that contains the entire json string as the key for some reason.
-#    b = simplejson.loads(request.POST.keys()[0])
-    jsonString = "".join(request.readlines())
-    b = simplejson.loads(jsonString)
-
-    # create the org and get its auto-assigned primary key
-    org = Organizations(name=b[u"name"], kind=b[u"kind"])
-    org.save()
-    cid = org.pk
-
-    # TODO: test
-    # create the contact info object from post request
-    contact_info = ContactInfo(
-        name = b[u"contact_info"][u"name"], # not sure if this is how nested json can be read in
-        address = b[u"contact_info"][u"address"],
-        email = b[u"contact_info"][u"email"], #how to set email fields?
-        phone = b[u"contact_info"][u"phone"],
-    )
-
-    contact_info.save()
-
-    # create the org data 
-    orgData = OrganizationsData(
-        org = org,
-        date_established = dateFromString(b[u"date_established"]),
-        description = b[u"description"],
-        location = b[u"location"],
-        contact_info = contact_info,
-    )
-
-    # update the org's associations 
-    people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
-    crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
-    orgData.people.add(*people)
-    orgData.crises.add(*orgs)
-    orgData.save()
-
-    # create the org's maps, images, etc
-    create_associated_org_data(b, crisis) 
-
-    return {"id" : cid}
-    # return jsonResponse(simplejson.dumps({"id": cid}), 201)
-
-def post_new_person(request):
-    #TODO: reduce redundancy with above
-    #TODO: Handle authentication here
-
-    # In Django 1.5, there's request.body or request.content.
-    # Django 1.3 (CS machines) has POST, which is a dictlike object
-    # that contains the entire json string as the key for some reason.
-    b = simplejson.loads(request.POST.keys()[0])
-
-    # create the person and get its auto-assigned primary key
-    person = People(name=b[u"name"], kind=b[u"kind"])
-    person.save()
-    cid = person.pk
-
-    # create the person data 
-    personData = PeopleData(
-        person = person,
-        dob = dateFromString(b[u"dob"]),
-        location = b[u"location"],
-    )
-
-    # update the person's associations 
-    orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), b[u"organizations"]))
-    crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
-    personData.orgs.add(*orgs)
-    personData.crises.add(*crises)
-    personData.save()
-
-    # create the person's maps, images, etc
-    create_associated_people_data(b, person) 
-
-    return {"id" : cid}
-    # return jsonResponse(simplejson.dumps({"id": cid}), 201)
-
-# PUT implementations #
-def put_crisis(request, cid):
-    cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
-    if not cDataMatches:
-        return resource_not_found() 
-    cData = cDataMatches[0]
-    
-    putData = jsonFromRequest(request)
-
-    delete_associated_crisis_data(cData.crisis)
-    create_associated_crisis_data(putData, cData.crisis)
-
-    cData.crisis.name       = putData["name"]
-    cData.crisis.kind       = putData["kind"]
-    cData.description       = putData["description"]
-    cData.location          = putData["location"]
-    cData.start_date        = dateFromString(putData["start_date"])
-    cData.end_date          = dateFromString(putData["end_date"])
-    cData.human_impact      = putData["human_impact"]
-    cData.economic_impact   = putData["economic_impact"]
-    cData.save()
-    cData.crisis.save()
-    
-    return success_no_content() 
-
 def put_person(request, pid): #TODO: verify pid, oid, cid?
     pDataMatches = PeopleData.objects.filter(person__pk=pid)
     if not pDataMatches:
@@ -407,11 +403,11 @@ def put_person(request, pid): #TODO: verify pid, oid, cid?
     delete_associated_people_data(pData.person) 
     create_associated_people_data(putData, pData.person)
 
-    pData.person.name       = putData["name"]
-    pData.person.kind       = putData["kind"]
-    pData.description       = putData["description"]
-    pData.location          = putData["location"]
-    pData.dob        = dateFromString(putData["dob"])
+    pData.person.name = putData["name"]
+    pData.person.kind = putData["kind"]
+    pData.description = putData["description"]
+    pData.location    = putData["location"]
+    pData.dob         = dateFromString(putData["DOB"])
     pData.save()
     pData.person.save()
     
@@ -488,14 +484,6 @@ def get_crisis(request, cid):
     data = get_crisis_dict(crisisData)
     return jsonResponse(simplejson.dumps(data), 200)
 
-def get_person(request, cid):
-    # filter will return an empty list when there are no matches
-    matches = PeopleData.objects.filter(person__pk=cid)
-    if not matches:
-        return resource_not_found()
-    personData = matches[0]
-    data = get_person_dict(personData)
-    return jsonResponse(simplejson.dumps(data), 200)
 
 def get_org(request, cid):
     # filter will return an empty list when there are no matches
@@ -581,6 +569,8 @@ def get_person_dict(personData):
         "social_media"  : pSocial,
         "external_links": pLinks,
         "citations"     : pCitations,
+        "crises"        : pCrises,
+        "organizations" : pOrgs
     }
 
 #############################################
@@ -756,5 +746,7 @@ def get_org_dict(orgData):
         "external_links": oLinks, 
         "citations"     : oCitations,
         "contact_info"  : get_contact_info_dict(orgData),
+        "people"        : oPeople,
+        "crises"        : oCrises
     }
 
