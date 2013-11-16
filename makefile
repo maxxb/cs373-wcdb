@@ -26,8 +26,7 @@
 ############################################
 TMPDIR = turnin_tmp
 
-all:
-	make WCDB3.zip
+all: WCDB3.zip
 
 clean:
 	rm -f WCDB3.zip
@@ -49,15 +48,16 @@ $(TMPDIR):
 	mkdir -p $(TMPDIR)
 
 # Copy all python files to tmpdir
-# Unfortunately, cp doesn't have the capability to create subdirectories:
+# Unfortunately, cp doesn't have the capability to create subdirectories
 # The following will create tmpdir/models.py:
 # 
 # 		cp wcdb/crises/models.py tmpdir
 #
-# But we want tmpdir/wcdb/crises/models.py
-# Instead, do the following:
+# But if we want tmpdir/wcdb/crises/models.py, we can do the following:
+#
 # 	1. Use "mkdir -p ..." to create the directories first
 # 	2. Use "cp ..." to copy files to destination
+#
 pyfiles:
 	find ./ -name "*.py" | sed -e "s/\/\w\+[.]py$$//g" | sed -e "s/[.]\///g" | awk ' !x[$$0]++' | xargs -n1 -I @@ mkdir -p "$(TMPDIR)/@@"
 	find ./ -name "*.py" | sed -e "s/[.]\///g" | xargs -n1 -I @@ cp @@ $(TMPDIR)/@@
@@ -111,8 +111,7 @@ test:
 	cd wcdb && python manage.py test crises --settings=settings.local
 
 # Do a total refresh of the local database
-# Pipe "no" to the syncdb command because it asks to create a superuser,
-# and I don't always want to answer that question
+# Pipe "no" to syncdb to auto-answer the prompt asking to create a super user
 dbrefresh:
 	rm -f wcdb/mydb.db
 	cd wcdb && echo "no" | python manage.py syncdb --settings=settings.local
