@@ -6,13 +6,15 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from django.test.client import Client
 from django.utils.unittest import skipIf
 from django.utils import simplejson 
 from datetime import date
 from crises.models import *
 import json
 import test_cases
+
+# import spider tests so they get run as well
+from spider.tests import *
 
 class CrisesDatabaseTests(TestCase):
     fixtures = ['test-cases.json']

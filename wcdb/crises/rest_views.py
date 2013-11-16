@@ -157,7 +157,6 @@ def get_all_people():
         })
     return jsonResponse(simplejson.dumps(data), 200)
 
-
 def get_person(request, cid):
     # filter will return an empty list when there are no matches
     matches = PeopleData.objects.filter(person__pk=cid)
