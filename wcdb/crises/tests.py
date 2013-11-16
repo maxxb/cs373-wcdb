@@ -1,9 +1,7 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
+""" This module tests the database and the rest api """
 
-Replace this with more appropriate tests for your application.
-"""
+# import spider tests so they get run as well
+from spider.tests import *
 
 from django.test import TestCase
 from django.utils.unittest import skipIf
@@ -12,9 +10,6 @@ from datetime import date
 from crises.models import *
 import json
 import test_cases
-
-# import spider tests so they get run as well
-from spider.tests import *
 
 class CrisesDatabaseTests(TestCase):
     fixtures = ['test-cases.json']
@@ -145,7 +140,7 @@ class PeopleDatabaseTests(TestCase):
         self.assertEquals(pMap.people.pk, 1)
         self.assertEquals(pMap.maps, u"http://goo.gl/maps/oOQCX")
 
-class OrganizationDatabaseTests(TestCase):
+class OrganizationsDatabaseTests(TestCase):
     fixtures = ['test-cases.json']
 
     def test_organization_maps(self):
@@ -205,7 +200,7 @@ class OrganizationDatabaseTests(TestCase):
         self.assertEquals(oData.people.get(pk=2), People.objects.get(pk=2)) #3rd person not defined in test-data.json
         self.assertEquals(oData.crises.get(pk=1), Crises.objects.get(pk=1))
 
-class RestTests(TestCase):
+class CrisesRestTests(TestCase):
     fixtures = ['test-cases.json']
 
     #GET /api/crises
@@ -262,6 +257,9 @@ class RestTests(TestCase):
             self.assertTrue(rGet.status_code, 200)
             rGetJson = json.loads(rGet.content)
             self.assertEquals(rGetJson, expectedResponse)
+
+class PeopleRestTests(TestCase):
+    fixtures = ['test-cases.json']
 
     #GET /api/people
     def test_rest_get_people(self):
@@ -321,6 +319,9 @@ class RestTests(TestCase):
             self.assertTrue(rGet.status_code, 200)
             rGetJson = json.loads(rGet.content)
             self.assertEquals(rGetJson, expectedResponse)
+
+class OrganizationRestTests(TestCase):
+    fixtures = ['test-cases.json']
 
     #GET /api/organizations
     def test_rest_get_organizations(self):

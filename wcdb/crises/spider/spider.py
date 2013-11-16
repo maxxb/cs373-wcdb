@@ -196,6 +196,7 @@ def parseArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument("--loglevel", help="either INFO or DEBUG")
     parser.add_argument("--logfile", help="either INFO or DEBUG")
+    parser.add_argument("--outFile", help="wrtie the index to this file")
     return parser.parse_args()
 
 def setupLogging(args):
@@ -211,6 +212,10 @@ if __name__ == '__main__':
     args = parseArgs()
     setupLogging(args)
         
+    outFile = args.outFile
+    if outFile == None:
+        outFile = "tmp_index.py"
+
     rooturls = [
         "http://tcp-connections.herokuapp.com/crises/",
         "http://tcp-connections.herokuapp.com/people/",
@@ -218,5 +223,5 @@ if __name__ == '__main__':
     ]
     spider = Spider(maxDepth=1, delay=0, rooturls=rooturls)
     spider.crawl()
-    with open("index.py", "w") as f:
+    with open(outFile, "w") as f:
         f.write("index = " + pprint.pformat(spider.index))

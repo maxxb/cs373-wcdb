@@ -121,4 +121,6 @@ dbrefresh:
 shell:
 	cd wcdb && python manage.py shell --settings=settings.local
 
+index:
+	cd wcdb/crises/spider && python spider.py --loglevel=INFO --outFile=../index.py
 
