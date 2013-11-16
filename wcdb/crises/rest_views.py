@@ -26,7 +26,12 @@ def dateFromString(ds):
     return datetime.strptime(ds, "%Y-%m-%d").date()
 
 def jsonFromRequest(request):
-    jsonString = "".join(request.readlines())
+    # In django 1.3.1 (CS machines), the fake request objects used for testing are different than
+    # the actual HttpRequest objects used. The only way I've found to get at the post 
+    # data on both is to use .raw_post_data.
+
+    # jsonString = "".join(request.readlines())
+    jsonString = request.raw_post_data
     return simplejson.loads(jsonString)
 
 #############################################

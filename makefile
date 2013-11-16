@@ -106,6 +106,9 @@ WCDB3.zip: allfiles WCDB-Report.pdf WCDB-UML.pdf
 runserver:
 	cd wcdb && python manage.py runserver --settings=settings.local
 
+testserver:
+	cd wcdb && python manage.py testserver fixtures/test-cases.json --settings=settings.local
+
 # run django tests
 test:
 	cd wcdb && python manage.py test crises --settings=settings.local
