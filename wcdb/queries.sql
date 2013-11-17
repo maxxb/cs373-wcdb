@@ -48,4 +48,4 @@ WHERE R.x + S.y >= all;
 SELECT name, start_date FROM crises_crisesdata INNER JOIN crises_crises WHERE start_date < '2000-01-01' and crisis_id = id
 
 # === FIVE NON-UNIQUE QUERIES BELOW === #
-#6. 
+#6. Select the person that is involved in most number of crises.
