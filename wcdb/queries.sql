@@ -27,7 +27,7 @@ SELECT name FROM crises_crises
 #3. Select the longest running crisis/crises.
 SELECT name, start_date FROM crises_crisesdata INNER JOIN crises_crises 
 	WHERE start_date <= all 
-		(SELECT start_date FROM crises_crises_data)
+		(SELECT start_date FROM crises_crisesdata)
 	and crisis_id = id
 
 #4. Select most related (most related people/crises) organizations.
