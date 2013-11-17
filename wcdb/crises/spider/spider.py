@@ -14,7 +14,12 @@ from HTMLParser import HTMLParser
 # Define a regex to ignore characters we don't wnat in the index
 # \x80-\x9f scrubs out some utf-8 chars that appear in the index
 PUNCTUATION = '!"#$%&\'()*+,./:;<=>?@[\\]^_`{|}~\xe2-'
-IGNORE_CHARS_REGEX = re.compile("[%s]|[%s]" % (string.whitespace + PUNCTUATION, "\x80-\x9f"))
+UTF_PUNC = "\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x80\x8a\x8b\x8c\x8d\x8e\x8f" \
+           "\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x90\x9a\x9b\x9c\x9d\x9e\x9f"
+
+#IGNORE_CHARS_REGEX = re.compile("[%s]|[%s]" % (string.whitespace + PUNCTUATION, "\x80-\x9f"))
+#MATCH_CHARS_REGEX = re.compile("\w+")
+MATCH_CHARS_REGEX = re.compile("([^%s%s]+)" % (UTF_PUNC, string.whitespace + PUNCTUATION))
 
 def loadPage(url):
     """ Return the HTML from the given page as a string """
@@ -41,8 +46,14 @@ def joinUrls(x, y):
     return result
 
 def wordsFromText(data):
-    words = map(lambda x: x.strip().lower(), IGNORE_CHARS_REGEX.split(data))
-    return filter(lambda word: word != '', words)
+    return [x.group(0).lower() for x in MATCH_CHARS_REGEX.finditer(data)]
+
+def createIndexValue(url, title, context):
+    return {
+        "url" : url,
+        "title" : title,
+        "context" : context
+    }
 
 class HTMLFetcherParser(HTMLParser):
 
@@ -52,15 +63,22 @@ class HTMLFetcherParser(HTMLParser):
         It assumes all relative urls are with respect to baseurl
         """
         HTMLParser.__init__(self)
-        self.words = []
+        self.url = baseurl
+        self.title = ""
+        # words is a dictionary mapping words to the context
+        self.words = {}
+        # urls is the list of all links in the page
         self.urls = []
         self.__currentTag = None
         self.baseurl = baseurl
-        self.feed(loadPage(baseurl))
+        self.html = loadPage(baseurl)
+
+        # parse the page
+        self.feed(self.html)
     
     def handle_starttag(self, tag, attrs):
         """
-        tag is a string containin the html tag type ('a', 'div', etc)
+        tag is a string containing the html tag type ('a', 'div', etc)
         attrs is a list of tuples (key, value)
         """
         if tag == "a":
@@ -79,9 +97,26 @@ class HTMLFetcherParser(HTMLParser):
         self.__currentTag = None
 
     def handle_data(self, data):
+        if self.__currentTag == 'title':
+            self.title = data.strip()
         if self.__currentTag not in ['script', 'a']:
-            words = wordsFromText(data)
-            self.words += words
+            self.__parseText(data)
+
+    def __parseText(self, text):
+        # finditer returns an iterable of all non-overlapping matches in the string
+        matches = [x for x in MATCH_CHARS_REGEX.finditer(text)]
+        for m in matches:
+            word = m.group(0).lower()
+            self.words[word] = self.__getContext(word, m, text)
+
+    def __getContext(self, word, match, text):
+        """ 
+        This grabs the context (surrounding text) of the given word from text, 
+        using info in the given re.MatchObject instance 
+        """
+        radius = 20
+        lower, upper = match.start() - radius, match.end() + radius
+        return text[max(0, lower) : min(len(text), upper)]
 
     def getWordList(self):
         """ Return a list of all the words in the page """
@@ -169,29 +204,24 @@ class Spider(object):
             return set()
         self.seen_urls.add(url)
         logging.info("(%s) Crawling %s" % (depth, url))
-        wordList, urlList = self.parse_page(url)
-        self.index_words(wordList, url)
-        return set(self.filterUrls(urlList))
+        page = HTMLFetcherParser(url)
+        self.index_words(page, url)
+        return set(self.filterUrls(page.getUrlList()))
 
-    def parse_page(self, url):
+    def index_words(self, page, url):
         """ 
-        Get the page at the url and parse it
-        This returns a tuple (wordList, urlList) of all the terms and urls found in the page
+        Index all the terms in wordlist to the index with the given url 
+        page is an HTMLFetcherParser.
         """
-        parser = HTMLFetcherParser(url)
-        wordList = parser.getWordList()
-        urlList = parser.getUrlList()
-        return wordList, urlList
-
-    def index_words(self, wordList, url):
-        """ Index all the terms in wordlist to the index with the given url """
         # print wordList
+        wordList = page.getWordList()
         for word in wordList:
+            v = createIndexValue(url, page.title, wordList[word])
             if word in self.index:
-                self.index[word].add(url)
+                self.index[word].append(v)
             else:
-                self.index[word] = set([url])       
-
+                self.index[word] = [v]
+        
 def parseArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument("--loglevel", help="either INFO or DEBUG")
