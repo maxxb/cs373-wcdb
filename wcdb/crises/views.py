@@ -5,16 +5,23 @@ from django.template import *
 from search import query
 ################################################
 
+from django.db import connection
+
+
 def links(request,entity):
-    if entity == 'crises':
-        crises_list = Crises.objects.all()
-        return render(request,'links_page.html', {'links':crises_list})
-    elif entity == 'organizations':
-        org_list = Organizations.objects.all()
-        return render(request,'links_page.html', {'links':org_list})
-    elif entity == 'people':
-        people_list = People.objects.all()
-        return render(request,'links_page.html', {'links':people_list})
+	cursor = connection.cursor()
+	if entity == 'crises':
+		cursor.execute("SELECT * FROM crises_crises")
+		rows = cursor.fetchall()
+		print rows
+		crises_list = Crises.objects.all()
+		return render(request,'links_page.html', {'links':crises_list})
+	elif entity == 'organizations':
+		org_list = Organizations.objects.all()
+		return render(request,'links_page.html', {'links':org_list})
+	elif entity == 'people':
+		people_list = People.objects.all()
+		return render(request,'links_page.html', {'links':people_list})
 
 def crisis_index(request, cid):
     crisis_data = CrisesData.objects.get(pk=cid)
