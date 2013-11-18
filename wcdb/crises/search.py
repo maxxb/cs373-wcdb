@@ -6,7 +6,7 @@ def query(search_terms):
 
     s = search_terms.strip()
     if not s:
-        return []
+        return {}
 
     # tokens = s.split('+')
     
@@ -30,4 +30,4 @@ def query(search_terms):
                 URL_match_count[d["url"]] = [1, d]
     #returns a list of best matching URLs in order of most matches to fewest
     print URL_match_count
-    return OrderedDict(sorted(URL_match_count.items(), key = lambda t: t[1][0])).keys()[::-1]
+    return OrderedDict(sorted(URL_match_count.items(), key = lambda t: -t[1][0]))

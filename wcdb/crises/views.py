@@ -33,5 +33,5 @@ def search (request, search_terms):
     print "searched: %s" % search_terms
     query_results = query(search_terms)
     print "results: %s" % query_results
-    return render(request, 'search.html', {'search_terms': search_terms, 'query_results': query_results})
+    return render(request, 'search.html', {'search_terms': search_terms.replace('+', ' '), 'query_results': query_results.items()})
 ############################################################################################################
