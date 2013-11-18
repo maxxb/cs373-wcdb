@@ -14,20 +14,19 @@ cursor.execute("SELECT name, start_date FROM crises_crisesdata INNER JOIN crises
 rows = cursor.fetchall()
 print rows
 
-#cursor.execute("SELECT organizationsdata_id, R.x + S.y FROM (SELECT organizationsdata_id, COUNT(*) AS x FROM crises_organizationsdata_crises GROUP BY id) as R, (SELECT organizationsdata_id, COUNT(*) AS y FROM crises_organizationsdata_people GROUP BY organizationsdata_id) as S, WHERE R.x + S.y >= all")
-cursor.execute("SELECT R.organizationsdata_id, R.x + S.y FROM (SELECT organizationsdata_id, COUNT(*) AS x FROM crises_organizationsdata_crises GROUP BY organizationsdata_id) as R, (SELECT organizationsdata_id, COUNT(*) AS y FROM crises_organizationsdata_people GROUP BY organizationsdata_id) as S")
+cursor.execute("SELECT organizationsdata_id, MAX(numAssociations) FROM (SELECT organizationsdata_id, COUNT(*) AS numAssociations FROM (SELECT * FROM crises_organizationsdata_crises UNION ALL SELECT * FROM crises_organizationsdata_people) GROUP BY organizationsdata_id) ")
 rows = cursor.fetchall()
 print rows
 
-cursor.execute("SELECT organizationsdata_id, COUNT(*) AS y FROM crises_organizationsdata_people GROUP BY organizationsdata_id")
+cursor.execute("SELECT organizationsdata_id, COUNT(*) FROM crises_organizationsdata_crises GROUP by organizationsdata_id")
 rows = cursor.fetchall()
 print rows
 
-cursor.execute("SELECT organizationsdata_id, COUNT(*) AS x FROM crises_organizationsdata_crises GROUP BY organizationsdata_id")
+cursor.execute("SELECT organizationsdata_id, COUNT(*) FROM crises_organizationsdata_people GROUP by organizationsdata_id")
 rows = cursor.fetchall()
 print rows
 
-cursor.execute("SELECT R.organizationsdata_id, R.x + S.y FROM (SELECT organizationsdata_id, COUNT(*) AS x FROM crises_organizationsdata_people GROUP BY organizationsdata_id) as R  (SELECT organizationsdata_id, COUNT(*) AS y FROM crises_organizationsdata_people GROUP BY organizationsdata_id) as S")
+cursor.execute("SELECT organizationsdata_id, total FROM (SELECT organizationsdata_id, sum(count) AS total FROM (SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_crises GROUP by organizationsdata_id UNION ALL SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_people GROUP by organizationsdata_id) GROUP BY organizationsdata_id) WHERE total = (SELECT MAX(total) AS max FROM (SELECT organizationsdata_id, sum(count) AS total FROM (SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_crises GROUP by organizationsdata_id UNION ALL SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_people GROUP by organizationsdata_id) GROUP BY organizationsdata_id))")
 rows = cursor.fetchall()
 print rows
 
