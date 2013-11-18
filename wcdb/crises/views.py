@@ -9,11 +9,7 @@ from django.db import connection
 
 
 def links(request,entity):
-	cursor = connection.cursor()
 	if entity == 'crises':
-		cursor.execute("SELECT * FROM crises_crises")
-		rows = cursor.fetchall()
-		print rows
 		crises_list = Crises.objects.all()
 		return render(request,'links_page.html', {'links':crises_list})
 	elif entity == 'organizations':
