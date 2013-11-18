@@ -61,15 +61,16 @@ SELECT name FROM crises_people
 			GROUP BY person_id) AS X);
 
 #7. select twitter account link of all people
-SELECT twitter FROM crises_peopledata #TODO: display name too
+SELECT twitter FROM crises_peopletwitter #TODO: display name too
 
 #8. Select the youngest people in the database
-
+SELECT name, dob FROM crises_people INNER JOIN crises_peopledata ON id = person_id WHERE dob = (SELECT min(dob) AS minDob FROM crises_peopledata)
 
 #9. Select the crises with the most resources needed
+SELECT name, numResourses FROM crises_crises INNER JOIN (SELECT crisis_id, count(*) AS numResourses FROM crises_crisesresourses GROUP BY crisis_id) AS R ON id = crisis_id Where numResourses = (SELECT max(numResourses) FROM (SELECT crisis_id, count(*) AS numResourses FROM crises_crisesresourses GROUP BY crisis_id))
 
-
-#10. 
+#10.Select the crisis kind that has most number of crises.
+SELECT * FROM (SELECT kind, count(*) AS numOfCrises FROM crises_organizations GROUP BY kind) Where numOfCrises = (SELECT max(numOfCrises) FROM (SELECT kind, count(*) AS numOfCrises FROM crises_organizations GROUP BY kind))
 
 
 #Others: Select the crises that have not ended yet. #hard since no "present" end_date

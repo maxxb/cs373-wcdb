@@ -17,6 +17,6 @@ urlpatterns = patterns('',
     url(r'^api/', include('crises.rest_urls')),
 
     #############################################################
-    url(r'^search/(.*)', 'crises.views.search'),
+    url(r'^search/', 'crises.views.search'),
     #############################################################
 )
