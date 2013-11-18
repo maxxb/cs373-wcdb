@@ -35,10 +35,20 @@ SELECT name, start_date FROM
 #4. Select most related (most related people/crises) organizations.
 # just print id and count of the most-related
 # TODO: inner join R,S with crises_organizations to print name along with it?
-SELECT organizationsdata_id, MAX(numAssociations) FROM
-	(SELECT organizationsdata_id, COUNT(*) AS numAssociations FROM 
-		(crises_organizationsdata_crises INNER JOIN crises_organizationsdata_people USING (organizationsdata_id))
-		GROUP BY organizationsdata_id);
+
+#SELECT organizationsdata_id, MAX(numAssociations) FROM
+#      (SELECT organizationsdata_id, COUNT(*) AS numAssociations FROM 
+#              (crises_organizationsdata_crises INNER JOIN crises_organizationsdata_people USING (or
+#              GROUP BY organizationsdata_id);
+
+(SELECT organizationsdata_id, R.x + S.y #not sure
+	#count how many times each org_id occurs in each table
+	(SELECT organizationsdata_id,	COUNT(*) AS x #`num`
+		FROM crises_organizationsdata_crises 
+		GROUP BY organizationsdata_id) as R,
+	(SELECT organizationsdata_id,	COUNT(*) AS y
+		FROM crises_organizationsdata_people 
+		GROUP BY organizationsdata_id) as S)
 
 #5. Count the number of crises before the 21st century (earlier than 2000).
 SELECT name, start_date FROM crises_crisesdata INNER JOIN crises_crises WHERE start_date < '2000-01-01' and crisis_id = id
@@ -49,3 +59,17 @@ SELECT name FROM crises_people
 	(SELECT person_id, max(numCrises) FROM 
 		(SELECT person_id, count(*) AS numCrises FROM crises_peopledata_crises
 			GROUP BY person_id) AS X);
+
+#7. select twitter account link of all people
+SELECT twitter FROM crises_peopledata #TODO: display name too
+
+#8. Select the youngest people in the database
+
+
+#9. Select the crises with the most resources needed
+
+
+#10. 
+
+
+#Others: Select the crises that have not ended yet. #hard since no "present" end_date
