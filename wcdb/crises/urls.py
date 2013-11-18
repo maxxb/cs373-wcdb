@@ -10,5 +10,9 @@ urlpatterns = patterns('',
 
     url(r'^people/(\d+)/$', 'crises.views.person_index'),
 
+    url(r'^wordcloud/$','crises.views.wordcloud_list'),
+
+    url(r'^wordcloud/(\w+)$','crises.views.wordclouds'),
+
     url(r'^api/', include('crises.rest_urls')),
 )

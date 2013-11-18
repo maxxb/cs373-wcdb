@@ -1,0 +1,64 @@
+{% with "http://localhost:8000/static/assets/"|add:wid|add:".json" as url %}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<input type="hidden" id="url" name="variable" value={{ url }}>
+
+<meta charset="utf-8">
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../static/word-cloud/d3/lib/d3/d3.js"></script>
+<script src="../static/word-cloud/d3/d3.layout.cloud.js"></script>
+<script>
+
+var json = null;
+var url = document.getElementById("url").value;
+$.ajax(url,{
+  async: false,
+  global: false,
+   dataType: "json",
+   success: function(data) {
+     console.log(data);
+     json = data;
+   },
+   error: function(data) {
+      console.log("error");
+      console.log(data);
+   }
+});
+
+  var fill = d3.scale.category20();
+
+  d3.layout.cloud().size([1000, 500])
+      .words(json.map(function(d) {
+        return {text: d.text, size: d.size};
+      }))
+      .padding(2)
+      .rotate(function() { return ~~(Math.random() * 2) * 60; })
+      .font("Impact")
+      .fontSize(function(d) { return d.size; })
+      .on("end", draw)
+      .start();
+
+  function draw(words) {
+    d3.select("body").append("svg")
+        .attr("width", 1000)
+        .attr("height", 1000)
+      .append("g")
+        .attr("transform", "translate(500,300)")
+      .selectAll("text")
+        .data(words)
+      .enter().append("text")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .style("font-family", "Impact")
+        .style("fill", function(d, i) { return fill(i); })
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; });
+  }
+</script>
+
+{% endwith %}
+

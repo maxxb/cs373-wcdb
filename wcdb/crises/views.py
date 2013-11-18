@@ -31,5 +31,9 @@ def org_index(request, oid):
 def person_index(request, pid):
 	people_data = PeopleData.objects.get(pk=pid)
 	return render(request, 'people_index.html', {'people_data': people_data})
-	
 
+def wordcloud_list(request):
+	return render(request, 'wordcloud.html')
+
+def wordclouds(request, wid):
+	return render(request, 'wordcloud_index.html', {'wid':wid})
