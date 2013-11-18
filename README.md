@@ -3,6 +3,17 @@ cs373-wcdb
 
 World Crisis Database
 
+Doing stuff with the makefile
+-----------------------------
+
+* Run the server locally: `make runserver`
+* Run tests: `make test`
+* Run a test server with a temporary database loaded with fixtures/test-cases.json: `make testserver`
+* Empty the local database and reload: `make dbrefresh`
+* Run the Django shell: `make shell`
+* Respider the live site and rebuild the index: `make index`
+
+
 Doing stuff locally
 -------------------
 All of the following should be executed from the `wcdb` directory (where `manage.py` exists).
