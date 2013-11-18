@@ -15,4 +15,8 @@ urlpatterns = patterns('',
     url(r'^wordcloud/(\w+)$','crises.views.wordclouds'),
 
     url(r'^api/', include('crises.rest_urls')),
+
+    #############################################################
+    url(r'^search/(.*)', 'crises.views.search'),
+    #############################################################
 )

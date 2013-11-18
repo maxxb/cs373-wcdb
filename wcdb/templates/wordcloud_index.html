@@ -1,4 +1,4 @@
-{% with "http://localhost:8000/static/assets/"|add:wid|add:".json" as url %}
+{% with "../static/assets/"|add:wid|add:".json" as url %}
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -61,4 +61,6 @@ $.ajax(url,{
 </script>
 
 {% endwith %}
+
+<p>Copyright &copy; <a href="../static/word-cloud/d3/lib/d3/LICENSE.txt">Michael Bostock</a> 2010
 
