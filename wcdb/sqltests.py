@@ -39,7 +39,7 @@ rows = cursor.fetchall()
 print "Query 5: \n"
 print rows
 
-cursor.execute("SELECT name FROM crises_people WHERE id = person_id (SELECT person_id, max(numCrises) FROM (SELECT person_id, count(*) AS numCrises FROM crises_peopledata_crises GROUP BY person_id) AS X)")
+cursor.execute("SELECT name, numCrises FROM (SELECT peopledata_id, count(*) As numCrises FROM crises_peopledata_crises GROUP BY peopledata_id) AS poeplecrisescount INNER JOIN crises_people ON peopledata_id = id WHERE numCrises = (SELECT max(numCrises) AS max FROM (SELECT peopledata_id, count(*) AS numCrises FROM crises_peopledata_crises GROUP BY peopledata_id) AS X)")
 rows = cursor.fetchall()
 print "Query 6: \n"
 print rows
