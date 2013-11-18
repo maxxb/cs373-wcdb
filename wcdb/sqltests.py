@@ -38,3 +38,28 @@ cursor.execute("SELECT name, start_date FROM crises_crisesdata INNER JOIN crises
 rows = cursor.fetchall()
 print "Query 5: \n"
 print rows
+
+cursor.execute("SELECT name FROM crises_people WHERE id = person_id (SELECT person_id, max(numCrises) FROM (SELECT person_id, count(*) AS numCrises FROM crises_peopledata_crises GROUP BY person_id) AS X)")
+rows = cursor.fetchall()
+print "Query 6: \n"
+print rows
+
+cursor.execute("SELECT twitter FROM crises_peopletwitter")
+rows = cursor.fetchall()
+print "Query 7: \n"
+print rows
+
+cursor.execute("SELECT name, dob FROM crises_people INNER JOIN crises_peopledata ON id = person_id WHERE dob = (SELECT min(dob) AS minDob FROM crises_peopledata)")
+rows = cursor.fetchall()
+print "Query 8: \n"
+print rows
+
+cursor.execute("SELECT name, numResourses FROM crises_crises INNER JOIN (SELECT crisis_id, count(*) AS numResourses FROM crises_crisesresourses GROUP BY crisis_id) AS R ON id = crisis_id Where numResourses = (SELECT max(numResourses) FROM (SELECT crisis_id, count(*) AS numResourses FROM crises_crisesresourses GROUP BY crisis_id))")
+rows = cursor.fetchall()
+print "Query 9: \n"
+print rows
+
+cursor.execute("SELECT * FROM (SELECT kind, count(*) AS numOfCrises FROM crises_organizations GROUP BY kind) Where numOfCrises = (SELECT max(numOfCrises) FROM (SELECT kind, count(*) AS numOfCrises FROM crises_organizations GROUP BY kind))")
+rows = cursor.fetchall()
+print "Query 10: \n"
+print rows
