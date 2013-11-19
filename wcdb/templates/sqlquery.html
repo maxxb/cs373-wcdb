@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}SQL Query{% endblock %}
+
+{% block sqlquery %}
+<center>
+<h1>{{ queryName }}</h1>
+<br><br>
+
+<table border="1">
+{% for r in qresult %}
+<tr>
+{% for c in r %}
+<td><h4>{{c}}</h4></td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+{% endblock sqlquery %}
