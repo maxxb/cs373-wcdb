@@ -17,7 +17,7 @@ rows = cursor.fetchall()
 print "Query 3: \n"
 print rows
 
-cursor.execute("SELECT organizationsdata_id, MAX(numAssociations) FROM (SELECT organizationsdata_id, COUNT(*) AS numAssociations FROM (SELECT * FROM crises_organizationsdata_crises UNION ALL SELECT * FROM crises_organizationsdata_people) GROUP BY organizationsdata_id) ")
+'''cursor.execute("SELECT organizationsdata_id, MAX(numAssociations) FROM (SELECT organizationsdata_id, COUNT(*) AS numAssociations FROM (SELECT * FROM crises_organizationsdata_crises UNION ALL SELECT * FROM crises_organizationsdata_people) GROUP BY organizationsdata_id) ")
 rows = cursor.fetchall()
 print rows
 
@@ -27,9 +27,9 @@ print rows
 
 cursor.execute("SELECT organizationsdata_id, COUNT(*) FROM crises_organizationsdata_people GROUP by organizationsdata_id")
 rows = cursor.fetchall()
-print rows
+print rows'''
 
-cursor.execute("SELECT organizationsdata_id, total FROM (SELECT organizationsdata_id, sum(count) AS total FROM (SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_crises GROUP by organizationsdata_id UNION ALL SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_people GROUP by organizationsdata_id) GROUP BY organizationsdata_id) WHERE total = (SELECT MAX(total) AS max FROM (SELECT organizationsdata_id, sum(count) AS total FROM (SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_crises GROUP by organizationsdata_id UNION ALL SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_people GROUP by organizationsdata_id) GROUP BY organizationsdata_id))")
+cursor.execute("SELECT name, total FROM crises_organizations INNER JOIN (SELECT organizationsdata_id, sum(count) AS total FROM (SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_crises GROUP by organizationsdata_id UNION ALL SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_people GROUP by organizationsdata_id) GROUP BY organizationsdata_id) ON id = organizationsdata_id WHERE total = (SELECT MAX(total) AS max FROM (SELECT organizationsdata_id, sum(count) AS total FROM (SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_crises GROUP by organizationsdata_id UNION ALL SELECT organizationsdata_id, COUNT(*) AS count FROM crises_organizationsdata_people GROUP by organizationsdata_id) GROUP BY organizationsdata_id))")
 rows = cursor.fetchall()
 print "Query 4: \n"
 print rows
@@ -59,7 +59,7 @@ rows = cursor.fetchall()
 print "Query 9: \n"
 print rows
 
-cursor.execute("SELECT * FROM (SELECT kind, count(*) AS numOfCrises FROM crises_organizations GROUP BY kind) Where numOfCrises = (SELECT max(numOfCrises) FROM (SELECT kind, count(*) AS numOfCrises FROM crises_organizations GROUP BY kind))")
+cursor.execute("SELECT * FROM (SELECT kind, count(*) AS numOfCrises FROM crises_crises GROUP BY kind) Where numOfCrises = (SELECT max(numOfCrises) FROM (SELECT kind, count(*) AS numOfCrises FROM crises_crises GROUP BY kind))")
 rows = cursor.fetchall()
 print "Query 10: \n"
 print rows
