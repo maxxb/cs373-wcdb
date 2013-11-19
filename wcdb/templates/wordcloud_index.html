@@ -1,14 +1,16 @@
-{% with "../static/assets/word-cloud/"|add:wid|add:".json" as url %}
+{% extends "base.html" %}
+{% block title %}World Crisies Database | Word Cloud{% endblock %}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+{% block wordcloud %}
+{% with "/static/assets/word-cloud/"|add:wid|add:".json" as url %}
+
 <input type="hidden" id="url" name="variable" value={{ url }}>
 
 <meta charset="utf-8">
 <body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="../static/js/d3.js"></script>
-<script src="../static/js/d3.layout.cloud.js"></script>
+<script src="/static/js/d3.js"></script>
+<script src="/static/js/d3.layout.cloud.js"></script>
 <script>
 
 var json = null;
@@ -62,5 +64,10 @@ $.ajax(url,{
 
 {% endwith %}
 
-<p>Copyright &copy; <a href="../static/assets/LICENSE.txt">Michael Bostock</a> 2010
+{% endblock %}
 
+{% block copyright %} 
+<p>Copyright &copy; <a href="/static/assets/LICENSE.txt">LICENSE</a>
+<p>Made Using D3 <a href="https://github.com/mbostock/d3">Github</a>  
+<br><br><p>Designed and Implemented by <a href="/about">The TCP Connections</a></p>
+{% endblock %} 

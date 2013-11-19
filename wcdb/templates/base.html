@@ -4,8 +4,8 @@
     <meta charset = "utf-8">
     <title>{% block title %}{% endblock %}</title>
     <link rel = "stylesheet" type = "text/css" href = "http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic">
-    <link rel = "stylesheet" type = "text/css" href = "../static/css/bootstrap.css">
-    <link rel = "stylesheet" type = "text/css" href = "../static/css/wcdb-style.css">
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/bootstrap.css">
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/wcdb-style.css">
   </head>
   <body>
     <!-- Body container -->
@@ -20,9 +20,8 @@
                     <li><a href = "/crises/">Crises</a></li>
                     <li><a href = "/organizations/">Organizations</a></li>
                     <li><a href = "/people/">People</a></li>
-                    <li><a href = "/wordcloud/">Word Cloud</a></li>
-                    <li><a href = "/sqlqueries/">SQL Queries</a></li>
-                    <li><a href = "/about">About Us</a></li>
+                    <li><a href = "/wordcloud/">Word Clouds</a></li>
+                    <li><a href = "/sqlqueries/">Queries</a></li>
                   </ul>
 
                     <form class="col-xs-6 col-md-3 navbar-search pull-left" role="search" action="/search" method="get" style="padding: 10px">
@@ -73,8 +72,17 @@
         {% block results %}  
         {% endblock %}
 
-    </div><!-- /.container -->
+    </div><!-- /.container --> 
+
+    <div id="footer">
+      <div class="container">
+        <center>
+        {% block copyright %}  
+        {% endblock %} 
+      </center>
+      </div>
+    </div>      
       <script src="https://code.jquery.com/jquery.js"></script>
-      <script src="../static/js/bootstrap.js"></script>
+      <script src="/static/js/bootstrap.js"></script>
   </body>
 </html>

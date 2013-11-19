@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}SQL Query{% endblock %}
+{% block title %}World Crisies Database | SQL Query{% endblock %}
 
 {% block sqlquery %}
 <center>
-<h1>{{ queryName }}</h1>
+<h1>World Crises Database | {{ queryName }}</h1>
 <br><br>
 
 <table border="1">
@@ -18,3 +18,7 @@
 </table>
 
 {% endblock sqlquery %}
+
+{% block copyright %}  
+<br><br><p>Designed and Implemented by <a href="/about">The TCP Connections</a></p>
+{% endblock %} 
