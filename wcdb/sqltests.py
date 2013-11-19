@@ -44,7 +44,7 @@ rows = cursor.fetchall()
 print "Query 6: \n"
 print rows
 
-cursor.execute("SELECT twitter FROM crises_peopletwitter")
+cursor.execute("SELECT name, twitter FROM crises_people INNER JOIN crises_peopletwitter ON crises_people.id = people_id")
 rows = cursor.fetchall()
 print "Query 7: \n"
 print rows
