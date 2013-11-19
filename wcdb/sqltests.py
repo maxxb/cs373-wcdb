@@ -49,7 +49,7 @@ rows = cursor.fetchall()
 print "Query 7: \n"
 print rows
 
-cursor.execute("SELECT name, dob FROM crises_people INNER JOIN crises_peopledata ON id = person_id WHERE dob = (SELECT min(dob) AS minDob FROM crises_peopledata)")
+cursor.execute("SELECT name, dob FROM crises_people INNER JOIN crises_peopledata ON id = person_id WHERE dob = (SELECT max(dob) AS minDob FROM crises_peopledata)")
 rows = cursor.fetchall()
 print "Query 8: \n"
 print rows

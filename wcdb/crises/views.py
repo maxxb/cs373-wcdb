@@ -64,9 +64,9 @@ def sqlquery(request, qid):
 	"SELECT name, start_date FROM crises_crisesdata INNER JOIN crises_crises WHERE start_date < '2000-01-01' and crisis_id = id",
 	"SELECT name, numCrises FROM (SELECT peopledata_id, count(*) As numCrises FROM crises_peopledata_crises GROUP BY peopledata_id) AS poeplecrisescount INNER JOIN crises_people ON peopledata_id = id WHERE numCrises = (SELECT max(numCrises) AS max FROM (SELECT peopledata_id, count(*) AS numCrises FROM crises_peopledata_crises GROUP BY peopledata_id) AS X)",
 	"SELECT name, twitter FROM crises_people INNER JOIN crises_peopletwitter ON crises_people.id = people_id",
-	"SELECT name, dob FROM crises_people INNER JOIN crises_peopledata ON id = person_id WHERE dob = (SELECT min(dob) AS minDob FROM crises_peopledata)",
+	"SELECT name, dob FROM crises_people INNER JOIN crises_peopledata ON id = person_id WHERE dob = (SELECT max(dob) AS minDob FROM crises_peopledata)",
 	"SELECT name, numResourses FROM crises_crises INNER JOIN (SELECT crisis_id, count(*) AS numResourses FROM crises_crisesresourses GROUP BY crisis_id) AS R ON id = crisis_id Where numResourses = (SELECT max(numResourses) FROM (SELECT crisis_id, count(*) AS numResourses FROM crises_crisesresourses GROUP BY crisis_id))",
-	"SELECT * FROM (SELECT kind, count(*) AS numOfCrises FROM crises_crises GROUP BY kind) Where numOfCrises = (SELECT max(numOfCrises) FROM (SELECT kind, count(*) AS numOfCrises FROM crises_crises GROUP BY kind))"]
+	"SELECT kind, numOfCrises FROM (SELECT kind, count(*) AS numOfCrises FROM crises_crises GROUP BY kind) Where numOfCrises = (SELECT max(numOfCrises) FROM (SELECT kind, count(*) AS numOfCrises FROM crises_crises GROUP BY kind))"]
 	queryNames = ["Select all government organizations",
 	"Select everything not related to anything else",
 	"Select the longest running crisis/crises",
