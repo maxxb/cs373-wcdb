@@ -465,11 +465,11 @@ def post_new_organization(request):
     )
 
     # update the org's associations 
+    orgData.save()
     people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
     crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
     orgData.people.add(*people)
     orgData.crises.add(*crises)
-    orgData.save()
 
     # create the org's maps, images, etc
     create_associated_org_data(b, org) 
