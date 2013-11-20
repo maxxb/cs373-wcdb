@@ -5,6 +5,7 @@ Use `get.py` for GET requests.
 
 * `python get.py --url http://localhost:8000/api/crises`
 * `python get.py --url http://localhost:8000/api/people/1`
+* `python get.py --url http://localhost:8000/api/organizations/1`
 
 Use `post.py` for POST requests. There is some predefined POST data in `data.py`. The script will choose the correct data in `data.py` (person, crisis, or org) based on the url
 
@@ -17,5 +18,11 @@ Use `put.py` for PUT requests. This will choose from some predefined PUT data in
 * `python put.py --url http://localhost:8000/api/crises/1` (uses `data.CRISIS_PUT` as the put data)
 * `python put.py --url http://localhost:8000/api/people/1` (uses `data.PERSON_PUT` as the put data)
 * `python put.py --url http://localhost:8000/api/organizations/1` (uses `data.ORG_PUT` as the put data)
+
+Use `delete.py` for DELETE requests.
+
+* `python delete.py --url http://localhost:8000/api/crises/1`
+* `python delete.py --url http://localhost:8000/api/people/1`
+* `python delete.py --url http://localhost:8000/api/organizations/1`
 
 
