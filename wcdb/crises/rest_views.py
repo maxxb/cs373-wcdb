@@ -619,7 +619,7 @@ def crisis_orgs(request, cid):
     if request.method == 'GET':
         matches = CrisesData.objects.filter(crisis__pk=cid)
         if not matches:
-            return resourceNotFound()
+            return resource_not_found()
         cData = matches[0]
         result = []
         for org in cData.orgs.all():
@@ -636,7 +636,7 @@ def crisis_people(request, cid):
     if request.method == 'GET':
         matches = CrisesData.objects.filter(crisis__pk=cid)
         if not matches:
-            return resourceNotFound()
+            return resource_not_found()
         cData = matches[0]
         result = []
         for person in cData.people.all():
@@ -686,7 +686,7 @@ def person_orgs(request, pid):
     if request.method == 'GET':
         matches = PeopleData.objects.filter(person__pk=pid)
         if not matches:
-            return resourceNotFound()
+            return resource_not_found()
         data = matches[0]
         result = []
         for org in data.orgs.all():
@@ -703,7 +703,7 @@ def person_crises(request, pid):
     if request.method == 'GET':
         matches = PeopleData.objects.filter(person__pk=pid)
         if not matches:
-            return resourceNotFound()
+            return resource_not_found()
         data = matches[0]
         result = []
         for crisis in data.crises.all():
@@ -753,7 +753,7 @@ def organization_people(request, oid):
     if request.method == 'GET':
         matches = OrganizationsData.objects.filter(org__pk=oid)
         if not matches:
-            return resourceNotFound()
+            return resource_not_found()
         data = matches[0]
         result = []
         for person in data.people.all():
@@ -770,7 +770,7 @@ def organization_crises(request, oid):
     if request.method == 'GET':
         matches = OrganizationsData.objects.filter(org__pk=oid)
         if not matches:
-            return resourceNotFound()
+            return resource_not_found()
         data = matches[0]
         result = []
         for crisis in data.crises.all():
