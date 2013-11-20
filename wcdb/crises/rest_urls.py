@@ -9,11 +9,11 @@ urlpatterns = patterns('',
     url(r'^people$', 'crises.rest_views.people'),
     url(r'^people/(\d+)$', 'crises.rest_views.person'),
     url(r'^people/(\d+)/organizations$', 'crises.rest_views.person_orgs'),
-    url(r'^people/(\d+)/crisis$', 'crises.rest_views.person_crises'),
+    url(r'^people/(\d+)/crises$', 'crises.rest_views.person_crises'),
 
     url(r'^organizations$', 'crises.rest_views.organizations'),
     url(r'^organizations/(\d+)$', 'crises.rest_views.organization'),
-    url(r'^organizations/(\d+)/crisis$', 'crises.rest_views.organization_crises'),
+    url(r'^organizations/(\d+)/crises$', 'crises.rest_views.organization_crises'),
     url(r'^organizations/(\d+)/people$', 'crises.rest_views.organization_people'),
 )
 
