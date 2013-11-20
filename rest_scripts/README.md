@@ -16,6 +16,6 @@ Use `put.py` for PUT requests. This will choose from some predefined PUT data in
  
 * `python put.py --url http://localhost:8000/api/crises/1` (uses `data.CRISIS_PUT` as the put data)
 * `python put.py --url http://localhost:8000/api/people/1` (uses `data.PERSON_PUT` as the put data)
-* `python put.py --url http://localhost:8000/api/organizations/1` (uses `data.ORG_PUT as the put data)
+* `python put.py --url http://localhost:8000/api/organizations/1` (uses `data.ORG_PUT` as the put data)
 
 
