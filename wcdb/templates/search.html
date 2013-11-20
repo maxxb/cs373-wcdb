@@ -4,6 +4,7 @@
 {% block title %}World Crisies Database | Search Results{% endblock %}
 
 {% block results %} 
+<<<<<<< HEAD
 <div class="col-md-12">
   <center>
   <h1>Search results for {{search_terms}}</h1>
@@ -19,3 +20,21 @@
 </div>  
 
 {% endblock results %}
+=======
+
+<div class="col-md-12">
+  <center><h1>Search results for {{search_terms}}</h1></center>
+  <br><br>
+  	{% for url, items in query_results %}
+  		<a href="{{url}}">{{ items.1.title }}</a><br>
+      <b><p>{{ items.1.context }}</p></b><br>
+  	{% endfor %}
+  </table>
+</div>  
+
+{% endblock results %}
+
+{% block copyright %}  
+<br><br><p>Designed and Implemented by <a href="/about">The TCP Connections</a></p>
+{% endblock %} 
+>>>>>>> e1eeab2d6b64764e5e2d0ee63615f88bf84e8b49

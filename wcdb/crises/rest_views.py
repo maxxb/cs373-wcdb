@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 from crises.models import *
 from django.utils import simplejson
 from django.http import HttpResponse
@@ -26,73 +27,17 @@ def dateFromString(ds):
     return datetime.strptime(ds, "%Y-%m-%d").date()
 
 def jsonFromRequest(request):
-    jsonString = "".join(request.readlines())
+    # In django 1.3.1 (CS machines), the fake request objects used for testing are different than
+    # the actual HttpRequest objects used. The only way I've found to get at the post 
+    # data on both is to use .raw_post_data.
+
+    # jsonString = "".join(request.readlines())
+    jsonString = request.raw_post_data
     return simplejson.loads(jsonString)
 
 #############################################
-# Crisis REST views
+# Crisis helpers
 #############################################
-def crises(request):
-    """ 
-    GET     Lists the crises in the database 
-    POST    Create a new entry for a crisis
-    """
-    if request.method == 'GET':
-        return get_all_crises()
-    elif request.method == 'POST':
-        jsonId = post_new_crisis(request)
-        return jsonResponse(simplejson.dumps(jsonId), 201)
-    else:
-        return method_not_supported()
-
-def crisis(request, cid):
-    """ 
-    GET     Displays the information for a specific crisis, id is the database primary key 
-    PUT     Update an existing crisis
-    DELETE  Delete an existing crisis
-    """
-    # filter will return empty lists when there are no matches
-    if request.method == 'GET':
-        return get_crisis(request, cid)
-    elif request.method == 'PUT':
-        return put_crisis(request, cid)
-    elif request.method == 'DELETE':
-        return delete_crisis(request, cid)
-    else:
-        return method_not_supported()
-
-def crisis_orgs(request, cid):
-    """ List all related organizations """
-    if request.method == 'GET':
-        matches = CrisesData.objects.filter(crisis__pk=cid)
-        if not matches:
-            return resourceNotFound()
-        cData = matches[0]
-        result = []
-        for org in cData.orgs.all():
-            orgDataMatches = OrganizationsData.objects.filter(org__pk=org.pk)
-            if orgDataMatches:
-                result.append(get_org_dict(orgDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
-    else:
-        return method_not_supported()
-
-def crisis_people(request, cid):
-    """ List all related people """
-    if request.method == 'GET':
-        matches = CrisesData.objects.filter(crisis__pk=cid)
-        if not matches:
-            return resourceNotFound()
-        cData = matches[0]
-        result = []
-        for person in cData.people.all():
-            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
-            if pDataMatches:
-                result.append(get_person_dict(pDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
-    else:
-        return method_not_supported()
-
 def get_all_crises():
     data = []
     for row in Crises.objects.all():
@@ -103,24 +48,13 @@ def get_all_crises():
         })
     return jsonResponse(simplejson.dumps(data), 200)
 
-def get_all_people():
-    data = []
-    for row in People.objects.all():
-        data.append({
-            "name": row.name,
-            "id" : row.pk,
-            "kind" : row.kind
-        })
-    return jsonResponse(simplejson.dumps(data), 200)
-
-def get_all_orgs():
-    data = []
-    for row in Organizations.objects.all():
-        data.append({
-            "name": row.name,
-            "id" : row.pk,
-            "kind" : row.kind
-        })
+def get_crisis(request, cid):
+    # filter will return an empty list when there are no matches
+    matches = CrisesData.objects.filter(crisis__pk=cid)
+    if not matches:
+        return resource_not_found()
+    crisisData = matches[0]
+    data = get_crisis_dict(crisisData)
     return jsonResponse(simplejson.dumps(data), 200)
 
 def create_associated_crisis_data(data, crisis):
@@ -147,13 +81,13 @@ def create_associated_crisis_data(data, crisis):
     for x in data[u"citations"]:
         CrisesCitations(citations=x, crisis=crisis).save()
     #create associations
-    for x in CrisesData.objects.filter(crisis__pk=pk):
+    for x in CrisesData.objects.filter(crisis__pk=crisis.pk):
         people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
         for p in people:
             x.people.add(p)
         orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
         for o in orgs:
-            x.orgs.add(p)
+            x.orgs.add(o)
 
 def delete_associated_crisis_data(crisis):
     pk = crisis.pk
@@ -169,95 +103,33 @@ def delete_associated_crisis_data(crisis):
     map(lambda x: x.delete(), CrisesLinks.objects.filter(crisis__pk=pk))
     map(lambda x: x.delete(), CrisesCitations.objects.filter(crisis__pk=pk))
 
+# PUT implementations #
+def put_crisis(request, cid):
+    cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
+    if not cDataMatches:
+        return resource_not_found() 
+    cData = cDataMatches[0]
+    
+    putData = jsonFromRequest(request)
 
-def create_associated_people_data(data, person):
-    """
-    data is a dict containing API keys: "maps", "images", etc.
-    person is a People model object.
-    """
-    # create the person's maps, images, etc
-    for x in data[u"maps"]:
-        PeopleMaps(maps=x, people=people).save()
-    for x in data[u"images"]:
-        PeopleImages(image=x, people=people).save()
-    for x in data[u"videos"]:
-        PeopleVideos(video=x, people=people).save()
-    for x in data[u"social_media"]:
-        # TODO: can we get the widget_id from the url?
-        PeopleTwitter(twitter=x, widget_id=123456789, people=people).save()
-    for x in data[u"external_links"]:
-        PeopleLinks(external_links=x, people=people).save()
-    for x in data[u"citations"]:
-        PeopleCitations(citations=x, people=people).save()
-    #create associations
-    for x in PeopleData.objects.filter(person__pk=pk):
-        crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
-        for c in crises:
-            x.crises.add(c)
-        orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
-        for o in orgs:
-            x.orgs.add(p)
+    delete_associated_crisis_data(cData.crisis)
+    create_associated_crisis_data(putData, cData.crisis)
 
-def delete_associated_people_data(person):
-    pk = person.pk
-    for x in PeopleData.objects.filter(person__pk=pk):
-        x.orgs.clear() #remove associations but preserve object
-        x.crises.clear()
-    map(lambda x: x.delete(), PeopleMaps.objects.filter(people__pk=pk))
-    map(lambda x: x.delete(), PeopleImages.objects.filter(people__pk=pk))
-    map(lambda x: x.delete(), PeopleVideos.objects.filter(people__pk=pk))
-    map(lambda x: x.delete(), PeopleTwitter.objects.filter(people__pk=pk))
-    map(lambda x: x.delete(), PeopleLinks.objects.filter(people__pk=pk))
-    map(lambda x: x.delete(), PeopleCitations.objects.filter(people__pk=pk))
-
-def create_associated_org_data(data, org):
-    """
-    data is a dict containing API keys: "maps", "images", etc.
-    org is an Organization model object.
-    """
-    # create the org's maps, images, etc
-    for x in data[u"maps"]:
-        OrgMaps(maps=x, org=org).save()
-    for x in data[u"images"]:
-        OrgImages(image=x, org=org).save()
-    for x in data[u"videos"]:
-        OrgVideos(video=x, org=org).save()
-    for x in data[u"social_media"]:
-        # TODO: can we get the widget_id from the url?
-        OrgTwitter(twitter=x, widget_id=123456789, org=org).save()
-    for x in data[u"external_links"]:
-        OrgLinks(external_links=x, org=org).save()
-    for x in data[u"citations"]:
-        OrgCitations(citations=x, org=org).save()
-    #create associations
-    for x in OrgData.objects.filter(org__pk=pk):
-        people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
-        for p in people:
-            x.people.add(p)
-        crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
-        for c in crises:
-            x.crises.add(c)
-
-def delete_associated_org_data(org):
-    pk = org.pk
-    for x in OrganizationsData.objects.filter(org__pk=pk):
-        x.people.clear() #remove associations but preserve object
-        x.crises.clear()
-    map(lambda x: x.delete(), OrgMaps.objects.filter(org__pk=pk))
-    map(lambda x: x.delete(), OrgImages.objects.filter(org__pk=pk))
-    map(lambda x: x.delete(), OrgVideos.objects.filter(org__pk=pk))
-    map(lambda x: x.delete(), OrgTwitter.objects.filter(org__pk=pk))
-    map(lambda x: x.delete(), OrgLinks.objects.filter(org__pk=pk))
-    map(lambda x: x.delete(), OrgCitations.objects.filter(org__pk=pk))
+    cData.crisis.name       = putData["name"]
+    cData.crisis.kind       = putData["kind"]
+    cData.description       = putData["description"]
+    cData.location          = putData["location"]
+    cData.start_date        = dateFromString(putData["start_date"])
+    cData.end_date          = dateFromString(putData["end_date"])
+    cData.human_impact      = putData["human_impact"]
+    cData.economic_impact   = putData["economic_impact"]
+    cData.save()
+    cData.crisis.save()
+    
+    return success_no_content() 
 
 def post_new_crisis(request):
-    #TODO: Handle authentication here
-
-    # In Django 1.5, there's request.body or request.content.
-    # Django 1.3 (CS machines) has POST, which is a dictlike object
-    # that contains the entire json string as the key for some reason.
-    jsonString = "".join(request.readlines())
-    b = simplejson.loads(jsonString)
+    b = jsonFromRequest(request)
 
     # create the crisis and get its auto-assigned primary key
     crisis = Crises(name=b[u"name"], kind=b[u"kind"])
@@ -285,226 +157,7 @@ def post_new_crisis(request):
     # create the crisis's maps, images, etc
     create_associated_crisis_data(b, crisis) 
 
-    return {"id": cid}
-    # return jsonResponse(simplejson.dumps({"id": cid}), 201)
-
-def post_new_organization(request):
-    #TODO: reduce redundancy with above
-    #TODO: Handle authentication here
-
-    # In Django 1.5, there's request.body or request.content.
-    # Django 1.3 (CS machines) has POST, which is a dictlike object
-    # that contains the entire json string as the key for some reason.
-#    b = simplejson.loads(request.POST.keys()[0])
-    jsonString = "".join(request.readlines())
-    b = simplejson.loads(jsonString)
-
-    # create the org and get its auto-assigned primary key
-    org = Organizations(name=b[u"name"], kind=b[u"kind"])
-    org.save()
-    cid = org.pk
-
-    # TODO: test
-    # create the contact info object from post request
-    contact_info = ContactInfo(
-        name = b[u"contact_info"][u"name"], # not sure if this is how nested json can be read in
-        address = b[u"contact_info"][u"address"],
-        email = b[u"contact_info"][u"email"], #how to set email fields?
-        phone = b[u"contact_info"][u"phone"],
-    )
-
-    contact_info.save()
-
-    # create the org data 
-    orgData = OrganizationsData(
-        org = org,
-        date_established = dateFromString(b[u"date_established"]),
-        description = b[u"description"],
-        location = b[u"location"],
-        contact_info = contact_info,
-    )
-
-    # update the org's associations 
-    people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
-    crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
-    orgData.people.add(*people)
-    orgData.crises.add(*orgs)
-    orgData.save()
-
-    # create the org's maps, images, etc
-    create_associated_org_data(b, crisis) 
-
-    return {"id" : cid}
-    # return jsonResponse(simplejson.dumps({"id": cid}), 201)
-
-def post_new_person(request):
-    #TODO: reduce redundancy with above
-    #TODO: Handle authentication here
-
-    # In Django 1.5, there's request.body or request.content.
-    # Django 1.3 (CS machines) has POST, which is a dictlike object
-    # that contains the entire json string as the key for some reason.
-    b = simplejson.loads(request.POST.keys()[0])
-
-    # create the person and get its auto-assigned primary key
-    person = People(name=b[u"name"], kind=b[u"kind"])
-    person.save()
-    cid = person.pk
-
-    # create the person data 
-    personData = PeopleData(
-        person = person,
-        dob = dateFromString(b[u"dob"]),
-        location = b[u"location"],
-    )
-
-    # update the person's associations 
-    orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), b[u"organizations"]))
-    crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
-    personData.orgs.add(*orgs)
-    personData.crises.add(*crises)
-    personData.save()
-
-    # create the person's maps, images, etc
-    create_associated_people_data(b, person) 
-
-    return {"id" : cid}
-    # return jsonResponse(simplejson.dumps({"id": cid}), 201)
-
-# PUT implementations #
-def put_crisis(request, cid):
-    cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
-    if not cDataMatches:
-        return resource_not_found() 
-    cData = cDataMatches[0]
-    
-    putData = jsonFromRequest(request)
-
-    delete_associated_crisis_data(cData.crisis)
-    create_associated_crisis_data(putData, cData.crisis)
-
-    cData.crisis.name       = putData["name"]
-    cData.crisis.kind       = putData["kind"]
-    cData.description       = putData["description"]
-    cData.location          = putData["location"]
-    cData.start_date        = dateFromString(putData["start_date"])
-    cData.end_date          = dateFromString(putData["end_date"])
-    cData.human_impact      = putData["human_impact"]
-    cData.economic_impact   = putData["economic_impact"]
-    cData.save()
-    cData.crisis.save()
-    
-    return success_no_content() 
-
-def put_person(request, pid): #TODO: verify pid, oid, cid?
-    pDataMatches = PeopleData.objects.filter(person__pk=pid)
-    if not pDataMatches:
-        return resource_not_found() 
-    pData = pDataMatches[0]
-    
-    putData = jsonFromRequest(request)
-
-    delete_associated_people_data(pData.person) 
-    create_associated_people_data(putData, pData.person)
-
-    pData.person.name       = putData["name"]
-    pData.person.kind       = putData["kind"]
-    pData.description       = putData["description"]
-    pData.location          = putData["location"]
-    pData.dob        = dateFromString(putData["dob"])
-    pData.save()
-    pData.person.save()
-    
-    return success_no_content() 
-
-def put_org(request, oid):
-    oDataMatches = OrganizationsData.objects.filter(org__pk=oid)
-    if not oDataMatches:
-        return resource_not_found() 
-    oData = oDataMatches[0]
-    
-    putData = jsonFromRequest(request)
-
-    delete_associated_org_data(oData.org) 
-    create_associated_org_data(putData, oData.org)
-
-    oData.org.name       = putData["name"]
-    oData.org.kind       = putData["kind"]
-    oData.date_established  = dateFromString(putData["date_established"])
-    oData.description       = putData["description"]
-    oData.location          = putData["location"]
-    oData.contact_info.name = putData["contact_info"]["name"]
-    oData.contact_info.address = putData["contact_info"]["address"]
-    oData.contact_info.email = putData["contact_info"]["email"] 
-    oData.contact_info.phone = putData["contact_info"]["phone"]
-    oData.save()
-    oData.org.save()
-    
-    return success_no_content() 
-
-# DELETE Implementations #
-def delete_crisis(request, cid): #prequest unused? 
-    cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
-    if cDataMatches:
-        cData = cDataMatches[0]
-        #delete Maps, Images, etc.
-        delete_associated_crisis_data(cData.crisis);
-        #delete actual crisis
-        cData.crisis.delete()
-        cData.delete()
-
-    return success_no_content()
-
-def delete_person(request, pid):
-    pDataMatches = PeopleData.objects.filter(person__pk=pid)
-    if pDataMatches:
-        pData = pDataMatches[0]
-        #delete Maps, Images, etc.
-        delete_associated_people_data(pData.person);
-        #delete actual person
-        pData.person.delete()
-        pData.delete()
-
-    return success_no_content()
-    
-def delete_org(request, oid):
-    oDataMatches = OrganizationsData.objects.filter(org__pk=oid)
-    if oDataMatches:
-        oData = oDataMatches[0]
-        #delete Maps, Images, etc.
-        delete_associated_org_data(oData.org);
-        #delete actual org
-        oData.org.delete()
-        oData.delete()
-
-    return success_no_content()  
-
-def get_crisis(request, cid):
-    # filter will return an empty list when there are no matches
-    matches = CrisesData.objects.filter(crisis__pk=cid)
-    if not matches:
-        return resource_not_found()
-    crisisData = matches[0]
-    data = get_crisis_dict(crisisData)
-    return jsonResponse(simplejson.dumps(data), 200)
-
-def get_person(request, cid):
-    # filter will return an empty list when there are no matches
-    matches = PeopleData.objects.filter(person__pk=cid)
-    if not matches:
-        return resource_not_found()
-    personData = matches[0]
-    data = get_person_dict(personData)
-    return jsonResponse(simplejson.dumps(data), 200)
-
-def get_org(request, cid):
-    # filter will return an empty list when there are no matches
-    matches = OrganizationsData.objects.filter(org__pk=cid)
-    if not matches:
-        return resource_not_found()
-    orgData = matches[0]
-    data = get_org_dict(orgData)
-    return jsonResponse(simplejson.dumps(data), 200)
+    return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
 def get_crisis_dict(crisisData):
     """
@@ -549,6 +202,142 @@ def get_crisis_dict(crisisData):
         "citations"         : cCitations,
     }
 
+# DELETE Implementations #
+def delete_crisis(request, cid): #prequest unused? 
+    cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
+    if cDataMatches:
+        cData = cDataMatches[0]
+        #delete Maps, Images, etc.
+        delete_associated_crisis_data(cData.crisis);
+        #delete actual crisis
+        cData.crisis.delete()
+        cData.delete()
+
+    return success_no_content()
+
+#############################################
+# People helpers
+#############################################
+def get_all_people():
+    data = []
+    for row in People.objects.all():
+        data.append({
+            "name": row.name,
+            "id" : row.pk,
+            "kind" : row.kind
+        })
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def get_person(request, cid):
+    # filter will return an empty list when there are no matches
+    matches = PeopleData.objects.filter(person__pk=cid)
+    if not matches:
+        return resource_not_found()
+    personData = matches[0]
+    data = get_person_dict(personData)
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def create_associated_people_data(data, person):
+    """
+    data is a dict containing API keys: "maps", "images", etc.
+    person is a People model object.
+    """
+    # create the person's maps, images, etc
+    for x in data[u"maps"]:
+        PeopleMaps(maps=x, people=person).save()
+    for x in data[u"images"]:
+        PeopleImages(image=x, people=person).save()
+    for x in data[u"videos"]:
+        PeopleVideos(video=x, people=person).save()
+    for x in data[u"social_media"]:
+        # TODO: can we get the widget_id from the url?
+        PeopleTwitter(twitter=x, widget_id=123456789, people=person).save()
+    for x in data[u"external_links"]:
+        PeopleLinks(external_links=x, people=person).save()
+    for x in data[u"citations"]:
+        PeopleCitations(citations=x, people=person).save()
+    #create associations
+    for x in PeopleData.objects.filter(person__pk=person.pk):
+        crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
+        for c in crises:
+            x.crises.add(c)
+        orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
+        for o in orgs:
+            x.orgs.add(o)
+
+def delete_associated_people_data(person):
+    pk = person.pk
+    for x in PeopleData.objects.filter(person__pk=pk):
+        x.orgs.clear() #remove associations but preserve object
+        x.crises.clear()
+    map(lambda x: x.delete(), PeopleMaps.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleImages.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleVideos.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleTwitter.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleLinks.objects.filter(people__pk=pk))
+    map(lambda x: x.delete(), PeopleCitations.objects.filter(people__pk=pk))
+
+def post_new_person(request):
+    b = jsonFromRequest(request)
+
+    # create the person and get its auto-assigned primary key
+    person = People(name=b[u"name"], kind=b[u"kind"])
+    person.save()
+    cid = person.pk
+
+    # create the person data 
+    personData = PeopleData(
+        person = person,
+        dob = dateFromString(b[u"DOB"]),
+        location = b[u"location"],
+        description = b[u"description"]
+    )
+
+    # update the person's associations 
+    orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), b[u"organizations"]))
+    crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
+    personData.orgs.add(*orgs)
+    personData.crises.add(*crises)
+    personData.save()
+
+    # create the person's maps, images, etc
+    create_associated_people_data(b, person) 
+
+    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+
+def put_person(request, pid): #TODO: verify pid, oid, cid?
+    pDataMatches = PeopleData.objects.filter(person__pk=pid)
+    if not pDataMatches:
+        return resource_not_found() 
+    pData = pDataMatches[0]
+    
+    putData = jsonFromRequest(request)
+
+    delete_associated_people_data(pData.person) 
+    create_associated_people_data(putData, pData.person)
+
+    pData.person.name = putData["name"]
+    pData.person.kind = putData["kind"]
+    pData.description = putData["description"]
+    pData.location    = putData["location"]
+    pData.dob         = dateFromString(putData["DOB"])
+    pData.save()
+    pData.person.save()
+    
+    return success_no_content() 
+
+def delete_person(request, pid):
+    pDataMatches = PeopleData.objects.filter(person__pk=pid)
+    if pDataMatches:
+        pData = pDataMatches[0]
+        #delete Maps, Images, etc.
+        delete_associated_people_data(pData.person);
+        #delete actual person
+        pData.person.delete()
+        pData.delete()
+
+    return success_no_content()
+
 def get_person_dict(personData):
     """
     personData is a row from the PeopleData table
@@ -581,133 +370,149 @@ def get_person_dict(personData):
         "social_media"  : pSocial,
         "external_links": pLinks,
         "citations"     : pCitations,
+        "crises"        : pCrises,
+        "organizations" : pOrgs
     }
 
 #############################################
-# Person REST views
+# Organization helpers
 #############################################
-def people(request):
-    """ 
-    GET     Lists the people in the database 
-    POST    Create a new entry for a person
+def get_all_orgs():
+    data = []
+    for row in Organizations.objects.all():
+        data.append({
+            "name": row.name,
+            "id" : row.pk,
+            "kind" : row.kind
+        })
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def get_org(request, cid):
+    # filter will return an empty list when there are no matches
+    matches = OrganizationsData.objects.filter(org__pk=cid)
+    if not matches:
+        return resource_not_found()
+    orgData = matches[0]
+    data = get_org_dict(orgData)
+    return jsonResponse(simplejson.dumps(data), 200)
+
+def create_associated_org_data(data, org):
     """
-    if request.method == 'GET':
-        return get_all_people()
-    elif request.method == 'POST':
-        return post_new_person(request)
-    else:
-        return method_not_supported()
-
-def person(request, pid):
-    """ 
-    GET     Displays the information for a specific person, id is the database primary key 
-    PUT     Update an existing person
-    DELETE  Delete an existing person
+    data is a dict containing API keys: "maps", "images", etc.
+    org is an Organization model object.
     """
-    # filter will return empty lists when there are no matches
-    if request.method == 'GET':
-        return get_person(request, pid)
-    elif request.method == 'PUT':
-        return put_person(request, pid)
-    elif request.method == 'DELETE':
-        return delete_person(request, pid)
-    else:
-        return method_not_supported()
+    # create the org's maps, images, etc
+    for x in data[u"maps"]:
+        OrgMaps(maps=x, org=org).save()
+    for x in data[u"images"]:
+        OrgImages(image=x, org=org).save()
+    for x in data[u"videos"]:
+        OrgVideos(video=x, org=org).save()
+    for x in data[u"social_media"]:
+        # TODO: can we get the widget_id from the url?
+        OrgTwitter(twitter=x, widget_id=123456789, org=org).save()
+    for x in data[u"external_links"]:
+        OrgLinks(external_links=x, org=org).save()
+    for x in data[u"citations"]:
+        OrgCitations(citations=x, org=org).save()
+    #create associations
+    for x in OrganizationsData.objects.filter(org__pk=org.pk):
+        people = People.objects.filter(id__in = map(lambda x: int(x), data[u"people"]))
+        for p in people:
+            x.people.add(p)
+        crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
+        for c in crises:
+            x.crises.add(c)
 
-def person_orgs(request, pid):
-    """ List all related organizations """
-    if request.method == 'GET':
-        matches = PeopleData.objects.filter(person__pk=pid)
-        if not matches:
-            return resourceNotFound()
-        data = matches[0]
-        result = []
-        for org in data.orgs.all():
-            orgDataMatches = OrganizationsData.objects.filter(org__pk=org.pk)
-            if orgDataMatches:
-                result.append(get_org_dict(orgDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
-    else:
-        return method_not_supported()
+def delete_associated_org_data(org):
+    pk = org.pk
+    for x in OrganizationsData.objects.filter(org__pk=pk):
+        x.people.clear() #remove associations but preserve object
+        x.crises.clear()
+    map(lambda x: x.delete(), OrgMaps.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgImages.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgVideos.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgTwitter.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgLinks.objects.filter(org__pk=pk))
+    map(lambda x: x.delete(), OrgCitations.objects.filter(org__pk=pk))
 
-def person_crises(request, pid):
-    """ List all related crises """
-    if request.method == 'GET':
-        matches = PeopleData.objects.filter(person__pk=pid)
-        if not matches:
-            return resourceNotFound()
-        data = matches[0]
-        result = []
-        for crisis in data.crises.all():
-            crisisDataMatches = CrisesData.objects.filter(crisis__pk=crisis.pk)
-            if crisisDataMatches:
-                result.append(get_crisis_dict(crisisDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
-    else:
-        return method_not_supported()
+def post_new_organization(request):
+    b = jsonFromRequest(request)
 
-#############################################
-# Organization REST views
-#############################################
-def organizations(request):
-    """ 
-    GET     Lists the organizations in the database 
-    POST    Create a new entry for an organization
-    """
-    if request.method == 'GET':
-        return get_all_orgs()
-    elif request.method == 'POST':
-        return post_new_organization(request)
-    else:
-        return method_not_supported()
+    # create the org and get its auto-assigned primary key
+    org = Organizations(name=b[u"name"], kind=b[u"kind"])
+    org.save()
+    cid = org.pk
 
-def organization(request, oid):
-    """ 
-    GET     Displays the information for a specific organization, id is the database primary key 
-    PUT     Update an existing organization
-    DELETE  Delete an existing organization
-    """
-    # filter will return empty lists when there are no matches
-    if request.method == 'GET':
-        return get_org(request, oid)
-    elif request.method == 'PUT':
-        return put_org(request, oid)
-    elif request.method == 'DELETE':
-        return delete_org(request, oid)
-    else:
-        return method_not_supported()
+    # TODO: test
+    # create the contact info object from post request
+    contact_info = ContactInfo(
+        name = b[u"contact_info"][u"name"], # not sure if this is how nested json can be read in
+        address = b[u"contact_info"][u"address"],
+        email = b[u"contact_info"][u"email"], #how to set email fields?
+        phone = b[u"contact_info"][u"phone"],
+    )
 
-def organization_people(request, oid):
-    """ List all related people """
-    if request.method == 'GET':
-        matches = OrganizationsData.objects.filter(org__pk=oid)
-        if not matches:
-            return resourceNotFound()
-        data = matches[0]
-        result = []
-        for person in data.people.all():
-            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
-            if pDataMatches:
-                result.append(get_person_dict(pDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
-    else:
-        return method_not_supported()
+    contact_info.save()
 
-def organization_crises(request, oid):
-    """ List all related crises """
-    if request.method == 'GET':
-        matches = OrganizationsData.objects.filter(org__pk=oid)
-        if not matches:
-            return resourceNotFound()
-        data = matches[0]
-        result = []
-        for crisis in data.crises.all():
-            crisisDataMatches = CrisesData.objects.filter(crisis__pk=crisis.pk)
-            if crisisDataMatches:
-                result.append(get_crisis_dict(crisisDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
-    else:
-        return method_not_supported()
+    # create the org data 
+    orgData = OrganizationsData(
+        org = org,
+        date_established = dateFromString(b[u"established"]),
+        description = b[u"description"],
+        location = b[u"location"],
+        contact_info = contact_info,
+    )
+
+    # update the org's associations 
+    people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
+    crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
+    orgData.people.add(*people)
+    orgData.crises.add(*crises)
+    orgData.save()
+
+    # create the org's maps, images, etc
+    create_associated_org_data(b, org) 
+
+    # return {"id" : cid}
+    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+
+def put_org(request, oid):
+    oDataMatches = OrganizationsData.objects.filter(org__pk=oid)
+    if not oDataMatches:
+        return resource_not_found() 
+    oData = oDataMatches[0]
+    
+    putData = jsonFromRequest(request)
+
+    delete_associated_org_data(oData.org) 
+    create_associated_org_data(putData, oData.org)
+
+    oData.org.name       = putData["name"]
+    oData.org.kind       = putData["kind"]
+    oData.date_established  = dateFromString(putData["date_established"])
+    oData.description       = putData["description"]
+    oData.location          = putData["location"]
+    oData.contact_info.name = putData["contact_info"]["name"]
+    oData.contact_info.address = putData["contact_info"]["address"]
+    oData.contact_info.email = putData["contact_info"]["email"] 
+    oData.contact_info.phone = putData["contact_info"]["phone"]
+    oData.save()
+    oData.org.save()
+    
+    return success_no_content() 
+
+def delete_org(request, oid):
+    oDataMatches = OrganizationsData.objects.filter(org__pk=oid)
+    if oDataMatches:
+        oData = oDataMatches[0]
+        #delete Maps, Images, etc.
+        delete_associated_org_data(oData.org);
+        #delete actual org
+        oData.org.delete()
+        oData.delete()
+
+    return success_no_content()  
 
 def get_contact_info_dict(orgData):
     """
@@ -756,5 +561,207 @@ def get_org_dict(orgData):
         "external_links": oLinks, 
         "citations"     : oCitations,
         "contact_info"  : get_contact_info_dict(orgData),
+        "people"        : oPeople,
+        "crises"        : oCrises
     }
 
+#############################################
+# Crisis REST views
+#############################################
+@csrf_exempt
+def crises(request):
+    """ 
+    GET     Lists the crises in the database 
+    POST    Create a new entry for a crisis
+    """
+    if request.method == 'GET':
+        return get_all_crises()
+    elif request.method == 'POST':
+        return post_new_crisis(request)
+    else:
+        return method_not_supported()
+
+@csrf_exempt
+def crisis(request, cid):
+    """ 
+    GET     Displays the information for a specific crisis, id is the database primary key 
+    PUT     Update an existing crisis
+    DELETE  Delete an existing crisis
+    """
+    # filter will return empty lists when there are no matches
+    if request.method == 'GET':
+        return get_crisis(request, cid)
+    elif request.method == 'PUT':
+        return put_crisis(request, cid)
+    elif request.method == 'DELETE':
+        return delete_crisis(request, cid)
+    else:
+        return method_not_supported()
+
+@csrf_exempt
+def crisis_orgs(request, cid):
+    """ List all related organizations """
+    if request.method == 'GET':
+        matches = CrisesData.objects.filter(crisis__pk=cid)
+        if not matches:
+            return resourceNotFound()
+        cData = matches[0]
+        result = []
+        for org in cData.orgs.all():
+            orgDataMatches = OrganizationsData.objects.filter(org__pk=org.pk)
+            if orgDataMatches:
+                result.append(get_org_dict(orgDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
+
+@csrf_exempt
+def crisis_people(request, cid):
+    """ List all related people """
+    if request.method == 'GET':
+        matches = CrisesData.objects.filter(crisis__pk=cid)
+        if not matches:
+            return resourceNotFound()
+        cData = matches[0]
+        result = []
+        for person in cData.people.all():
+            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
+            if pDataMatches:
+                result.append(get_person_dict(pDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
+
+#############################################
+# Person REST views
+#############################################
+@csrf_exempt
+def people(request):
+    """ 
+    GET     Lists the people in the database 
+    POST    Create a new entry for a person
+    """
+    if request.method == 'GET':
+        return get_all_people()
+    elif request.method == 'POST':
+        return post_new_person(request)
+    else:
+        return method_not_supported()
+
+@csrf_exempt
+def person(request, pid):
+    """ 
+    GET     Displays the information for a specific person, id is the database primary key 
+    PUT     Update an existing person
+    DELETE  Delete an existing person
+    """
+    # filter will return empty lists when there are no matches
+    if request.method == 'GET':
+        return get_person(request, pid)
+    elif request.method == 'PUT':
+        return put_person(request, pid)
+    elif request.method == 'DELETE':
+        return delete_person(request, pid)
+    else:
+        return method_not_supported()
+
+@csrf_exempt
+def person_orgs(request, pid):
+    """ List all related organizations """
+    if request.method == 'GET':
+        matches = PeopleData.objects.filter(person__pk=pid)
+        if not matches:
+            return resourceNotFound()
+        data = matches[0]
+        result = []
+        for org in data.orgs.all():
+            orgDataMatches = OrganizationsData.objects.filter(org__pk=org.pk)
+            if orgDataMatches:
+                result.append(get_org_dict(orgDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
+
+@csrf_exempt
+def person_crises(request, pid):
+    """ List all related crises """
+    if request.method == 'GET':
+        matches = PeopleData.objects.filter(person__pk=pid)
+        if not matches:
+            return resourceNotFound()
+        data = matches[0]
+        result = []
+        for crisis in data.crises.all():
+            crisisDataMatches = CrisesData.objects.filter(crisis__pk=crisis.pk)
+            if crisisDataMatches:
+                result.append(get_crisis_dict(crisisDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
+
+#############################################
+# Organization REST views
+#############################################
+@csrf_exempt
+def organizations(request):
+    """ 
+    GET     Lists the organizations in the database 
+    POST    Create a new entry for an organization
+    """
+    if request.method == 'GET':
+        return get_all_orgs()
+    elif request.method == 'POST':
+        return post_new_organization(request)
+    else:
+        return method_not_supported()
+
+@csrf_exempt
+def organization(request, oid):
+    """ 
+    GET     Displays the information for a specific organization, id is the database primary key 
+    PUT     Update an existing organization
+    DELETE  Delete an existing organization
+    """
+    # filter will return empty lists when there are no matches
+    if request.method == 'GET':
+        return get_org(request, oid)
+    elif request.method == 'PUT':
+        return put_org(request, oid)
+    elif request.method == 'DELETE':
+        return delete_org(request, oid)
+    else:
+        return method_not_supported()
+
+@csrf_exempt
+def organization_people(request, oid):
+    """ List all related people """
+    if request.method == 'GET':
+        matches = OrganizationsData.objects.filter(org__pk=oid)
+        if not matches:
+            return resourceNotFound()
+        data = matches[0]
+        result = []
+        for person in data.people.all():
+            pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
+            if pDataMatches:
+                result.append(get_person_dict(pDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()
+
+@csrf_exempt
+def organization_crises(request, oid):
+    """ List all related crises """
+    if request.method == 'GET':
+        matches = OrganizationsData.objects.filter(org__pk=oid)
+        if not matches:
+            return resourceNotFound()
+        data = matches[0]
+        result = []
+        for crisis in data.crises.all():
+            crisisDataMatches = CrisesData.objects.filter(crisis__pk=crisis.pk)
+            if crisisDataMatches:
+                result.append(get_crisis_dict(crisisDataMatches[0]))
+        return jsonResponse(simplejson.dumps(result), 200)
+    else:
+        return method_not_supported()

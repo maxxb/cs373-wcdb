@@ -1,0 +1,13 @@
+/Library/Python/2.7/site-packages/django/conf/__init__.py:221: DeprecationWarning: You have no filters defined on the 'mail_admins' logging handler: adding implicit debug-false-only filter. See http://docs.djangoproject.com/en/dev/releases/1.4/#request-exceptions-are-now-always-logged
+  DeprecationWarning)
+
+..................................................................................................................................................s......................................................................................................................................x............................................................................................................................................................................................................................../Library/Python/2.7/site-packages/django/conf/urls/defaults.py:3: DeprecationWarning: django.conf.urls.defaults is deprecated; use django.conf.urls instead
+  DeprecationWarning)
+
+....
+----------------------------------------------------------------------
+Ran 508 tests in 16.701s
+
+OK (skipped=1, expected failures=1)
+Creating test database for alias 'default'...
+Destroying test database for alias 'default'...

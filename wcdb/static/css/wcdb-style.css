@@ -25,6 +25,11 @@ p {
 	font-weight: 300;
 	font-family: 'Open Sans', sans-serif;
 }
+h4 {
+	font-size: 22pt;
+	font-weight: 300;
+	font-family: 'Open Sans', sans-serif;
+}
 a:link{
 	font-size: 17pt;
 	font-weight: 300;
@@ -61,8 +66,15 @@ li {
   background-color: black;
 }
 .carousel-inner > .item > img {
-  float: left;
   top: 0;
   left: 0;
   height: 500px;
 }
+
+.homeCarousel img {
+  width: 1140px;
+  height: 500px;
+  max-height: 500px;
+  margin: 0 auto;
+}
+

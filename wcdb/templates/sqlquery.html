@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}World Crisies Database | SQL Query{% endblock %}
+
+{% block sqlquery %}
+<center>
+<h1>World Crises Database | {{ queryName }}</h1>
+<br><br>
+
+<table border="1">
+{% for r in qresult %}
+<tr>
+{% for c in r %}
+<td><h4>{{c}}</h4></td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+{% endblock sqlquery %}
+
+{% block copyright %}  
+<br><br><p>Designed and Implemented by <a href="/about">The TCP Connections</a></p>
+{% endblock %} 
