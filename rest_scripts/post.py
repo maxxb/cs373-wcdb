@@ -44,7 +44,7 @@ if __name__ == '__main__':
         print json.loads(response_str)
     except Exception as e:
         print e
-        print response_body
+        print response_str
 
 
     

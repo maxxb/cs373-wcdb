@@ -18,5 +18,5 @@ if __name__ == '__main__':
         print pprint.pformat(json.loads(response_str))
     except Exception, e:
         print e
-        print response_body
+        print response_str
 
