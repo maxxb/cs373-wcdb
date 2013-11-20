@@ -30,8 +30,6 @@ def jsonFromRequest(request):
     # In django 1.3.1 (CS machines), the fake request objects used for testing are different than
     # the actual HttpRequest objects used. The only way I've found to get at the post 
     # data on both is to use .raw_post_data.
-
-    # jsonString = "".join(request.readlines())
     jsonString = request.raw_post_data
     return simplejson.loads(jsonString)
 
@@ -502,15 +500,16 @@ def put_org(request, oid):
 
     oData.org.name = putData["name"]
     oData.org.kind = putData["kind"]
-    oData.date_established     = dateFromString(putData["date_established"])
+    oData.date_established     = dateFromString(putData["established"])
     oData.description          = putData["description"]
     oData.location             = putData["location"]
     oData.contact_info.name    = putData["contact_info"]["name"]
     oData.contact_info.address = putData["contact_info"]["address"]
     oData.contact_info.email   = putData["contact_info"]["email"] 
     oData.contact_info.phone   = putData["contact_info"]["phone"]
-    oData.save()
+    oData.contact_info.save()
     oData.org.save()
+    oData.save()
     
     return success_no_content() 
 

@@ -82,7 +82,7 @@ ORG_PUT = {
     "kind": "DISASTER RELIEF",
     "description": "FEMA DESCRIPTION",
     "maps": ["http://GOOGLYMAPSFORFEMA"],
-    "images": ["http://WIKIPEDIA.DUH.!"],
+    "images": ["http://WIKIPEDIA.DUH"],
     "videos": ["http://GOOGLEPLUSTUBE"],
     "social_media": ["https://FEMATWITTER"],
     "crises": [2],
