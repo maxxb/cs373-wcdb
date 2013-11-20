@@ -20,7 +20,7 @@ def makePutRequest(url, data):
     headers = {"Content-Type": "application/json"}
     request = urllib2.Request(url, data=data, headers=headers)
     request.get_method = lambda: 'PUT'
-    return urllib2.urlopen(request).read()
+    return util.performRequest(request)
 
 def getPutData(args):
     dataFile = util.getFileFromArgs(args)
@@ -36,7 +36,8 @@ if __name__ == '__main__':
     url = util.getUrlFromArgs(args, default = "http://localhost:8000/api/crises/1")
     data = getPutData(args)
     print "Making a PUT to %s" % url
-    response_str = makePutRequest(url, data)
+    status_code, response_str = makePutRequest(url, data)
+    print "Status code %s" % status_code
     try:
         print response_str
     except Exception as e:

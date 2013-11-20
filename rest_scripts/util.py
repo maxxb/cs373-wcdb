@@ -1,4 +1,10 @@
 import argparse
+import urllib2
+
+def performRequest(request):
+    """ Make the GET request and return a pair (status_code, response_body) """
+    response = urllib2.urlopen(request)
+    return response.getcode(), response.read()
 
 def getUrlFromArgs(args, default = "http://localhost:8000/api/crises/1"):
     url = default

@@ -21,7 +21,7 @@ def makePostRequest(url, data):
     """ Make a POST request to the given url with the given data """
     headers = {"Content-Type": "application/json"}
     request = urllib2.Request(url, data=data, headers=headers)
-    return urllib2.urlopen(request).read()
+    return util.performRequest(request)
 
 def getPostData(args):
     dataFile = util.getFileFromArgs(args)
@@ -38,7 +38,8 @@ if __name__ == '__main__':
     data = getPostData(args)
     print data
     print "Making a POST to %s" % url 
-    response_str = makePostRequest(url, data)
+    status_code, response_str = makePostRequest(url, data)
+    print "Status_code %s" % status_code
     try:
         print json.loads(response_str)
     except Exception as e:
