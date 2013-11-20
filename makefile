@@ -127,3 +127,24 @@ shell:
 index:
 	cd wcdb/crises/spider && python spider.py --loglevel=INFO --outFile=../index.py
 
+
+############################################
+# -- HEROKU DB STUFF --
+############################################
+
+heroku-terminal:
+	heroku run bash --app tcp-connections
+
+heroku-resetdb:
+	heroku pg:reset DATABASE --confirm tcp-connections
+
+heroku-syncdb:
+	python manage.py syncdb --settings=settings.heroku
+
+heroku-loaddata:
+	python manage.py loaddata fixtures/*.json --settings=settings.heroku
+
+heroku-populatedb:
+	heroku run make heroku-syncdb --app tcp-connections
+	heroku run make heroku-loaddata --app tcp-connections
+
