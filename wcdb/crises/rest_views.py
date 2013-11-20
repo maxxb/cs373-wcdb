@@ -88,6 +88,7 @@ def create_associated_crisis_data(data, crisis):
         orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
         for o in orgs:
             x.orgs.add(o)
+        x.save()
 
 def delete_associated_crisis_data(crisis):
     pk = crisis.pk
@@ -156,6 +157,7 @@ def post_new_crisis(request):
 
     # create the crisis's maps, images, etc
     create_associated_crisis_data(b, crisis) 
+    crisisData.save()
 
     return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
@@ -264,6 +266,7 @@ def create_associated_people_data(data, person):
         orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), data[u"organizations"]))
         for o in orgs:
             x.orgs.add(o)
+        x.save()
 
 def delete_associated_people_data(person):
     pk = person.pk
@@ -472,7 +475,8 @@ def post_new_organization(request):
     orgData.crises.add(*crises)
 
     # create the org's maps, images, etc
-    create_associated_org_data(b, org) 
+    create_associated_org_data(b, org)
+
 
     # return {"id" : cid}
     return jsonResponse(simplejson.dumps({"id": cid}), 201)
