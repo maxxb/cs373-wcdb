@@ -7,11 +7,16 @@
 <h1>World Crises Database | {{ queryName }}</h1>
 <br><br>
 
-<table border="1">
+<table border="3" cellpadding="10">
+<tr>
+{% for c in titles %}
+<td><center><h3>{{ c }}</h3></center></td>
+{% endfor %}
+</tr>
 {% for r in qresult %}
 <tr>
 {% for c in r %}
-<td><h4>{{c}}</h4></td>
+<td><center><h4>{{ c }}</h4></center></td>
 {% endfor %}
 </tr>
 {% endfor %}

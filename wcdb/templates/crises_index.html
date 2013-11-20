@@ -58,12 +58,12 @@
 					</li>
 					<li><b>Related people</b>:
 						{% for p in crisis_data.people.all %}
-							<p>{{p.name}}</p>
+							<a href="../../people/{{ p.id }}"><p>{{p.name}}</p></a>
 						{% endfor %}	
 					</li>
 					<li><b>Related organizations</b>:
 						{% for o in crisis_data.orgs.all %}
-							<p>{{o.name}}</p>
+							<a href="../../organizations/{{ o.id }}"><p>{{o.name}}</p></a>
 						{% endfor %}	
 					</li>
 				</ul>

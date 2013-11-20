@@ -78,3 +78,8 @@ li {
   margin: 0 auto;
 }
 
+.Pic img {
+  width: 100px; !important
+  height: auto;
+}
+

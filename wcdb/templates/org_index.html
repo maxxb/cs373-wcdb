@@ -50,12 +50,12 @@
 					</li>
 					<li><b>Related people</b>:
 						{% for p in org_data.people.all %}
-							<p>{{p.name}}</p>
+							<a href="../../people/{{ p.id }}"><p>{{p.name}}</p></a>
 						{% endfor %}	
 					</li>
 					<li><b>Related crises</b>:
 						{% for o in org_data.crises.all %}
-							<p>{{o.name}}</p>
+							<a href="../../crises/{{ o.id }}"><p>{{o.name}}</p></a>
 						{% endfor %}	
 					</li>
 				</ul>

@@ -43,17 +43,7 @@ def wordclouds(request, wid):
 ###########################################################################################################
 
 def sqlqueries_list(request):
-	queryNames = ["Select all government organizations",
-	"Select everything not related to anything else",
-	"Select the longest running crisis/crises",
-	"Select most related (most related people/crises) organizations",
-	"Count the number of crises before the 21st century (earlier than 2000)",
-	"Select the person/people involved in most number of crises",
-	"select twitter account link of all people",
-	"Select the youngest people in the database",
-	"Select the crises with the most resources needed",
-	"Select the crisis kind that has most number of crises"]
-	return render(request, 'sqlqueries.html', {'queryNames': queryNames})
+	return render(request, 'sqlqueries.html')
 
 def sqlquery(request, qid):
 	index = int(qid)
@@ -67,16 +57,26 @@ def sqlquery(request, qid):
 	"SELECT name, dob FROM crises_people INNER JOIN crises_peopledata ON id = person_id WHERE dob = (SELECT max(dob) AS minDob FROM crises_peopledata)",
 	"SELECT name, numResourses FROM crises_crises INNER JOIN (SELECT crisis_id, count(*) AS numResourses FROM crises_crisesresourses GROUP BY crisis_id) AS R ON id = crisis_id Where numResourses = (SELECT max(numResourses) FROM (SELECT crisis_id, count(*) AS numResourses FROM crises_crisesresourses GROUP BY crisis_id))",
 	"SELECT kind, numOfCrises FROM (SELECT kind, count(*) AS numOfCrises FROM crises_crises GROUP BY kind) Where numOfCrises = (SELECT max(numOfCrises) FROM (SELECT kind, count(*) AS numOfCrises FROM crises_crises GROUP BY kind))"]
-	queryNames = ["Select all government organizations",
-	"Select everything not related to anything else",
-	"Select the longest running crisis/crises",
-	"Select most related (most related people/crises) organizations",
-	"Count the number of crises before the 21st century (earlier than 2000)",
-	"Select the person/people involved in most number of crises",
-	"select twitter account link of all people",
-	"Select the youngest people in the database",
-	"Select the crises with the most resources needed",
-	"Select the crisis kind that has most number of crises"]
+	queryNames = ["Select All Government Organizations",
+	"Select Everything Not Related to Anything Else",
+	"Select the Longest Running Crisis/Crises",
+	"Select Most Related (Most Related People/Crises) Organizations",
+	"Count the Number of Crises Before the 21st Century (Earlier than 2000)",
+	"Select the Person/People Involved in the Most Number of Crises",
+	"select Twitter Account Link of All People",
+	"Select the Youngest People in the Database",
+	"Select the Crises With the Most Resources Needed",
+	"Select the Crisis Kind that has Most Number of Crises"]
+	queryTitles = [("Name", "Kind"),
+	("Type", "Name"),
+	("Name", "Start Date"),
+	("Name", "Total"),
+	("Name", "Start Date"),
+	("Name", "Number of Crises"),
+	("Name", "Twitter Link"),
+	("Name", "Date of Birth"),
+	("Name", "Number of Resources"),
+	("Kind", "Number of Crises"),]
 	
 	cursor = connection.cursor()
 	cursor.execute(queries[index])
@@ -84,7 +84,7 @@ def sqlquery(request, qid):
 	
 	queryName = queryNames[index]
 	
-	return render(request, 'sqlquery.html', {'queryName': queryName, 'qresult':qresult})
+	return render(request, 'sqlquery.html', {'queryName': queryName, 'qresult':qresult, "titles": queryTitles[index]})
 
 ###########################################################################################################
 def search (request):
