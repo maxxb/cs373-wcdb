@@ -147,9 +147,9 @@ def post_new_crisis(request):
         human_impact = b[u"human_impact"],
         economic_impact = b[u"economic_impact"],
     )
+    crisisData.save()
 
     # update the crisis's associations 
-    crisisData.save()
     people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
     orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), b[u"organizations"]))
     crisisData.people.add(*people)
@@ -295,9 +295,9 @@ def post_new_person(request):
         location = b[u"location"],
         description = b[u"description"]
     )
+    personData.save()
 
     # update the person's associations 
-    personData.save()
     orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), b[u"organizations"]))
     crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
     personData.orgs.add(*orgs)
@@ -305,6 +305,7 @@ def post_new_person(request):
 
     # create the person's maps, images, etc
     create_associated_people_data(b, person) 
+    personData.save()
 
     return jsonResponse(simplejson.dumps({"id": cid}), 201)
 
@@ -426,6 +427,7 @@ def create_associated_org_data(data, org):
         crises = Crises.objects.filter(id__in = map(lambda x: int(x), data[u"crises"]))
         for c in crises:
             x.crises.add(c)
+        x.save()
 
 def delete_associated_org_data(org):
     pk = org.pk
@@ -455,7 +457,6 @@ def post_new_organization(request):
         email = b[u"contact_info"][u"email"], #how to set email fields?
         phone = b[u"contact_info"][u"phone"],
     )
-
     contact_info.save()
 
     # create the org data 
@@ -466,9 +467,9 @@ def post_new_organization(request):
         location = b[u"location"],
         contact_info = contact_info,
     )
+    orgData.save()
 
     # update the org's associations 
-    orgData.save()
     people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
     crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
     orgData.people.add(*people)
@@ -476,7 +477,7 @@ def post_new_organization(request):
 
     # create the org's maps, images, etc
     create_associated_org_data(b, org)
-
+    orgData.save()
 
     # return {"id" : cid}
     return jsonResponse(simplejson.dumps({"id": cid}), 201)
