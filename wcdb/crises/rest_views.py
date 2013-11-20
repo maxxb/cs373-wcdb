@@ -294,11 +294,11 @@ def post_new_person(request):
     )
 
     # update the person's associations 
+    personData.save()
     orgs = Organizations.objects.filter(id__in = map(lambda x: int(x), b[u"organizations"]))
     crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
     personData.orgs.add(*orgs)
     personData.crises.add(*crises)
-    personData.save()
 
     # create the person's maps, images, etc
     create_associated_people_data(b, person) 
@@ -465,11 +465,11 @@ def post_new_organization(request):
     )
 
     # update the org's associations 
+    orgData.save()
     people = People.objects.filter(id__in = map(lambda x: int(x), b[u"people"]))
     crises = Crises.objects.filter(id__in = map(lambda x: int(x), b[u"crises"]))
     orgData.people.add(*people)
     orgData.crises.add(*crises)
-    orgData.save()
 
     # create the org's maps, images, etc
     create_associated_org_data(b, org) 
