@@ -283,6 +283,7 @@ def delete_associated_people_data(person):
 def post_new_person(request):
     b = jsonFromRequest(request)
 
+    print b
     # create the person and get its auto-assigned primary key
     person = People(name=b[u"name"], kind=b[u"kind"])
     person.save()
