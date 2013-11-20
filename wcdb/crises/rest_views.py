@@ -207,13 +207,16 @@ def get_crisis_dict(crisisData):
 # DELETE Implementations #
 def delete_crisis(request, cid): #prequest unused? 
     cDataMatches = CrisesData.objects.filter(crisis__pk=cid)
+    # if it exists, delete the CrisesData entry, and all associated data
     if cDataMatches:
         cData = cDataMatches[0]
-        #delete Maps, Images, etc.
         delete_associated_crisis_data(cData.crisis);
-        #delete actual crisis
-        cData.crisis.delete()
         cData.delete()
+    # if it exists, delete the Crises entry
+    cMatches = Crises.objects.filter(pk=cid)
+    if cMatches:
+        crisis = cMatches[0]
+        crisis.delete()
 
     return success_no_content()
 
@@ -332,13 +335,17 @@ def put_person(request, pid): #TODO: verify pid, oid, cid?
 
 def delete_person(request, pid):
     pDataMatches = PeopleData.objects.filter(person__pk=pid)
+    # if it exists, delete the PeopleData entry and all associated data
     if pDataMatches:
         pData = pDataMatches[0]
-        #delete Maps, Images, etc.
         delete_associated_people_data(pData.person);
-        #delete actual person
-        pData.person.delete()
         pData.delete()
+
+    # if it exists, delete the People entry
+    pMatches = People.objects.filter(pk=pid)
+    if pMatches:
+        person = pMatches[0]
+        person.delete()
 
     return success_no_content()
 
@@ -493,15 +500,15 @@ def put_org(request, oid):
     delete_associated_org_data(oData.org) 
     create_associated_org_data(putData, oData.org)
 
-    oData.org.name       = putData["name"]
-    oData.org.kind       = putData["kind"]
-    oData.date_established  = dateFromString(putData["date_established"])
-    oData.description       = putData["description"]
-    oData.location          = putData["location"]
-    oData.contact_info.name = putData["contact_info"]["name"]
+    oData.org.name = putData["name"]
+    oData.org.kind = putData["kind"]
+    oData.date_established     = dateFromString(putData["date_established"])
+    oData.description          = putData["description"]
+    oData.location             = putData["location"]
+    oData.contact_info.name    = putData["contact_info"]["name"]
     oData.contact_info.address = putData["contact_info"]["address"]
-    oData.contact_info.email = putData["contact_info"]["email"] 
-    oData.contact_info.phone = putData["contact_info"]["phone"]
+    oData.contact_info.email   = putData["contact_info"]["email"] 
+    oData.contact_info.phone   = putData["contact_info"]["phone"]
     oData.save()
     oData.org.save()
     
@@ -509,13 +516,17 @@ def put_org(request, oid):
 
 def delete_org(request, oid):
     oDataMatches = OrganizationsData.objects.filter(org__pk=oid)
+    # if it exists, delete the OrganizationData entry and its associated data
     if oDataMatches:
         oData = oDataMatches[0]
-        #delete Maps, Images, etc.
         delete_associated_org_data(oData.org);
-        #delete actual org
-        oData.org.delete()
         oData.delete()
+
+    # if it exists, delete the Organization entry
+    oMatches = Organizations.objects.filter(pk=oid)
+    if oMatches:
+        org = oMatches[0]
+        org.delete()
 
     return success_no_content()  
 
