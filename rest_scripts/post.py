@@ -41,7 +41,8 @@ if __name__ == '__main__':
     response_str = makePostRequest(url, data)
     try:
         print json.loads(response_str)
-    except:
+    except Exception as e:
+        print e
         print response_body
 
 

@@ -53,3 +53,60 @@ FEMA = {
         "email": "None",
         "phone": "800-621-3362"}
 }
+
+CRISIS_PUT = {
+    "name": "PUTPUTUPDATEUPDATE",
+    "start_date": "9999-01-01",
+    "end_date": "9999-01-01",
+    "location": "CAMBODIA",
+    "kind": "ATTACK",
+    "description": "LONG TEXT DESCRIPTION SOMETHING SOMETHING",
+    "human_impact": "PEOPLE DIED",
+    "economic_impact": "SOMETHING ABOUT FARMING",
+    "maps": ["http://GOOGLYMAPS"],
+    "images": ["http://JPEG.PICTURE"],
+    "videos": ["http://VIDEO"],
+    "social_media": ["https://TWEETS"],
+    "ways_to_help": ["$$$"],
+    "resources_needed": ["$$$$$$$$$$"],
+    "people": [2],
+    "organizations": [2],
+    "external_links": ["WIKIPEDIA"],
+    "citations": ["BILIOGRAPHY"],
+}
+
+ORG_PUT = {
+    "name": "FEMA",
+    "established": "9999-06-19",
+    "location": "USAUSAUSA",
+    "kind": "DISASTER RELIEF",
+    "description": "FEMA DESCRIPTION",
+    "maps": ["http://GOOGLYMAPSFORFEMA"],
+    "images": ["http://WIKIPEDIA.DUH.!"],
+    "videos": ["http://GOOGLEPLUSTUBE"],
+    "social_media": ["https://FEMATWITTER"],
+    "crises": [2],
+    "people": [2],
+    "external_links": ["http://FEMASWEBSITE"],
+    "citations": ["http://BIBLIOGRAPHY.txt"],
+    "contact_info": {"name": "FEMA",
+        "address": "HYATTSVILLE",
+        "email": "FEMA@FEMA.FEMA",
+        "phone": "999-999-9999"}
+}
+
+PERSON_PUT = {
+    "name": "AL GORE",
+    "DOB": "9999-03-31",
+    "location": "USA!!USA!!USA!!!11!",
+    "kind": "NOT THE PRESIDENT",
+    "description": "GLOBAL WARMING DUDE",
+    "maps": ["http://GOOGLYMAPS"],
+    "images": ["http://WIKIPEDIA"],
+    "videos": ["http://YOUTUBES"],
+    "social_media": ["https://TWITTER"],
+    "crises": [2],
+    "organizations": [2],
+    "external_links": ["http://GLOBALWARMINGISREAL"],
+    "citations": ["http://ALGOREWIKI"],
+}
