@@ -84,7 +84,7 @@ TestWCDB3.py: $(TMPDIR)
 # the leading '-' character says to ignore error codes (which are set if the test fails)
 # the "2>" and "1>&2" are to ensure we capture both stderr and stdout
 TestWCDB3.out: $(TMPDIR)
-	-cd wcdb && python manage.py test crises --settings=settings.local 2> ../$(TMPDIR)/TestWCDB3.out 1>&2
+	-cd wcdb && python manage.py test crises --settings=config.local 2> ../$(TMPDIR)/TestWCDB3.out 1>&2
 
 WCDB-Report.pdf:
 	bash -c "if [ ! -f $(TMPDIR)/WCDB3-Report.pdf ]; then echo '--- ERROR: Missing file $(TMPDIR)/WCDB3-Report.pdf ---' && exit 1; fi"
@@ -104,25 +104,25 @@ WCDB3.zip: allfiles WCDB-Report.pdf WCDB-UML.pdf
 
 # run django's local server
 runserver:
-	cd wcdb && python manage.py runserver --settings=settings.local
+	cd wcdb && python manage.py runserver --settings=config.local
 
 testserver:
-	cd wcdb && python manage.py testserver fixtures/test-cases.json --settings=settings.local
+	cd wcdb && python manage.py testserver fixtures/test-cases.json --settings=config.local
 
 # run django tests
 test:
-	cd wcdb && python manage.py test crises --settings=settings.local
+	cd wcdb && python manage.py test crises
 
 # Do a total refresh of the local database
 # Pipe "no" to syncdb to auto-answer the prompt asking to create a super user
 dbrefresh:
 	rm -f wcdb/mydb.db
-	cd wcdb && echo "no" | python manage.py syncdb --settings=settings.local
-	cd wcdb && python manage.py loaddata fixtures/*.json --settings=settings.local
+	cd wcdb && echo "no" | python manage.py syncdb --settings=config.local
+	cd wcdb && python manage.py loaddata fixtures/*.json --settings=config.local
 
 # Run django's shell
 shell:
-	cd wcdb && python manage.py shell --settings=settings.local
+	cd wcdb && python manage.py shell --settings=config.local
 
 index:
 	cd wcdb/crises/spider && python spider.py --loglevel=INFO --outFile=../index.py
