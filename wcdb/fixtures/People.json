@@ -4,7 +4,7 @@
 		"pk":1,
 		"fields":{
 			"name":"Yasser Arafat",
-			"kind":"Political Leader"
+			"kind":"Former Political Leader"
 		}
 	},
 	{
@@ -20,7 +20,7 @@
 		"pk":3,
 		"fields":{
 			"name":"Mikhail Gorbachev",
-			"kind":"Political Leader"
+			"kind":"Former Political Leader"
 		}
 	},
 	{
@@ -28,7 +28,7 @@
 		"pk":4,
 		"fields":{
 			"name":"Bill Gates",
-			"kind":"Philantropist"
+			"kind":"CEO, Philantropist"
 		}
 	},
 	{

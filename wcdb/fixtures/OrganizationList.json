@@ -20,7 +20,7 @@
 		"pk":3,
 		"fields":{
 			"name":"Union Carbide Corporation",
-			"kind":"Corporation"
+			"kind":"Multinational Corporation"
 		}
 	},
 	{
@@ -76,7 +76,7 @@
 		"pk":10,
 		"fields":{
 			"name":"British Petroleum (BP)",
-			"kind":"Group organization"
+			"kind":"Multinational Corporation"
 		}
 	}
 ]

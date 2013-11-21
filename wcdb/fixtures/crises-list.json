@@ -3,7 +3,7 @@
 		"model":"crises.Crises",
 		"pk":1,
 		"fields":{
-			"name":"Israeli-Palestinian conflict",
+			"name":"Israeli-Palestinian Conflict",
 			"kind":"Political"
 		}
 	},
