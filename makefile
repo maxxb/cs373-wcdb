@@ -118,7 +118,7 @@ test:
 dbrefresh:
 	rm -f wcdb/mydb.db
 	cd wcdb && echo "no" | python manage.py syncdb --settings=config.local
-	cd wcdb && python manage.py loaddata fixtures/*.json --settings=config.local
+	cd wcdb && python manage.py loaddata fixtures/People*.json fixtures/Organization*.json fixtures/crises-*.json  --settings=config.local
 
 # Run django's shell
 shell:
