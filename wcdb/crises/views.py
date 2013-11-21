@@ -94,3 +94,7 @@ def search (request):
 	print "results: %s" % query_results
 	return render(request, 'search.html', {'search_terms': search_terms.replace('+', ' '), 'query_results': query_results.items()})
 ############################################################################################################
+
+def tests(request):
+	testData = runTests()
+	return render(request, 'tests.html', {'test_data': test_data})
