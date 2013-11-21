@@ -5,8 +5,9 @@
 {% block sqlquery %}
 <center>
 <h1>{{ queryName }}</h1>
-<br><br>
-
+<br>
+<p>{{ rawSql }}</p>
+<br>
 <table border="3" cellpadding="10">
 <tr>
 {% for c in titles %}

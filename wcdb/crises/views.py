@@ -84,7 +84,7 @@ def sqlquery(request, qid):
 	
 	queryName = queryNames[index]
 	
-	return render(request, 'sqlquery.html', {'queryName': queryName, 'qresult':qresult, "titles": queryTitles[index]})
+	return render(request, 'sqlquery.html', {'queryName': queryName, 'rawSql': queries[index], 'qresult':qresult, "titles": queryTitles[index]})
 
 ###########################################################################################################
 def search (request):
