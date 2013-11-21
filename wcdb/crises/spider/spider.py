@@ -19,6 +19,7 @@ UTF_PUNC = "\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x80\x8a\x8b\x8c\x8d\x8e\x8f
 
 #IGNORE_CHARS_REGEX = re.compile("[%s]|[%s]" % (string.whitespace + PUNCTUATION, "\x80-\x9f"))
 #MATCH_CHARS_REGEX = re.compile("\w+")
+WHITESPACE_REGEX = re.compile("([%s]+)" % string.whitespace)
 MATCH_CHARS_REGEX = re.compile("([^%s%s]+)" % (UTF_PUNC, string.whitespace + PUNCTUATION))
 
 def loadPage(url):
@@ -55,6 +56,25 @@ def createIndexValue(url, title, context):
         "context" : context
     }
 
+def createWordContext(text):
+    wordContext = {}
+    wordsAndPos = [(m.group(0).lower(), m.start()) for m in MATCH_CHARS_REGEX.finditer(text)]
+
+    # take the radius in number of words
+    radius = 7
+    for i, (word, pos) in enumerate(wordsAndPos):
+        lower, upper = i - radius, i + radius
+        context = wordsAndPos[max(0, lower):min(len(wordsAndPos), upper)]
+
+        lower, upper = context[0][1], context[-1][1]
+        text_context = text[max(0, lower) : min(len(text), upper)]
+
+        if wordContext.has_key(word):
+            wordContext[word] = wordContext[word] + "... ..." + text_context
+        else:
+            wordContext[word] = text_context
+    return wordContext
+
 class HTMLFetcherParser(HTMLParser):
 
     def __init__(self, baseurl):
@@ -65,8 +85,7 @@ class HTMLFetcherParser(HTMLParser):
         HTMLParser.__init__(self)
         self.url = baseurl
         self.title = ""
-        # words is a dictionary mapping words to the context
-        self.words = {}
+        self.text = ""
         # urls is the list of all links in the page
         self.urls = []
         self.__currentTag = None
@@ -75,6 +94,10 @@ class HTMLFetcherParser(HTMLParser):
 
         # parse the page
         self.feed(self.html)
+
+        # words is a dictionary mapping words to the context
+        self.words = createWordContext(self.text)
+
     
     def handle_starttag(self, tag, attrs):
         """
@@ -99,24 +122,14 @@ class HTMLFetcherParser(HTMLParser):
     def handle_data(self, data):
         if self.__currentTag == 'title':
             self.title = data.strip()
-        if self.__currentTag not in ['script', 'a']:
+        elif self.__currentTag not in ['script', 'a', 'span']:
             self.__parseText(data)
 
     def __parseText(self, text):
         # finditer returns an iterable of all non-overlapping matches in the string
-        matches = [x for x in MATCH_CHARS_REGEX.finditer(text)]
-        for m in matches:
-            word = m.group(0).lower()
-            self.words[word] = self.__getContext(word, m, text)
-
-    def __getContext(self, word, match, text):
-        """ 
-        This grabs the context (surrounding text) of the given word from text, 
-        using info in the given re.MatchObject instance 
-        """
-        radius = 20
-        lower, upper = match.start() - radius, match.end() + radius
-        return text[max(0, lower) : min(len(text), upper)]
+        cleanText = WHITESPACE_REGEX.sub(" ", text).strip() 
+        if cleanText:
+            self.text += " " + cleanText
 
     def getWordList(self):
         """ Return a list of all the words in the page """

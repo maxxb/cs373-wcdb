@@ -9,7 +9,7 @@ application = django.core.handlers.wsgi.WSGIHandler()
 '''
 
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings.heroku'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'config.heroku'
 
 from django.core.wsgi import get_wsgi_application
 from dj_static import Cling
