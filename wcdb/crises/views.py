@@ -63,7 +63,7 @@ def sqlquery(request, qid):
 	"Select Most Related (Most Related People/Crises) Organizations",
 	"Count the Number of Crises Before the 21st Century (Earlier than 2000)",
 	"Select the Person/People Involved in the Most Number of Crises",
-	"select Twitter Account Link of All People",
+	"Select Twitter Account Link of All People",
 	"Select the Youngest People in the Database",
 	"Select the Crises With the Most Resources Needed",
 	"Select the Crisis Kind that has Most Number of Crises"]
