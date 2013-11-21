@@ -11,7 +11,6 @@ def query(search_terms):
     # tokens = s.split('+')
     
     tokens = wordsFromText(s)
-    print tokens
     #URL -> number of search term matches
     URL_match_count = {}
     for token in tokens:
@@ -28,6 +27,5 @@ def query(search_terms):
                 URL_match_count[d["url"]][0] += 1 
             else:
                 URL_match_count[d["url"]] = [1, d]
-    #returns a list of best matching URLs in order of most matches to fewest
-    print URL_match_count
+    # returns a list of best matching URLs in order of most matches to fewest
     return OrderedDict(sorted(URL_match_count.items(), key = lambda t: -t[1][0]))
