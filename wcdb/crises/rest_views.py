@@ -16,6 +16,9 @@ def method_not_supported():
 def resource_not_found():
     return HttpResponse(content_type=JSON_CONTENT, status=404)
 
+def bad_request():
+    return HttpResponse(content_type=JSON_CONTENT, status=400)
+
 def success_no_content():
     return HttpResponse(content_type=JSON_CONTENT, status=204)
 
@@ -128,7 +131,11 @@ def put_crisis(request, cid):
     return success_no_content() 
 
 def post_new_crisis(request):
-    b = jsonFromRequest(request)
+    try:
+        b = jsonFromRequest(request)
+    except simplejson.JSONDecodeError as e:
+        print e
+        return bad_request()
 
     # create the crisis and get its auto-assigned primary key
     crisis = Crises(name=b[u"name"], kind=b[u"kind"])
@@ -282,7 +289,11 @@ def delete_associated_people_data(person):
     map(lambda x: x.delete(), PeopleCitations.objects.filter(people__pk=pk))
 
 def post_new_person(request):
-    b = jsonFromRequest(request)
+    try:
+        b = jsonFromRequest(request)
+    except simplejson.JSONDecodeError as e:
+        print e
+        return bad_request()
 
     # create the person and get its auto-assigned primary key
     person = People(name=b[u"name"], kind=b[u"kind"])
@@ -447,7 +458,11 @@ def delete_associated_org_data(org):
     map(lambda x: x.delete(), OrgCitations.objects.filter(org__pk=pk))
 
 def post_new_organization(request):
-    b = jsonFromRequest(request)
+    try:
+        b = jsonFromRequest(request)
+    except simplejson.JSONDecodeError as e:
+        print e
+        return bad_request()
 
     # create the org and get its auto-assigned primary key
     org = Organizations(name=b[u"name"], kind=b[u"kind"])
