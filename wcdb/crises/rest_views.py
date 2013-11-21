@@ -133,7 +133,7 @@ def put_crisis(request, cid):
 def post_new_crisis(request):
     try:
         b = jsonFromRequest(request)
-    except json.JSONDecodeError as e:
+    except ValueError as e:
         print e
         return bad_request()
 
@@ -291,7 +291,7 @@ def delete_associated_people_data(person):
 def post_new_person(request):
     try:
         b = jsonFromRequest(request)
-    except json.JSONDecodeError as e:
+    except ValueError as e:
         print e
         return bad_request()
 
@@ -460,7 +460,7 @@ def delete_associated_org_data(org):
 def post_new_organization(request):
     try:
         b = jsonFromRequest(request)
-    except json.JSONDecodeError as e:
+    except ValueError as e:
         print e
         return bad_request()
 
