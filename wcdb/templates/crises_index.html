@@ -3,7 +3,7 @@
 {% block title %}World Crisies Database | {{crisis_data.crisis.name}}{% endblock %}
 
 {% block crisis %}  
-<center><h1>World Crises Database | {{crisis_data.crisis.name}}</h1></center>
+<center><h1>{{crisis_data.crisis.name}}</h1></center>
 <br>
 <div class="panel-group" id="accordion" style="height: 348px;">
 	<div class="panel panel-default">
@@ -41,7 +41,7 @@
 							<p>{{x.help}}</p>
 						{% endfor %}
 					</li>
-					<li><b>Resources Needed</b>: 
+					<li><b>Resources Needed</b>:
 						{% for x in crisis_data.crisis.crisesresourses_set.all %}
 							<p>{{x.resourses}}</p>
 						{% endfor %}
