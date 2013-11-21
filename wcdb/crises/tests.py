@@ -2,6 +2,7 @@
 
 # import spider tests so they get run as well
 from spider.tests import *
+from search_tests import *
 
 from django.test import TestCase
 from django.utils.unittest import skipIf
