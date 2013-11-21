@@ -7,10 +7,11 @@
 <input type="hidden" id="url" name="variable" value={{ url }}>
 
 <meta charset="utf-8">
-<body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="/static/js/d3.js"></script>
 <script src="/static/js/d3.layout.cloud.js"></script>
+<div id="vis" class="col-md-12 col-xs-4"></div>
+
 <script>
 
 var json = null;
@@ -36,14 +37,14 @@ $.ajax(url,{
         return {text: d.text, size: d.size};
       }))
       .padding(2)
-      .rotate(function() { return ~~(Math.random() * 2) * 60; })
+      .rotate(function() { return ~~(Math.random() * 3) * 45; })
       .font("Impact")
       .fontSize(function(d) { return d.size; })
       .on("end", draw)
       .start();
 
   function draw(words) {
-    d3.select("body").append("svg")
+    d3.select("#vis").append("svg")
         .attr("width", 1000)
         .attr("height", 1000)
       .append("g")
@@ -61,13 +62,13 @@ $.ajax(url,{
         .text(function(d) { return d.text; });
   }
 </script>
-
 {% endwith %}
 
 {% endblock %}
 
 {% block copyright %} 
-<p>Copyright &copy; <a href="/static/assets/LICENSE.txt">LICENSE</a>
-<p>Made Using D3 <a href="https://github.com/mbostock/d3">Github</a>  
+<p>&copy; <a href="/static/assets/LICENSE.txt">LICENSE</a>
+<p><a href="https://github.com/mbostock/d3"><i class="fa fa-github-square"></a></i> Made Using D3</p>
+
 <br><br><p>Designed and Implemented by <a href="/about">The TCP Connections</a></p>
 {% endblock %} 
