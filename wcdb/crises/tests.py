@@ -13,7 +13,7 @@ import json
 import test_cases
 
 class CrisesDatabaseTests(TestCase):
-    fixtures = ['test-cases.json']
+    fixtures = ['tests/test-cases.json']
 
     def test_crises_data(self):
         # get the CrisesData row associated with the row Crises with primary key 1
@@ -22,7 +22,7 @@ class CrisesDatabaseTests(TestCase):
         self.assertEquals(cData.crisis.pk, cData.pk)
         self.assertEquals(cData.crisis.name, u"Israeli-Palestinian conflict")
         self.assertEquals(cData.crisis.kind, u"political")
-        # I guess test-cases.json has some fancy unicode characters in it 
+        # I guess tests/test-cases.json has some fancy unicode characters in it 
         self.assertTrue(cData.description.startswith(
             u"The Israeli\u2013Palestinian conflict is the ongoing struggle between"))
         self.assertEquals(cData.location, u"West Bank and Gaza Strip")
@@ -86,7 +86,7 @@ class CrisesDatabaseTests(TestCase):
         self.assertEquals(cMap.maps, u"http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=west%2Bbank%2C%2Bisrael&ie=UTF8&z=12&t=m&iwloc=near&output=embed")
 
 class PeopleDatabaseTests(TestCase):
-    fixtures = ['test-cases.json']
+    fixtures = ['tests/test-cases.json']
 
     def test_people_data(self):
         # get the PeopleData row associated with the row People with primary key 1
@@ -142,7 +142,7 @@ class PeopleDatabaseTests(TestCase):
         self.assertEquals(pMap.maps, u"http://goo.gl/maps/oOQCX")
 
 class OrganizationsDatabaseTests(TestCase):
-    fixtures = ['test-cases.json']
+    fixtures = ['tests/test-cases.json']
 
     def test_organization_maps(self):
         oMap = OrgMaps.objects.get(org__pk=1)
@@ -202,7 +202,7 @@ class OrganizationsDatabaseTests(TestCase):
         self.assertEquals(oData.crises.get(pk=1), Crises.objects.get(pk=1))
 
 class CrisesRestTests(TestCase):
-    fixtures = ['test-cases.json']
+    fixtures = ['tests/test-cases.json']
 
     #GET /api/crises
     def test_rest_get_crises(self):
@@ -261,7 +261,7 @@ class CrisesRestTests(TestCase):
             self.assertEquals(rGetJson, expectedResponse)
 
 class PeopleRestTests(TestCase):
-    fixtures = ['test-cases.json']
+    fixtures = ['tests/test-cases.json']
 
     #GET /api/people
     def test_rest_get_people(self):
@@ -323,7 +323,7 @@ class PeopleRestTests(TestCase):
             self.assertEquals(rGetJson, expectedResponse)
 
 class OrganizationRestTests(TestCase):
-    fixtures = ['test-cases.json']
+    fixtures = ['tests/test-cases.json']
 
     #GET /api/organizations
     def test_rest_get_organizations(self):

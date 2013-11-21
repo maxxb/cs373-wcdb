@@ -4,7 +4,7 @@
 		"pk":1,
 		"fields":{
 			"name":"Yasser Arafat",
-			"kind":"political leader"
+			"kind":"Political Leader"
 		}
 	},
 	{
@@ -20,7 +20,7 @@
 		"pk":3,
 		"fields":{
 			"name":"Mikhail Gorbachev",
-			"kind":"political leader"
+			"kind":"Political Leader"
 		}
 	},
 	{
