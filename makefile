@@ -136,7 +136,7 @@ heroku-terminal:
 	heroku run bash --app tcp-connections
 
 heroku-resetdb:
-	heroku pg:reset DATABASE --confirm tcp-connections
+	heroku pg:reset DATABASE_URL --confirm tcp-connections
 
 heroku-syncdb:
 	cd wcdb && python manage.py syncdb --settings=config.heroku
