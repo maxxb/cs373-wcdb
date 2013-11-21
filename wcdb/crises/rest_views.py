@@ -1,9 +1,9 @@
 from django.views.decorators.csrf import csrf_exempt
 from crises.models import *
-from django.utils import simplejson
 from django.http import HttpResponse
 from django.core import serializers
 from datetime import datetime
+import json
 
 #############################################
 # Some utility methods
@@ -34,7 +34,7 @@ def jsonFromRequest(request):
     # the actual HttpRequest objects used. The only way I've found to get at the post 
     # data on both is to use .raw_post_data.
     jsonString = request.raw_post_data
-    return simplejson.loads(jsonString)
+    return json.loads(jsonString)
 
 #############################################
 # Crisis helpers
@@ -47,7 +47,7 @@ def get_all_crises():
             "id" : row.pk,
             "kind" : row.kind
         })
-    return jsonResponse(simplejson.dumps(data), 200)
+    return jsonResponse(json.dumps(data), 200)
 
 def get_crisis(request, cid):
     # filter will return an empty list when there are no matches
@@ -56,7 +56,7 @@ def get_crisis(request, cid):
         return resource_not_found()
     crisisData = matches[0]
     data = get_crisis_dict(crisisData)
-    return jsonResponse(simplejson.dumps(data), 200)
+    return jsonResponse(json.dumps(data), 200)
 
 def create_associated_crisis_data(data, crisis):
     """
@@ -133,7 +133,7 @@ def put_crisis(request, cid):
 def post_new_crisis(request):
     try:
         b = jsonFromRequest(request)
-    except simplejson.JSONDecodeError as e:
+    except json.JSONDecodeError as e:
         print e
         return bad_request()
 
@@ -164,7 +164,7 @@ def post_new_crisis(request):
     create_associated_crisis_data(b, crisis) 
     crisisData.save()
 
-    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+    return jsonResponse(json.dumps({"id": cid}), 201)
 
 def get_crisis_dict(crisisData):
     """
@@ -236,7 +236,7 @@ def get_all_people():
             "id" : row.pk,
             "kind" : row.kind
         })
-    return jsonResponse(simplejson.dumps(data), 200)
+    return jsonResponse(json.dumps(data), 200)
 
 def get_person(request, cid):
     # filter will return an empty list when there are no matches
@@ -245,7 +245,7 @@ def get_person(request, cid):
         return resource_not_found()
     personData = matches[0]
     data = get_person_dict(personData)
-    return jsonResponse(simplejson.dumps(data), 200)
+    return jsonResponse(json.dumps(data), 200)
 
 def create_associated_people_data(data, person):
     """
@@ -291,7 +291,7 @@ def delete_associated_people_data(person):
 def post_new_person(request):
     try:
         b = jsonFromRequest(request)
-    except simplejson.JSONDecodeError as e:
+    except json.JSONDecodeError as e:
         print e
         return bad_request()
 
@@ -319,7 +319,7 @@ def post_new_person(request):
     create_associated_people_data(b, person) 
     personData.save()
 
-    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+    return jsonResponse(json.dumps({"id": cid}), 201)
 
 def put_person(request, pid): #TODO: verify pid, oid, cid?
     pDataMatches = PeopleData.objects.filter(person__pk=pid)
@@ -405,7 +405,7 @@ def get_all_orgs():
             "id" : row.pk,
             "kind" : row.kind
         })
-    return jsonResponse(simplejson.dumps(data), 200)
+    return jsonResponse(json.dumps(data), 200)
 
 def get_org(request, cid):
     # filter will return an empty list when there are no matches
@@ -414,7 +414,7 @@ def get_org(request, cid):
         return resource_not_found()
     orgData = matches[0]
     data = get_org_dict(orgData)
-    return jsonResponse(simplejson.dumps(data), 200)
+    return jsonResponse(json.dumps(data), 200)
 
 def create_associated_org_data(data, org):
     """
@@ -460,7 +460,7 @@ def delete_associated_org_data(org):
 def post_new_organization(request):
     try:
         b = jsonFromRequest(request)
-    except simplejson.JSONDecodeError as e:
+    except json.JSONDecodeError as e:
         print e
         return bad_request()
 
@@ -500,7 +500,7 @@ def post_new_organization(request):
     orgData.save()
 
     # return {"id" : cid}
-    return jsonResponse(simplejson.dumps({"id": cid}), 201)
+    return jsonResponse(json.dumps({"id": cid}), 201)
 
 def put_org(request, oid):
     oDataMatches = OrganizationsData.objects.filter(org__pk=oid)
@@ -641,7 +641,7 @@ def crisis_orgs(request, cid):
             orgDataMatches = OrganizationsData.objects.filter(org__pk=org.pk)
             if orgDataMatches:
                 result.append(get_org_dict(orgDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
+        return jsonResponse(json.dumps(result), 200)
     else:
         return method_not_supported()
 
@@ -658,7 +658,7 @@ def crisis_people(request, cid):
             pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
             if pDataMatches:
                 result.append(get_person_dict(pDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
+        return jsonResponse(json.dumps(result), 200)
     else:
         return method_not_supported()
 
@@ -708,7 +708,7 @@ def person_orgs(request, pid):
             orgDataMatches = OrganizationsData.objects.filter(org__pk=org.pk)
             if orgDataMatches:
                 result.append(get_org_dict(orgDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
+        return jsonResponse(json.dumps(result), 200)
     else:
         return method_not_supported()
 
@@ -725,7 +725,7 @@ def person_crises(request, pid):
             crisisDataMatches = CrisesData.objects.filter(crisis__pk=crisis.pk)
             if crisisDataMatches:
                 result.append(get_crisis_dict(crisisDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
+        return jsonResponse(json.dumps(result), 200)
     else:
         return method_not_supported()
 
@@ -775,7 +775,7 @@ def organization_people(request, oid):
             pDataMatches = PeopleData.objects.filter(person__pk=person.pk)
             if pDataMatches:
                 result.append(get_person_dict(pDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
+        return jsonResponse(json.dumps(result), 200)
     else:
         return method_not_supported()
 
@@ -792,6 +792,6 @@ def organization_crises(request, oid):
             crisisDataMatches = CrisesData.objects.filter(crisis__pk=crisis.pk)
             if crisisDataMatches:
                 result.append(get_crisis_dict(crisisDataMatches[0]))
-        return jsonResponse(simplejson.dumps(result), 200)
+        return jsonResponse(json.dumps(result), 200)
     else:
         return method_not_supported()
