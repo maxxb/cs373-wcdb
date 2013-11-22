@@ -7,6 +7,7 @@ class SearchTests(unittest.TestCase):
     This is testing against the index, which is built once
     and is independent of the actual data in the database
     """
+    @unittest.skip("")
     def test_query1(self):
         actual1 = [x for x in query("bill+gates")]
         actual2 = [x for x in query("BILL+GATES")]
