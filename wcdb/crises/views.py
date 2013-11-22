@@ -7,6 +7,9 @@ from search import query
 
 from django.db import connection
 
+from tests import CrisesDatabaseTests
+import tests as testCases
+
 
 def links(request,entity):
 	if entity == 'crises':
@@ -94,3 +97,15 @@ def search (request):
 	print "results: %s" % query_results
 	return render(request, 'search.html', {'search_terms': search_terms.replace('+', ' '), 'query_results': query_results.items()})
 ############################################################################################################
+
+def runTests():
+    import subprocess
+    proc = subprocess.Popen(["python", "manage.py", "test", "crises"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    comm = proc.communicate()
+    print comm
+    return comm[0] + "\n" + comm[1]
+
+def tests(request):
+	testData = runTests()
+	return render(request, 'tests.html', {'test_data': testData})
+

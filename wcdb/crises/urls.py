@@ -22,5 +22,9 @@ urlpatterns = patterns('',
 
     #############################################################
     url(r'^search/', 'crises.views.search'),
+
+    url(r'^tests/', 'crises.views.tests'),
     #############################################################
+
+    url(r'^tests', 'crises.views.tests'),
 )
