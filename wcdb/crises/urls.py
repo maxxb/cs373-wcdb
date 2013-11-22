@@ -25,4 +25,6 @@ urlpatterns = patterns('',
 
     url(r'^tests/', 'crises.views.tests'),
     #############################################################
+
+    url(r'^tests', 'crises.views.tests'),
 )
