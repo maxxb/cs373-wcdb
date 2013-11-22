@@ -139,10 +139,10 @@ heroku-resetdb:
 	heroku pg:reset DATABASE_URL --confirm tcp-connections
 
 heroku-syncdb:
-	cd wcdb && python manage.py syncdb --settings=config.heroku
+	heroku run --app tcp-connections "cd wcdb && python manage.py syncdb --settings=config.heroku"
 
 heroku-loaddata:
-	cd wcdb && python manage.py loaddata fixtures/*.json --settings=config.heroku
+	heroku run --app tcp-connections "cd wcdb && python manage.py loaddata fixtures/*.json --settings=config.heroku"
 
 heroku-populatedb:
 	heroku run make heroku-syncdb --app tcp-connections
