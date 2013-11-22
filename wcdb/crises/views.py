@@ -100,7 +100,7 @@ def search (request):
 
 def runTests():
     import subprocess
-    proc = subprocess.Popen(["python", "manage.py", "test", "crises"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen(["python", "manage.py", "test", "crises", "--settings=config.local"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     comm = proc.communicate()
     print comm
     return comm[0] + "\n" + comm[1]
