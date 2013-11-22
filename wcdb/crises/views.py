@@ -102,9 +102,10 @@ def runTests():
     import subprocess
     proc = subprocess.Popen(["python", "manage.py", "test", "crises"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     comm = proc.communicate()
-    return comm[0]
+    print comm
+    return comm[0] + "\n" + comm[1]
 
 def tests(request):
 	testData = runTests()
-	return render(request, 'tests.html', {'test_data': test_data})
+	return render(request, 'tests.html', {'test_data': testData})
 
